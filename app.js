@@ -6,8 +6,55 @@ document.addEventListener('DOMContentLoaded', () => {
     const comparisonTable = document.getElementById('comparison-table');
     const chartSection = document.getElementById('chart-section');
     const winChart = document.getElementById('win-chart');
+    
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const langToggleBtn = document.getElementById('lang-toggle');
 
     let selectedModelIds = LLM_DATA.models.map(m => m.id);
+    
+    // Tema ve Dil Ayarları
+    let currentLang = localStorage.getItem('lang') || 'tr';
+    let currentTheme = localStorage.getItem('theme') || 'dark';
+
+    function initThemeAndLang() {
+        document.documentElement.lang = currentLang;
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateToggleButtons();
+        applyTranslations();
+    }
+
+    function updateToggleButtons() {
+        themeToggleBtn.innerText = currentTheme === 'dark' ? t('themeToggle') : (currentLang === 'tr' ? 'Koyu Tema' : 'Dark Theme');
+        langToggleBtn.innerText = currentLang === 'tr' ? 'English' : 'Türkçe';
+    }
+
+    function applyTranslations() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            if (key === 'attributionPrefix') {
+                el.innerText = t(key) + " ";
+            } else {
+                el.innerHTML = t(key);
+            }
+        });
+    }
+
+    themeToggleBtn.addEventListener('click', () => {
+        currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        localStorage.setItem('theme', currentTheme);
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateToggleButtons();
+    });
+
+    langToggleBtn.addEventListener('click', () => {
+        currentLang = currentLang === 'tr' ? 'en' : 'tr';
+        localStorage.setItem('lang', currentLang);
+        document.documentElement.lang = currentLang;
+        updateToggleButtons();
+        applyTranslations();
+        initFilters(); // Re-render filters for language change if needed
+        renderTable(); // Re-render table for language change
+    });
 
     function initFilters() {
         modelFiltersContainer.innerHTML = '';
@@ -44,7 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const activeModels = LLM_DATA.models.filter(m => selectedModelIds.includes(m.id));
         
-        let companyHTML = `<tr><th rowspan="2" style="width: 180px;">Benchmark</th>`;
+        let companyHTML = `<tr><th rowspan="2" style="width: 180px;">${t('benchmark')}</th>`;
         LLM_DATA.companies.forEach(company => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             if (companyActiveModels.length > 0) {
@@ -57,7 +104,8 @@ document.addEventListener('DOMContentLoaded', () => {
         LLM_DATA.companies.forEach(company => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             companyActiveModels.forEach(model => {
-                modelHTML += `<th style="width: calc((100% - 180px) / ${activeModels.length});"><div class="model-header"><span class="name" style="color: ${model.color}">${model.name}</span><span class="date">${model.date}</span></div></th>`;
+                const displayDate = t(model.date);
+                modelHTML += `<th style="width: calc((100% - 180px) / ${activeModels.length});"><div class="model-header"><span class="name" style="color: ${model.color}">${model.name}</span><span class="date">${displayDate}</span></div></th>`;
             });
         });
         modelHTML += `</tr>`;
@@ -73,9 +121,10 @@ document.addEventListener('DOMContentLoaded', () => {
             const visibleBenchmarks = category.benchmarks.filter(bench => activeModels.some(model => bench.values[model.id] !== undefined && bench.values[model.id] !== null));
 
             if (visibleBenchmarks.length > 0) {
-                bodyHTML += `<tr class="category-row"><td colspan="${activeModels.length + 1}">${category.name}</td></tr>`;
+                bodyHTML += `<tr class="category-row"><td colspan="${activeModels.length + 1}">${t(category.name)}</td></tr>`;
                 visibleBenchmarks.forEach(bench => {
-                    bodyHTML += `<tr><td data-tooltip="${bench.tooltip || ''}">${bench.name}</td>`;
+                    const tooltipText = bench.tooltip ? t(bench.tooltip) : '';
+                    bodyHTML += `<tr><td data-tooltip="${tooltipText}">${bench.name}</td>`;
                     
                     const maxVal = findMaxValue(bench, activeModels);
                     const maxExcludingMythos = findMaxValue(bench, activeModels.filter(m => m.id !== 'mythos'));
@@ -180,6 +229,7 @@ document.addEventListener('DOMContentLoaded', () => {
         renderTable();
     }
 
+    initThemeAndLang();
     initFilters();
     renderTable();
 });

@@ -7,6 +7,20 @@
     --accent-blue: #3b82f6;
     --accent-mythos: #a855f7;
     --font-mono: 'JetBrains Mono', monospace;
+    --table-header-bg: #0f0f11;
+    --category-bg: #18181b;
+}
+
+[data-theme="light"] {
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --border-dim: #e2e8f0;
+    --text-muted: #64748b;
+    --text-main: #0f172a;
+    --accent-blue: #2563eb;
+    --accent-mythos: #9333ea;
+    --table-header-bg: #f1f5f9;
+    --category-bg: #f1f5f9;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -16,6 +30,32 @@ body {
     background-color: var(--bg-main);
     color: var(--text-main);
     overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.top-controls {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding: 15px 24px 0;
+    max-width: 1500px;
+    margin: 0 auto;
+}
+
+.control-btn {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border-dim);
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.control-btn:hover {
+    background: var(--border-dim);
 }
 
 .container { width: 100%; max-width: 1500px; margin: 0 auto; padding: 40px 24px; }
@@ -71,7 +111,7 @@ thead th:first-child, tbody td:first-child {
     text-align: left;
     width: 180px;
     padding-left: 20px;
-    background: #0f0f11;
+    background: var(--table-header-bg);
     position: sticky;
     left: 0;
     z-index: 10;
@@ -146,8 +186,8 @@ footer { margin-top: 60px; text-align: center; color: var(--text-muted); font-si
     left: 100%;
     top: 50%;
     transform: translateY(-50%) translateX(10px);
-    background: #18181b;
-    color: #fff;
+    background: var(--category-bg);
+    color: var(--text-main);
     padding: 10px 14px;
     border-radius: 8px;
     font-size: 12px;
@@ -253,4 +293,6 @@ footer { margin-top: 60px; text-align: center; color: var(--text-muted); font-si
     text-align: center;
     margin-top: 16px;
     color: var(--text-muted);
+}
+-muted);
 }
