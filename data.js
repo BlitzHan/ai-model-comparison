@@ -1,26 +1,26 @@
 const LLM_DATA = {
     models: [
-        { id: 'mythos', name: 'Mythos Preview', company: 'Anthropic', date: 'Nis 26', color: '#c878ff' },
-        { id: 'opus47', name: 'Opus 4.7', company: 'Anthropic', date: '16 Nis 26', color: '#f5b98c' },
-        { id: 'opus46', name: 'Opus 4.6', company: 'Anthropic', date: '5 Şub 26', color: '#d97757' },
-        { id: 'opus45', name: 'Opus 4.5', company: 'Anthropic', date: '24 Kas 25', color: '#a04a2e' },
-        { id: 'sonnet46', name: 'Sonnet 4.6', company: 'Anthropic', date: '17 Şub 26', color: '#b8553b' },
-        { id: 'gpt55', name: 'GPT 5.5', company: 'OpenAI', date: '23 Nis 26', color: '#6ee7a0' },
-        { id: 'gpt54', name: 'GPT 5.4', company: 'OpenAI', date: '5 Mar 26', color: '#4ade80' },
-        { id: 'gemini31', name: 'Gemini 3.1 Pro', company: 'Google', date: '19 Şub 26', color: '#60a5fa' },
-        { id: 'gemini3', name: 'Gemini 3 Pro', company: 'Google', date: '18 Kas 25', color: '#3b82c7' },
+        { id: 'mythos', name: 'Mythos Preview', company: 'Anthropic', date: 'Nis 26', color: '#a855f7' },
+        { id: 'opus47', name: 'Opus 4.7', company: 'Anthropic', date: '16 Nis 26', color: '#f97316' },
+        { id: 'opus46', name: 'Opus 4.6', company: 'Anthropic', date: '5 Şub 26', color: '#ea580c' },
+        { id: 'opus45', name: 'Opus 4.5', company: 'Anthropic', date: '24 Kas 25', color: '#c2410c' },
+        { id: 'sonnet46', name: 'Sonnet 4.6', company: 'Anthropic', date: '17 Şub 26', color: '#fb923c' },
+        { id: 'gpt55', name: 'GPT 5.5', company: 'OpenAI', date: '23 Nis 26', color: '#10b981' },
+        { id: 'gpt54', name: 'GPT 5.4', company: 'OpenAI', date: '5 Mar 26', color: '#059669' },
+        { id: 'gemini31', name: 'Gemini 3.1 Pro', company: 'Google', date: '19 Şub 26', color: '#3b82f6' },
+        { id: 'gemini3', name: 'Gemini 3 Pro', company: 'Google', date: '18 Kas 25', color: '#2563eb' },
         { id: 'deepseek', name: 'DeepSeek V4-Pro', company: 'DeepSeek', date: '24 Nis 26', color: '#ef4444' },
-        { id: 'deepseek32', name: 'DeepSeek V3.2', company: 'DeepSeek', date: '1 Ara 25', color: '#c82626' },
-        { id: 'deepseek3', name: 'DeepSeek V3', company: 'DeepSeek', date: '26 Ara 24', color: '#7f1d1d' },
-        { id: 'grok420', name: 'Grok 4.20', company: 'xAI', date: '17 Şub 26', color: '#0c85d0' },
-        { id: 'grok4', name: 'Grok 4', company: 'xAI', date: 'Tem 25', color: '#1da1f2' }
+        { id: 'deepseek32', name: 'DeepSeek V3.2', company: 'DeepSeek', date: '1 Ara 25', color: '#dc2626' },
+        { id: 'deepseek3', name: 'DeepSeek V3', company: 'DeepSeek', date: '26 Ara 24', color: '#b91c1c' },
+        { id: 'grok420', name: 'Grok 4.20', company: 'xAI', date: '17 Şub 26', color: '#06b6d4' },
+        { id: 'grok4', name: 'Grok 4', company: 'xAI', date: 'Tem 25', color: '#0891b2' }
     ],
     companies: [
-        { name: 'Anthropic', ids: ['mythos', 'opus47', 'opus46', 'opus45', 'sonnet46'], color: '#d97757' },
-        { name: 'OpenAI', ids: ['gpt55', 'gpt54'], color: '#10a37f' },
-        { name: 'Google', ids: ['gemini31', 'gemini3'], color: '#4285F4' },
+        { name: 'Anthropic', ids: ['mythos', 'opus47', 'opus46', 'opus45', 'sonnet46'], color: '#f97316' },
+        { name: 'OpenAI', ids: ['gpt55', 'gpt54'], color: '#10b981' },
+        { name: 'Google', ids: ['gemini31', 'gemini3'], color: '#3b82f6' },
         { name: 'DeepSeek', ids: ['deepseek', 'deepseek32', 'deepseek3'], color: '#ef4444' },
-        { name: 'xAI', ids: ['grok420', 'grok4'], color: '#1da1f2' }
+        { name: 'xAI', ids: ['grok420', 'grok4'], color: '#06b6d4' }
     ],
     categories: [
         {
