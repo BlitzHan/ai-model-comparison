@@ -15,3 +15,4 @@ Bu çalışma, Prof. Dr. Oğuz Ergin'in değerli verileri ve orijinal çalışma
 1. Dosyaları indirin.
 2. `index.html` dosyasını tarayıcınızda açın.
 3. Veya GitHub'a yükleyip **GitHub Pages** özelliğini aktif ederek yayına alın.
+ 
