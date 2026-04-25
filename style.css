@@ -74,7 +74,7 @@ h1 { font-size: 40px; font-weight: 800; letter-spacing: -0.04em; }
 }
 
 .btn-secondary {
-    background: #18181b;
+    background: var(--category-bg);
     color: var(--text-main);
     border: 1px solid var(--border-dim);
     padding: 8px 18px;
@@ -139,7 +139,7 @@ thead th:first-child {
     border: 1.5px solid var(--accent-blue);
     border-radius: 6px;
     min-width: 50px; /* Sabit boyut sayesinde sütun genişlese de çerçeve büyümez */
-    color: #fff;
+    color: var(--text-main);
     font-weight: 800;
 }
 
@@ -154,7 +154,7 @@ thead th:first-child {
     box-shadow: 0 0 8px rgba(168, 85, 247, 0.2);
 }
 
-.na-value { color: #3f3f46; }
+.na-value { color: var(--text-muted); opacity: 0.5; }
 
 /* Filter Chips */
 .model-filters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px; }
