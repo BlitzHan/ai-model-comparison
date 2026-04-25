@@ -15,6 +15,13 @@ const LLM_DATA = {
         { id: 'grok420', name: 'Grok 4.20', company: 'xAI', date: '17 Şub 26', color: '#0c85d0' },
         { id: 'grok4', name: 'Grok 4', company: 'xAI', date: 'Tem 25', color: '#1da1f2' }
     ],
+    companies: [
+        { name: 'Anthropic', ids: ['mythos', 'opus47', 'opus46', 'opus45', 'sonnet46'], color: '#d97757' },
+        { name: 'OpenAI', ids: ['gpt55', 'gpt54'], color: '#10a37f' },
+        { name: 'Google', ids: ['gemini31', 'gemini3'], color: '#4285F4' },
+        { name: 'DeepSeek', ids: ['deepseek', 'deepseek32', 'deepseek3'], color: '#ef4444' },
+        { name: 'xAI', ids: ['grok420', 'grok4'], color: '#1da1f2' }
+    ],
     categories: [
         {
             name: 'YAZILIM GELİŞTİRME / KODLAMA',

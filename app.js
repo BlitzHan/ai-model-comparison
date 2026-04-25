@@ -5,10 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('empty-state');
     const comparisonTable = document.getElementById('comparison-table');
 
-    let selectedModelIds = ['opus47', 'gemini31']; // Varsayılan seçim
+    // Varsayılan: Mythos Preview hariç hepsi
+    let selectedModelIds = LLM_DATA.models.filter(m => m.id !== 'mythos').map(m => m.id);
 
-    // 1. Model Filtrelerini Oluştur
     function initFilters() {
+        modelFiltersContainer.innerHTML = '';
         LLM_DATA.models.forEach(model => {
             const chip = document.createElement('label');
             chip.className = `filter-chip ${selectedModelIds.includes(model.id) ? 'active' : ''}`;
@@ -33,7 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Tabloyu Render Et
     function renderTable() {
         if (selectedModelIds.length === 0) {
             comparisonTable.classList.add('hidden');
@@ -45,54 +45,72 @@ document.addEventListener('DOMContentLoaded', () => {
         emptyState.classList.add('hidden');
 
         const activeModels = LLM_DATA.models.filter(m => selectedModelIds.includes(m.id));
-
-        // Head Render
-        let headHTML = `<tr><th>Benchmark</th>`;
-        activeModels.forEach(model => {
-            headHTML += `
-                <th>
-                    <div class="model-header">
-                        <span class="name" style="color: ${model.color}">${model.name}</span>
-                        <span class="date">${model.date}</span>
-                    </div>
-                </th>
-            `;
+        
+        // 1. Şirket Başlıklarını Hazırla (Colspan hesapla)
+        let companyHTML = `<tr><th rowspan="2">Benchmark</th>`;
+        LLM_DATA.companies.forEach(company => {
+            const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
+            if (companyActiveModels.length > 0) {
+                companyHTML += `
+                    <th colspan="${companyActiveModels.length}" class="company-header" style="color: ${company.color}">
+                        ${company.name.toUpperCase()}
+                    </th>
+                `;
+            }
         });
-        headHTML += `</tr>`;
-        tableHead.innerHTML = headHTML;
+        companyHTML += `</tr>`;
 
-        // Body Render
+        // 2. Model Detay Başlıkları
+        let modelHTML = `<tr>`;
+        LLM_DATA.companies.forEach(company => {
+            const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
+            companyActiveModels.forEach(model => {
+                modelHTML += `
+                    <th>
+                        <div class="model-header">
+                            <span class="name" style="color: ${model.color}">${model.name}</span>
+                            <span class="date">${model.date}</span>
+                        </div>
+                    </th>
+                `;
+            });
+        });
+        modelHTML += `</tr>`;
+
+        tableHead.innerHTML = companyHTML + modelHTML;
+
+        // 3. Body Render
         let bodyHTML = '';
         LLM_DATA.categories.forEach(category => {
-            // Bu kategorideki aktif modellerin en az birinde veri olan benchmarkları bul
             const visibleBenchmarks = category.benchmarks.filter(bench => {
                 return activeModels.some(model => bench.values[model.id] !== undefined && bench.values[model.id] !== null);
             });
 
             if (visibleBenchmarks.length > 0) {
-                // Kategori Başlığı
-                bodyHTML += `
-                    <tr class="category-row">
-                        <td colspan="${activeModels.length + 1}">${category.name}</td>
-                    </tr>
-                `;
+                bodyHTML += `<tr class="category-row"><td colspan="${activeModels.length + 1}">${category.name}</td></tr>`;
 
                 visibleBenchmarks.forEach(bench => {
                     bodyHTML += `<tr><td data-tooltip="${bench.tooltip || ''}">${bench.name}</td>`;
                     
-                    // En iyi değeri bul
+                    // Mythos ve Diğerleri için en iyileri bul
                     const bestId = findBestModel(bench, activeModels);
+                    const bestExcludingMythosId = findBestModel(bench, activeModels.filter(m => m.id !== 'mythos'));
 
-                    activeModels.forEach(model => {
-                        const val = bench.values[model.id];
-                        const displayVal = val || '<span class="na-value">—</span>';
-                        const isBest = model.id === bestId;
-                        
-                        bodyHTML += `
-                            <td class="value-cell ${isBest ? 'best-value' : ''}">
-                                ${displayVal}
-                            </td>
-                        `;
+                    LLM_DATA.companies.forEach(company => {
+                        const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
+                        companyActiveModels.forEach(model => {
+                            const val = bench.values[model.id];
+                            const displayVal = val || '<span class="na-value">—</span>';
+                            
+                            let classes = 'value-cell';
+                            if (model.id === bestId && model.id === 'mythos') {
+                                classes += ' best-mythos';
+                            } else if (model.id === bestExcludingMythosId) {
+                                classes += ' best-value';
+                            }
+                            
+                            bodyHTML += `<td class="${classes}">${displayVal}</td>`;
+                        });
                     });
                     bodyHTML += `</tr>`;
                 });
@@ -101,31 +119,26 @@ document.addEventListener('DOMContentLoaded', () => {
         tableBody.innerHTML = bodyHTML;
     }
 
-    // Değerleri karşılaştırmak için sayıya çevir
     function parseValue(val) {
         if (!val || typeof val !== 'string') return -1;
-        // % temizle
         let clean = val.replace('%', '').replace('$', '').replace('~', '').replace(',', '');
         return parseFloat(clean);
     }
 
-    function findBestModel(bench, activeModels) {
+    function findBestModel(bench, modelsToCompare) {
         let maxVal = -1;
         let bestId = null;
 
-        activeModels.forEach(model => {
+        modelsToCompare.forEach(model => {
             const val = parseValue(bench.values[model.id]);
             if (val > maxVal) {
                 maxVal = val;
                 bestId = model.id;
             }
         });
-
-        // Eğer birden fazla aynı değer varsa, ilki kalır (basitlik için)
         return bestId;
     }
 
-    // Buton Kontrolleri
     document.getElementById('select-all').addEventListener('click', () => {
         selectedModelIds = LLM_DATA.models.map(m => m.id);
         updateUI();
@@ -137,7 +150,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.getElementById('reset-default').addEventListener('click', () => {
-        selectedModelIds = ['opus47', 'gemini31'];
+        selectedModelIds = LLM_DATA.models.filter(m => m.id !== 'mythos').map(m => m.id);
         updateUI();
     });
 
