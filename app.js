@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('empty-state');
     const comparisonTable = document.getElementById('comparison-table');
 
-    // Varsayılan: Hepsi seçili
     let selectedModelIds = LLM_DATA.models.map(m => m.id);
 
     function initFilters() {
@@ -13,11 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
         LLM_DATA.models.forEach(model => {
             const chip = document.createElement('label');
             chip.className = `filter-chip ${selectedModelIds.includes(model.id) ? 'active' : ''}`;
-            chip.innerHTML = `
-                <input type="checkbox" value="${model.id}" ${selectedModelIds.includes(model.id) ? 'checked' : ''}>
-                <div class="color-dot" style="background-color: ${model.color}"></div>
-                <span>${model.name}</span>
-            `;
+            chip.innerHTML = `<input type="checkbox" value="${model.id}" ${selectedModelIds.includes(model.id) ? 'checked' : ''}><span>${model.name}</span>`;
 
             chip.querySelector('input').addEventListener('change', (e) => {
                 if (e.target.checked) {
@@ -29,7 +24,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
                 renderTable();
             });
-
             modelFiltersContainer.appendChild(chip);
         });
     }
@@ -46,49 +40,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const activeModels = LLM_DATA.models.filter(m => selectedModelIds.includes(m.id));
         
-        // Şirket Başlıkları
         let companyHTML = `<tr><th rowspan="2" style="width: 180px;">Benchmark</th>`;
         LLM_DATA.companies.forEach(company => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             if (companyActiveModels.length > 0) {
-                companyHTML += `
-                    <th colspan="${companyActiveModels.length}" class="company-header" style="color: ${company.color}">
-                        ${company.name.toUpperCase()}
-                    </th>
-                `;
+                companyHTML += `<th colspan="${companyActiveModels.length}" class="company-header" style="color: ${company.color}">${company.name.toUpperCase()}</th>`;
             }
         });
         companyHTML += `</tr>`;
 
-        // Model Detay Başlıkları
         let modelHTML = `<tr>`;
         LLM_DATA.companies.forEach(company => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             companyActiveModels.forEach(model => {
-                modelHTML += `
-                    <th style="width: calc((100% - 180px) / ${activeModels.length});">
-                        <div class="model-header">
-                            <span class="name" style="color: ${model.color}">${model.name}</span>
-                            <span class="date">${model.date}</span>
-                        </div>
-                    </th>
-                `;
+                modelHTML += `<th style="width: calc((100% - 180px) / ${activeModels.length});"><div class="model-header"><span class="name" style="color: ${model.color}">${model.name}</span><span class="date">${model.date}</span></div></th>`;
             });
         });
         modelHTML += `</tr>`;
 
         tableHead.innerHTML = companyHTML + modelHTML;
 
-        // Body
         let bodyHTML = '';
         LLM_DATA.categories.forEach(category => {
-            const visibleBenchmarks = category.benchmarks.filter(bench => {
-                return activeModels.some(model => bench.values[model.id] !== undefined && bench.values[model.id] !== null);
-            });
+            const visibleBenchmarks = category.benchmarks.filter(bench => activeModels.some(model => bench.values[model.id] !== undefined && bench.values[model.id] !== null));
 
             if (visibleBenchmarks.length > 0) {
                 bodyHTML += `<tr class="category-row"><td colspan="${activeModels.length + 1}">${category.name}</td></tr>`;
-
                 visibleBenchmarks.forEach(bench => {
                     bodyHTML += `<tr><td data-tooltip="${bench.tooltip || ''}">${bench.name}</td>`;
                     
@@ -101,11 +78,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             const val = bench.values[model.id];
                             const displayVal = val || '<span class="na-value">—</span>';
                             
-                            let classes = 'value-cell';
-                            if (model.id === bestId && model.id === 'mythos') classes += ' best-mythos';
-                            else if (model.id === bestExcludingMythosId) classes += ' best-value';
+                            let content = displayVal;
+                            if (val) {
+                                if (model.id === bestId && model.id === 'mythos') {
+                                    content = `<span class="best-mythos-pill">${displayVal}</span>`;
+                                } else if (model.id === bestExcludingMythosId) {
+                                    content = `<span class="best-value-pill">${displayVal}</span>`;
+                                }
+                            }
                             
-                            bodyHTML += `<td class="${classes}">${displayVal}</td>`;
+                            bodyHTML += `<td class="value-cell">${content}</td>`;
                         });
                     });
                     bodyHTML += `</tr>`;
@@ -148,9 +130,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const chips = modelFiltersContainer.querySelectorAll('.filter-chip');
         chips.forEach(chip => {
             const input = chip.querySelector('input');
-            const isActive = selectedModelIds.includes(input.value);
-            input.checked = isActive;
-            if (isActive) chip.classList.add('active');
+            input.checked = selectedModelIds.includes(input.value);
+            if (input.checked) chip.classList.add('active');
             else chip.classList.remove('active');
         });
         renderTable();
