@@ -102,7 +102,7 @@ thead {
 }
 
 thead th {
-    background: #0f0f11;
+    background: var(--table-header-bg);
     /* Prevent transparent lines when scrolling */
     box-shadow: 0 1px 0 var(--border-dim);
 }
@@ -126,7 +126,7 @@ thead th:first-child {
 .model-header .name { font-size: 13px; font-weight: 700; text-align: center; line-height: 1.2; }
 .model-header .date { font-size: 11px; color: var(--text-muted); text-align: center; white-space: nowrap; }
 
-.category-row td { background: #18181b; text-align: left; color: var(--accent-blue); font-size: 14px; font-weight: 700; padding: 12px 20px; }
+.category-row td { background: var(--category-bg); text-align: left; color: var(--accent-blue); font-size: 14px; font-weight: 700; padding: 12px 20px; }
 
 /* AKILLI ÇERÇEVE: Sadece metnin etrafına, hücrenin tamamına değil */
 .value-cell {
@@ -166,7 +166,7 @@ thead th:first-child {
     cursor: pointer; 
     transition: 0.2s;
 }
-.filter-chip.active { background: #fff; color: #000; border-color: #fff; }
+.filter-chip.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); }
 .filter-chip input { display: none; }
 
 footer { margin-top: 60px; text-align: center; color: var(--text-muted); font-size: 13px; padding-bottom: 40px; }
