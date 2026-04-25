@@ -149,11 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateUI();
     });
 
-    document.getElementById('reset-default').addEventListener('click', () => {
-        selectedModelIds = LLM_DATA.models.filter(m => m.id !== 'mythos').map(m => m.id);
-        updateUI();
-    });
-
     function updateUI() {
         const chips = modelFiltersContainer.querySelectorAll('.filter-chip');
         chips.forEach(chip => {
