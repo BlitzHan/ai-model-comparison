@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Model Karşılaştırma - Dinamik Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div class="badge">AI MODEL KARŞILAŞTIRMA</div>
+                <h1>LLM Başarım Analizi</h1>
+                <p class="subtitle">Karşılaştırmak istediğiniz modelleri seçin. Veri bulunmayan satırlar otomatik olarak gizlenir.</p>
+                <div class="attribution">
+                    Temel veri kaynağı: <a href="https://prof-oguzergin.github.io/ai-model-timeline/" target="_blank">Prof. Dr. Oğuz Ergin</a>
+                </div>
+            </div>
+            
+            <div class="model-selector-card">
+                <h3>Modelleri Seçin</h3>
+                <div id="model-filters" class="model-filters">
+                    <!-- JS ile doldurulacak -->
+                </div>
+                <div class="selector-actions">
+                    <button id="select-all" class="btn-secondary">Hepsini Seç</button>
+                    <button id="clear-selection" class="btn-secondary">Temizle</button>
+                    <button id="reset-default" class="btn-primary">Varsayılan (Opus 4.7 & Gemini 3.1)</button>
+                </div>
+            </div>
+        </header>
+
+        <main id="table-container">
+            <!-- Dinamik Tablo Buraya Gelecek -->
+            <div id="empty-state" class="hidden">
+                <p>Lütfen karşılaştırmak için en az bir model seçin.</p>
+            </div>
+            <table id="comparison-table">
+                <thead id="table-head"></thead>
+                <tbody id="table-body"></tbody>
+            </table>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <p>&copy; 2026 - AI Model Karşılaştırma Platformu</p>
+                <p>Bu çalışma Prof. Dr. Oğuz Ergin'in "ai-model-timeline" projesinden esinlenerek ve atıf yapılarak geliştirilmiştir.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
