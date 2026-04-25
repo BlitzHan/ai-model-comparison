@@ -71,12 +71,10 @@ thead th:first-child, tbody td:first-child {
 /* AKILLI ÇERÇEVE: Sadece metnin etrafına, hücrenin tamamına değil */
 .value-cell {
     font-family: var(--font-mono);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .best-value-pill {
+    display: inline-block;
     padding: 2px 8px;
     border: 1.5px solid var(--accent-blue);
     border-radius: 6px;
@@ -86,6 +84,7 @@ thead th:first-child, tbody td:first-child {
 }
 
 .best-mythos-pill {
+    display: inline-block;
     padding: 2px 8px;
     border: 2px solid var(--accent-mythos);
     border-radius: 6px;
