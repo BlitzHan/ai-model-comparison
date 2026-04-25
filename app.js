@@ -128,7 +128,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 container.innerHTML = `
                     <div class="bar-value" style="color: ${model.color}">${wins}</div>
-                    <div class="bar" style="height: ${percentage}%; background-color: ${model.color}"></div>
+                    <div class="bar-wrapper" style="flex: 1; width: 100%; display: flex; align-items: flex-end; margin-bottom: 8px;">
+                        <div class="bar" style="height: ${percentage}%; background-color: ${model.color}"></div>
+                    </div>
                     <div class="bar-label">${model.name.replace(' ', '<br>')}</div>
                 `;
                 winChart.appendChild(container);
