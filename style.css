@@ -53,7 +53,7 @@ h1 { font-size: 40px; font-weight: 800; letter-spacing: -0.04em; }
 /* Tablo Yapısı */
 #table-container { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 16px; width: 100%; }
 table { width: 100%; table-layout: fixed; border-collapse: collapse; }
-th, td { padding: 12px 6px; border-bottom: 1px solid var(--border-dim); font-size: 11px; text-align: center; }
+th, td { padding: 8px 4px; border-bottom: 1px solid var(--border-dim); font-size: 11px; text-align: center; }
 
 thead {
     position: sticky;
@@ -86,7 +86,7 @@ thead th:first-child {
 .model-header .name { font-size: 11px; font-weight: 700; text-align: center; line-height: 1.2; }
 .model-header .date { font-size: 9px; color: var(--text-muted); text-align: center; white-space: nowrap; }
 
-.category-row td { background: #18181b; text-align: left; color: var(--accent-blue); font-weight: 700; padding: 10px 20px; }
+.category-row td { background: #18181b; text-align: left; color: var(--accent-blue); font-weight: 700; padding: 8px 20px; }
 
 /* AKILLI ÇERÇEVE: Sadece metnin etrafına, hücrenin tamamına değil */
 .value-cell {
