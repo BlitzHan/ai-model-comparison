@@ -166,7 +166,7 @@ thead th:first-child {
     cursor: pointer; 
     transition: 0.2s;
 }
-.filter-chip.active { background: var(--text-main); color: var(--bg-main); border-color: var(--text-main); }
+.filter-chip.active { background: var(--chip-bg-active); color: var(--chip-text-active); border-color: var(--chip-border-active); font-weight: 600; }
 .filter-chip input { display: none; }
 
 footer { margin-top: 60px; text-align: center; color: var(--text-muted); font-size: 13px; padding-bottom: 40px; }
@@ -292,6 +292,11 @@ footer { margin-top: 60px; text-align: center; color: var(--text-muted); font-si
     font-weight: 600;
     text-align: center;
     margin-top: 16px;
+    color: var(--text-muted);
+}
+-muted);
+}
+gin-top: 16px;
     color: var(--text-muted);
 }
 -muted);
