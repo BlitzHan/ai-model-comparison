@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const emptyState = document.getElementById('empty-state');
     const comparisonTable = document.getElementById('comparison-table');
 
-    // Varsayılan: Mythos Preview hariç hepsi
-    let selectedModelIds = LLM_DATA.models.filter(m => m.id !== 'mythos').map(m => m.id);
+    // Varsayılan: Hepsi seçili
+    let selectedModelIds = LLM_DATA.models.map(m => m.id);
 
     function initFilters() {
         modelFiltersContainer.innerHTML = '';
@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const activeModels = LLM_DATA.models.filter(m => selectedModelIds.includes(m.id));
         
-        // 1. Şirket Başlıklarını Hazırla (Colspan hesapla)
-        let companyHTML = `<tr><th rowspan="2">Benchmark</th>`;
+        // Şirket Başlıkları
+        let companyHTML = `<tr><th rowspan="2" style="width: 180px;">Benchmark</th>`;
         LLM_DATA.companies.forEach(company => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             if (companyActiveModels.length > 0) {
@@ -60,13 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         companyHTML += `</tr>`;
 
-        // 2. Model Detay Başlıkları
+        // Model Detay Başlıkları
         let modelHTML = `<tr>`;
         LLM_DATA.companies.forEach(company => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             companyActiveModels.forEach(model => {
                 modelHTML += `
-                    <th>
+                    <th style="width: calc((100% - 180px) / ${activeModels.length});">
                         <div class="model-header">
                             <span class="name" style="color: ${model.color}">${model.name}</span>
                             <span class="date">${model.date}</span>
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         tableHead.innerHTML = companyHTML + modelHTML;
 
-        // 3. Body Render
+        // Body
         let bodyHTML = '';
         LLM_DATA.categories.forEach(category => {
             const visibleBenchmarks = category.benchmarks.filter(bench => {
@@ -92,7 +92,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 visibleBenchmarks.forEach(bench => {
                     bodyHTML += `<tr><td data-tooltip="${bench.tooltip || ''}">${bench.name}</td>`;
                     
-                    // Mythos ve Diğerleri için en iyileri bul
                     const bestId = findBestModel(bench, activeModels);
                     const bestExcludingMythosId = findBestModel(bench, activeModels.filter(m => m.id !== 'mythos'));
 
@@ -103,11 +102,8 @@ document.addEventListener('DOMContentLoaded', () => {
                             const displayVal = val || '<span class="na-value">—</span>';
                             
                             let classes = 'value-cell';
-                            if (model.id === bestId && model.id === 'mythos') {
-                                classes += ' best-mythos';
-                            } else if (model.id === bestExcludingMythosId) {
-                                classes += ' best-value';
-                            }
+                            if (model.id === bestId && model.id === 'mythos') classes += ' best-mythos';
+                            else if (model.id === bestExcludingMythosId) classes += ' best-value';
                             
                             bodyHTML += `<td class="${classes}">${displayVal}</td>`;
                         });
@@ -128,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function findBestModel(bench, modelsToCompare) {
         let maxVal = -1;
         let bestId = null;
-
         modelsToCompare.forEach(model => {
             const val = parseValue(bench.values[model.id]);
             if (val > maxVal) {
