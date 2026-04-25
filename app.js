@@ -69,8 +69,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 visibleBenchmarks.forEach(bench => {
                     bodyHTML += `<tr><td data-tooltip="${bench.tooltip || ''}">${bench.name}</td>`;
                     
-                    const bestId = findBestModel(bench, activeModels);
-                    const bestExcludingMythosId = findBestModel(bench, activeModels.filter(m => m.id !== 'mythos'));
+                    const maxVal = findMaxValue(bench, activeModels);
+                    const maxExcludingMythos = findMaxValue(bench, activeModels.filter(m => m.id !== 'mythos'));
 
                     LLM_DATA.companies.forEach(company => {
                         const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
@@ -79,10 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             const displayVal = val || '<span class="na-value">—</span>';
                             
                             let content = displayVal;
-                            if (val) {
-                                if (model.id === bestId && model.id === 'mythos') {
+                            const numVal = parseValue(val);
+                            
+                            if (val && numVal !== -1) {
+                                if (model.id === 'mythos' && numVal === maxVal && maxVal > -1) {
                                     content = `<span class="best-mythos-pill">${displayVal}</span>`;
-                                } else if (model.id === bestExcludingMythosId) {
+                                } else if (model.id !== 'mythos' && numVal === maxExcludingMythos && maxExcludingMythos > -1) {
                                     content = `<span class="best-value-pill">${displayVal}</span>`;
                                 }
                             }
@@ -99,21 +101,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function parseValue(val) {
         if (!val || typeof val !== 'string') return -1;
-        let clean = val.replace('%', '').replace('$', '').replace('~', '').replace(',', '');
+        let clean = val;
+        if (clean.includes('$')) {
+            clean = clean.replace(/\./g, '');
+        }
+        clean = clean.replace(/[%$~,]/g, '');
         return parseFloat(clean);
     }
 
-    function findBestModel(bench, modelsToCompare) {
+    function findMaxValue(bench, modelsToCompare) {
         let maxVal = -1;
-        let bestId = null;
         modelsToCompare.forEach(model => {
             const val = parseValue(bench.values[model.id]);
             if (val > maxVal) {
                 maxVal = val;
-                bestId = model.id;
             }
         });
-        return bestId;
+        return maxVal;
     }
 
     document.getElementById('select-all').addEventListener('click', () => {
