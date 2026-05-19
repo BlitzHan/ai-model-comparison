@@ -49,6 +49,7 @@ const TRANSLATIONS = {
         "23 Nis 26": "Apr 23, 26",
         "5 Mar 26": "Mar 5, 26",
         "19 May 26": "May 19, 26",
+        "17 Ara 25": "Dec 17, 25",
         "19 Şub 26": "Feb 19, 26",
         "18 Kas 25": "Nov 18, 25",
         "24 Nis 26": "Apr 24, 26",

@@ -57,6 +57,13 @@ const LLM_DATA = {
             "color": "#60a5fa"
         },
         {
+            "id": "gemini3flash",
+            "name": "Gemini 3 Flash",
+            "company": "Google",
+            "date": "17 Ara 25",
+            "color": "#93c5fd"
+        },
+        {
             "id": "gemini31",
             "name": "Gemini 3.1 Pro",
             "company": "Google",
@@ -130,6 +137,7 @@ const LLM_DATA = {
             "name": "Google",
             "ids": [
                 "gemini35flash",
+                "gemini3flash",
                 "gemini31",
                 "gemini3"
             ],
@@ -188,6 +196,7 @@ const LLM_DATA = {
                         "gpt55": "58.6%",
                         "gpt54": "57.7%",
                         "gemini35flash": "55.1%",
+                        "gemini3flash": "49.6%",
                         "gemini31": "54.2%",
                         "gemini3": "43.3%",
                         "deepseek": "55.4%"
@@ -238,6 +247,7 @@ const LLM_DATA = {
                         "opus47": "66.1%",
                         "gpt55": "78.2%",
                         "gemini35flash": "76.2%",
+                        "gemini3flash": "58.0%",
                         "gemini31": "70.3%"
                     }
                 },
@@ -312,6 +322,7 @@ const LLM_DATA = {
                         "gpt55": "41.4%",
                         "gpt54": "42.7%",
                         "gemini35flash": "40.2%",
+                        "gemini3flash": "33.7%",
                         "gemini31": "44.4%",
                         "gemini3": "37.5%",
                         "deepseek": "37.7%",
@@ -437,6 +448,7 @@ const LLM_DATA = {
                         "gpt55": "84.6%",
                         "gpt54": "74.0%",
                         "gemini35flash": "72.1%",
+                        "gemini3flash": "33.6%",
                         "gemini31": "77.1%",
                         "gemini3": "31.1%",
                         "deepseek32": "4.0%",
@@ -478,6 +490,7 @@ const LLM_DATA = {
                         "gpt55": "81.2%",
                         "sonnet46": "74.5%",
                         "gemini35flash": "83.6%",
+                        "gemini3flash": "81.2%",
                         "gemini31": "80.5%",
                         "gemini3": "81.0%"
                     }
@@ -491,6 +504,7 @@ const LLM_DATA = {
                         "sonnet46": "6.7%",
                         "gpt55": "36.2%",
                         "gemini35flash": "33.6%",
+                        "gemini3flash": "0.0%",
                         "gemini31": "26.5%"
                     }
                 },
@@ -516,6 +530,7 @@ const LLM_DATA = {
                         "sonnet46": "72.4%",
                         "gpt55": "84.1%",
                         "gemini35flash": "84.2%",
+                        "gemini3flash": "80.3%",
                         "gemini31": "83.3%"
                     }
                 },
@@ -544,6 +559,7 @@ const LLM_DATA = {
                         "sonnet46": "84.9%",
                         "gpt55": "94.8%",
                         "gemini35flash": "77.3%",
+                        "gemini3flash": "67.2%",
                         "gemini31": "84.9%"
                     }
                 },
@@ -553,6 +569,7 @@ const LLM_DATA = {
                     "tooltip": "MRCR v2 8-iğne uzun bağlam geri çağırma testi; 1M noktasal ölçüm.",
                     "values": {
                         "gemini35flash": "26.6%",
+                        "gemini3flash": "22.1%",
                         "gemini31": "26.3%"
                     }
                 },
@@ -611,6 +628,7 @@ const LLM_DATA = {
                         "gpt55": "78.7%",
                         "gpt54": "75.0%",
                         "gemini35flash": "78.4%",
+                        "gemini3flash": "65.1%",
                         "gemini31": "76.2%"
                     }
                 },
@@ -641,6 +659,7 @@ const LLM_DATA = {
                         "gpt55": "1769",
                         "gpt54": "1674",
                         "gemini35flash": "1656",
+                        "gemini3flash": "1204",
                         "gemini31": "1314",
                         "gemini3": "1195",
                         "deepseek": "1554"
@@ -658,6 +677,7 @@ const LLM_DATA = {
                         "gpt55": "75.3%",
                         "gpt54": "68.1%",
                         "gemini35flash": "83.6%",
+                        "gemini3flash": "62.0%",
                         "gemini31": "78.2%",
                         "gemini3": "54.1%",
                         "deepseek": "73.6%"
@@ -671,6 +691,7 @@ const LLM_DATA = {
                         "opus46": "47.2%",
                         "gpt55": "55.6%",
                         "gemini35flash": "56.5%",
+                        "gemini3flash": "49.4%",
                         "gemini31": "48.8%",
                         "deepseek": "51.8%"
                     }
@@ -696,6 +717,7 @@ const LLM_DATA = {
                         "sonnet46": "51.0%",
                         "gpt55": "51.8%",
                         "gemini35flash": "57.9%",
+                        "gemini3flash": "42.6%",
                         "gemini31": "43.0%"
                     }
                 },
