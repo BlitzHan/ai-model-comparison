@@ -50,6 +50,13 @@ const LLM_DATA = {
             "color": "#059669"
         },
         {
+            "id": "gemini35flash",
+            "name": "Gemini 3.5 Flash",
+            "company": "Google",
+            "date": "19 May 26",
+            "color": "#60a5fa"
+        },
+        {
             "id": "gemini31",
             "name": "Gemini 3.1 Pro",
             "company": "Google",
@@ -122,6 +129,7 @@ const LLM_DATA = {
         {
             "name": "Google",
             "ids": [
+                "gemini35flash",
                 "gemini31",
                 "gemini3"
             ],
@@ -179,6 +187,7 @@ const LLM_DATA = {
                         "opus46": "53.4%",
                         "gpt55": "58.6%",
                         "gpt54": "57.7%",
+                        "gemini35flash": "55.1%",
                         "gemini31": "54.2%",
                         "gemini3": "43.3%",
                         "deepseek": "55.4%"
@@ -219,6 +228,17 @@ const LLM_DATA = {
                         "gemini3": "56.9%",
                         "deepseek": "67.9%",
                         "deepseek32": "46.4%"
+                    }
+                },
+                {
+                    "id": "terminal_bench_2_1",
+                    "name": "Terminal-Bench 2.1",
+                    "tooltip": "Terminus-2 harness ile eylemci terminal kodlama görevleri.",
+                    "values": {
+                        "opus47": "66.1%",
+                        "gpt55": "78.2%",
+                        "gemini35flash": "76.2%",
+                        "gemini31": "70.3%"
                     }
                 },
                 {
@@ -291,6 +311,7 @@ const LLM_DATA = {
                         "sonnet46": "33.2%",
                         "gpt55": "41.4%",
                         "gpt54": "42.7%",
+                        "gemini35flash": "40.2%",
                         "gemini31": "44.4%",
                         "gemini3": "37.5%",
                         "deepseek": "37.7%",
@@ -413,8 +434,9 @@ const LLM_DATA = {
                         "opus46": "68.8%",
                         "opus45": "37.6%",
                         "sonnet46": "58.3%",
-                        "gpt55": "85.0%",
+                        "gpt55": "84.6%",
                         "gpt54": "74.0%",
+                        "gemini35flash": "72.1%",
                         "gemini31": "77.1%",
                         "gemini3": "31.1%",
                         "deepseek32": "4.0%",
@@ -451,10 +473,25 @@ const LLM_DATA = {
                     "name": "MMMU-Pro (Çok Modal)",
                     "tooltip": "Çok disiplinli çok kipli anlama (metin, görsel, çizelge).",
                     "values": {
+                        "opus47": "75.2%",
                         "opus46": "73.9%",
+                        "gpt55": "81.2%",
                         "sonnet46": "74.5%",
+                        "gemini35flash": "83.6%",
                         "gemini31": "80.5%",
                         "gemini3": "81.0%"
+                    }
+                },
+                {
+                    "id": "blueprint_bench_2",
+                    "name": "Blueprint-Bench 2",
+                    "tooltip": "Eylemci uzamsal akıl yürütme; normalize edilmiş skor.",
+                    "values": {
+                        "opus47": "24.5%",
+                        "sonnet46": "6.7%",
+                        "gpt55": "36.2%",
+                        "gemini35flash": "33.6%",
+                        "gemini31": "26.5%"
                     }
                 },
                 {
@@ -475,7 +512,11 @@ const LLM_DATA = {
                     "values": {
                         "mythos": "86.1%",
                         "opus47": "82.1%",
-                        "opus46": "69.1%"
+                        "opus46": "69.1%",
+                        "sonnet46": "72.4%",
+                        "gpt55": "84.1%",
+                        "gemini35flash": "84.2%",
+                        "gemini31": "83.3%"
                     }
                 },
                 {
@@ -494,6 +535,27 @@ const LLM_DATA = {
             "name": "UZUN BAĞLAM (1M Token)",
             "id": "context",
             "benchmarks": [
+                {
+                    "id": "mrcr_v2_8_needle_128k",
+                    "name": "MRCR v2 (8-needle, 128k)",
+                    "tooltip": "MRCR v2 8-iğne uzun bağlam geri çağırma testi; 128k ortalama.",
+                    "values": {
+                        "opus47": "59.3%",
+                        "sonnet46": "84.9%",
+                        "gpt55": "94.8%",
+                        "gemini35flash": "77.3%",
+                        "gemini31": "84.9%"
+                    }
+                },
+                {
+                    "id": "mrcr_v2_8_needle_1m",
+                    "name": "MRCR v2 (8-needle, 1M)",
+                    "tooltip": "MRCR v2 8-iğne uzun bağlam geri çağırma testi; 1M noktasal ölçüm.",
+                    "values": {
+                        "gemini35flash": "26.6%",
+                        "gemini31": "26.3%"
+                    }
+                },
                 {
                     "id": "mrcr_1m",
                     "name": "MRCR 1M",
@@ -547,7 +609,9 @@ const LLM_DATA = {
                         "opus45": "66.3%",
                         "sonnet46": "72.5%",
                         "gpt55": "78.7%",
-                        "gpt54": "75.0%"
+                        "gpt54": "75.0%",
+                        "gemini35flash": "78.4%",
+                        "gemini31": "76.2%"
                     }
                 },
                 {
@@ -571,10 +635,13 @@ const LLM_DATA = {
                     "name": "GDPval-AA (Elo)",
                     "tooltip": "Eylemci model değerlendirmesi; çok adımlı görev planlama ve API kullanımı.",
                     "values": {
+                        "opus47": "1753",
                         "opus46": "1619",
-                        "sonnet46": "1633",
+                        "sonnet46": "1676",
+                        "gpt55": "1769",
                         "gpt54": "1674",
-                        "gemini31": "1317",
+                        "gemini35flash": "1656",
+                        "gemini31": "1314",
                         "gemini3": "1195",
                         "deepseek": "1554"
                     }
@@ -584,13 +651,14 @@ const LLM_DATA = {
                     "name": "MCP-Atlas",
                     "tooltip": "8 ortamda LLM eylemcileri değerlendirmek için çok görevli sınav.",
                     "values": {
-                        "opus47": "77.3%",
+                        "opus47": "79.1%",
                         "opus46": "75.8%",
                         "opus45": "62.3%",
-                        "sonnet46": "61.3%",
+                        "sonnet46": "69.5%",
                         "gpt55": "75.3%",
                         "gpt54": "68.1%",
-                        "gemini31": "69.2%",
+                        "gemini35flash": "83.6%",
+                        "gemini31": "78.2%",
                         "gemini3": "54.1%",
                         "deepseek": "73.6%"
                     }
@@ -602,6 +670,7 @@ const LLM_DATA = {
                     "values": {
                         "opus46": "47.2%",
                         "gpt55": "55.6%",
+                        "gemini35flash": "56.5%",
                         "gemini31": "48.8%",
                         "deepseek": "51.8%"
                     }
@@ -616,6 +685,18 @@ const LLM_DATA = {
                         "gpt55": "60.0%",
                         "gpt54": "61.5%",
                         "gemini31": "59.7%"
+                    }
+                },
+                {
+                    "id": "finance_agent_v2",
+                    "name": "Finance Agent v2",
+                    "tooltip": "Finansal analiz ve karar alma için eylemci görevler.",
+                    "values": {
+                        "opus47": "51.5%",
+                        "sonnet46": "51.0%",
+                        "gpt55": "51.8%",
+                        "gemini35flash": "57.9%",
+                        "gemini31": "43.0%"
                     }
                 },
                 {
