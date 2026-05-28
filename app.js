@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             companyActiveModels.forEach(model => {
                 const displayDate = t(model.date);
-                modelHTML += `<th style="width: calc((100% - 180px) / ${activeModels.length});"><div class="model-header"><span class="name" style="color: ${model.color}">${model.name}</span><span class="date">${displayDate}</span></div></th>`;
+                modelHTML += `<th style="width: calc((100% - 180px) / ${activeModels.length}); min-width: 100px;"><div class="model-header"><span class="name" style="color: ${model.color}">${model.name}</span><span class="date">${displayDate}</span></div></th>`;
             });
         });
         modelHTML += `</tr>`;

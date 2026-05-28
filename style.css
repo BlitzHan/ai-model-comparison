@@ -91,7 +91,7 @@ h1 { font-size: 40px; font-weight: 800; letter-spacing: -0.04em; }
 }
 
 /* Tablo Yapısı */
-#table-container { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 16px; width: 100%; }
+#table-container { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 16px; width: 100%; overflow-x: auto; }
 table { width: 100%; table-layout: fixed; border-collapse: collapse; }
 th, td { padding: 8px 6px; border-bottom: 1px solid var(--border-dim); font-size: 14px; text-align: center; }
 
@@ -293,11 +293,4 @@ footer { margin-top: 60px; text-align: center; color: var(--text-muted); font-si
     text-align: center;
     margin-top: 16px;
     color: var(--text-muted);
-}
--muted);
-}
-gin-top: 16px;
-    color: var(--text-muted);
-}
--muted);
 }
