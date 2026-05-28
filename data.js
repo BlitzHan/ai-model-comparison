@@ -8,25 +8,32 @@ const LLM_DATA = {
             "color": "#a855f7"
         },
         {
+            "id": "opus48",
+            "name": "Opus 4.8",
+            "company": "Anthropic",
+            "date": "28 May 26",
+            "color": "#f97316"
+        },
+        {
             "id": "opus47",
             "name": "Opus 4.7",
             "company": "Anthropic",
             "date": "16 Nis 26",
-            "color": "#f97316"
+            "color": "#ea580c"
         },
         {
             "id": "opus46",
             "name": "Opus 4.6",
             "company": "Anthropic",
             "date": "5 Şub 26",
-            "color": "#ea580c"
+            "color": "#c2410c"
         },
         {
             "id": "opus45",
             "name": "Opus 4.5",
             "company": "Anthropic",
             "date": "24 Kas 25",
-            "color": "#c2410c"
+            "color": "#9a3412"
         },
         {
             "id": "sonnet46",
@@ -118,6 +125,7 @@ const LLM_DATA = {
             "name": "Anthropic",
             "ids": [
                 "mythos",
+                "opus48",
                 "opus47",
                 "opus46",
                 "opus45",
@@ -191,6 +199,7 @@ const LLM_DATA = {
                     "tooltip": "SWE-bench'in daha zor pro sürümü; gerçek yazılım mühendisliği görevleri.",
                     "values": {
                         "mythos": "77.8%",
+                        "opus48": "69.2%",
                         "opus47": "64.3%",
                         "opus46": "53.4%",
                         "gpt55": "58.6%",
@@ -244,6 +253,7 @@ const LLM_DATA = {
                     "name": "Terminal-Bench 2.1",
                     "tooltip": "Terminus-2 harness ile eylemci terminal kodlama görevleri.",
                     "values": {
+                        "opus48": "74.6%",
                         "opus47": "66.1%",
                         "gpt55": "78.2%",
                         "gemini35flash": "76.2%",
@@ -316,6 +326,7 @@ const LLM_DATA = {
                     "tooltip": "100'den fazla alanda uzmanlar tarafından yazılmış 3000 soru; mevcut yapay zekâları yenmek için tasarlandı.",
                     "values": {
                         "mythos": "56.8%",
+                        "opus48": "49.8%",
                         "opus47": "46.9%",
                         "opus46": "40.0%",
                         "sonnet46": "33.2%",
@@ -621,7 +632,8 @@ const LLM_DATA = {
                     "tooltip": "Simüle masaüstü işletim sisteminde gerçekçi bilgisayar kullanım görevleri.",
                     "values": {
                         "mythos": "79.6%",
-                        "opus47": "78.0%",
+                        "opus48": "83.4%",
+                        "opus47": "82.8%",
                         "opus46": "72.7%",
                         "opus45": "66.3%",
                         "sonnet46": "72.5%",
@@ -638,6 +650,7 @@ const LLM_DATA = {
                     "tooltip": "Python kod yorumlayıcı aracına erişimle Humanity's Last Exam.",
                     "values": {
                         "mythos": "64.7%",
+                        "opus48": "57.9%",
                         "opus47": "54.7%",
                         "opus46": "53.3%",
                         "sonnet46": "49.0%",
@@ -653,6 +666,7 @@ const LLM_DATA = {
                     "name": "GDPval-AA (Elo)",
                     "tooltip": "Eylemci model değerlendirmesi; çok adımlı görev planlama ve API kullanımı.",
                     "values": {
+                        "opus48": "1890",
                         "opus47": "1753",
                         "opus46": "1619",
                         "sonnet46": "1676",
@@ -713,6 +727,7 @@ const LLM_DATA = {
                     "name": "Finance Agent v2",
                     "tooltip": "Finansal analiz ve karar alma için eylemci görevler.",
                     "values": {
+                        "opus48": "53.9%",
                         "opus47": "51.5%",
                         "sonnet46": "51.0%",
                         "gpt55": "51.8%",
