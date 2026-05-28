@@ -99,6 +99,10 @@ thead {
     position: sticky;
     top: 0;
     z-index: 20;
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
 thead th {
@@ -116,6 +120,11 @@ thead th:first-child, tbody td:first-child {
     left: 0;
     z-index: 10;
     border-right: 1px solid var(--border-dim);
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
 }
 
 thead th:first-child {
