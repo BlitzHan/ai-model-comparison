@@ -1,6 +1,13 @@
 const LLM_DATA = {
     "models": [
         {
+            "id": "fable5",
+            "name": "Fable 5",
+            "company": "Anthropic",
+            "date": "9 Haz 26",
+            "color": "#7c3aed"
+        },
+        {
             "id": "mythos",
             "name": "Mythos Preview",
             "company": "Anthropic",
@@ -124,6 +131,7 @@ const LLM_DATA = {
         {
             "name": "Anthropic",
             "ids": [
+                "fable5",
                 "mythos",
                 "opus48",
                 "opus47",
@@ -198,6 +206,7 @@ const LLM_DATA = {
                     "name": "SWE-bench Pro",
                     "tooltip": "SWE-bench'in daha zor pro sürümü; gerçek yazılım mühendisliği görevleri.",
                     "values": {
+                        "fable5": "80.3%",
                         "mythos": "77.8%",
                         "opus48": "69.2%",
                         "opus47": "64.3%",
@@ -209,6 +218,16 @@ const LLM_DATA = {
                         "gemini31": "54.2%",
                         "gemini3": "43.3%",
                         "deepseek": "55.4%"
+                    }
+                },
+                {
+                    "id": "frontiercode_diamond",
+                    "name": "FrontierCode (Diamond)",
+                    "tooltip": "Sınır seviyesi zorlukta eylemci kodlama görevleri (Diamond alt kümesi, xhigh ayarı).",
+                    "values": {
+                        "fable5": "29.3%",
+                        "opus48": "13.4%",
+                        "gpt55": "5.7%"
                     }
                 },
                 {
@@ -251,14 +270,15 @@ const LLM_DATA = {
                 {
                     "id": "terminal_bench_2_1",
                     "name": "Terminal-Bench 2.1",
-                    "tooltip": "Terminus-2 harness ile eylemci terminal kodlama görevleri.",
+                    "tooltip": "Eylemci terminal kodlama görevleri (modeller kendi resmi CLI ajanlarıyla ölçülmüştür).",
                     "values": {
-                        "opus48": "74.6%",
+                        "fable5": "88.0%",
+                        "opus48": "82.7%",
                         "opus47": "66.1%",
-                        "gpt55": "78.2%",
+                        "gpt55": "83.4%",
                         "gemini35flash": "76.2%",
                         "gemini3flash": "58.0%",
-                        "gemini31": "70.3%"
+                        "gemini31": "70.7%"
                     }
                 },
                 {
@@ -325,6 +345,7 @@ const LLM_DATA = {
                     "name": "Humanity's Last Exam",
                     "tooltip": "100'den fazla alanda uzmanlar tarafından yazılmış 3000 soru; mevcut yapay zekâları yenmek için tasarlandı.",
                     "values": {
+                        "fable5": "59.0%",
                         "mythos": "56.8%",
                         "opus48": "49.8%",
                         "opus47": "46.9%",
@@ -338,6 +359,48 @@ const LLM_DATA = {
                         "gemini3": "37.5%",
                         "deepseek": "37.7%",
                         "grok4": "25.0%"
+                    }
+                },
+                {
+                    "id": "gdp_pdf",
+                    "name": "GDP.pdf",
+                    "tooltip": "Görsel bilgi işi görevleri; PDF tabanlı belgeler üzerinde araçsız çalışma.",
+                    "values": {
+                        "fable5": "29.8%",
+                        "opus48": "22.5%",
+                        "gpt55": "24.9%",
+                        "gemini31": "16.7%"
+                    }
+                },
+                {
+                    "id": "biomysterybench_hard",
+                    "name": "BioMysteryBench (hard)",
+                    "tooltip": "Biyoloji gizem vakaları; zor alt küme.",
+                    "values": {
+                        "fable5": "46.1%",
+                        "mythos": "29.6%",
+                        "opus48": "40.0%"
+                    }
+                },
+                {
+                    "id": "biomysterybench_human_solved",
+                    "name": "BioMysteryBench (human solved)",
+                    "tooltip": "Biyoloji gizem vakaları; insanlar tarafından çözülmüş alt küme.",
+                    "values": {
+                        "fable5": "83.9%",
+                        "mythos": "82.6%",
+                        "opus48": "80.4%"
+                    }
+                },
+                {
+                    "id": "healthbench_professional",
+                    "name": "HealthBench Professional",
+                    "tooltip": "Sağlık profesyonelleri tarafından hazırlanan tıbbi soru ve vaka değerlendirmeleri.",
+                    "values": {
+                        "fable5": "66.0%",
+                        "mythos": "64.7%",
+                        "opus48": "56.9%",
+                        "gpt55": "51.8%"
                     }
                 },
                 {
@@ -511,6 +574,8 @@ const LLM_DATA = {
                     "name": "Blueprint-Bench 2",
                     "tooltip": "Eylemci uzamsal akıl yürütme; normalize edilmiş skor.",
                     "values": {
+                        "fable5": "38.6%",
+                        "opus48": "14.5%",
                         "opus47": "24.5%",
                         "sonnet46": "6.7%",
                         "gpt55": "36.2%",
@@ -631,7 +696,8 @@ const LLM_DATA = {
                     "name": "OSWorld-Verified",
                     "tooltip": "Simüle masaüstü işletim sisteminde gerçekçi bilgisayar kullanım görevleri.",
                     "values": {
-                        "mythos": "79.6%",
+                        "fable5": "85.0%",
+                        "mythos": "85.4%",
                         "opus48": "83.4%",
                         "opus47": "82.8%",
                         "opus46": "72.7%",
@@ -649,6 +715,7 @@ const LLM_DATA = {
                     "name": "HLE (araçlı)",
                     "tooltip": "Python kod yorumlayıcı aracına erişimle Humanity's Last Exam.",
                     "values": {
+                        "fable5": "64.5%",
                         "mythos": "64.7%",
                         "opus48": "57.9%",
                         "opus47": "54.7%",
@@ -666,6 +733,7 @@ const LLM_DATA = {
                     "name": "GDPval-AA (Elo)",
                     "tooltip": "Eylemci model değerlendirmesi; çok adımlı görev planlama ve API kullanımı.",
                     "values": {
+                        "fable5": "1932",
                         "opus48": "1890",
                         "opus47": "1753",
                         "opus46": "1619",
@@ -708,6 +776,28 @@ const LLM_DATA = {
                         "gemini3flash": "49.4%",
                         "gemini31": "48.8%",
                         "deepseek": "51.8%"
+                    }
+                },
+                {
+                    "id": "automationbench",
+                    "name": "AutomationBench",
+                    "tooltip": "Araç kullanımı ve otomasyon iş akışlarını ölçen eylemci sınav.",
+                    "values": {
+                        "fable5": "17.4%",
+                        "opus48": "15.5%",
+                        "gpt55": "12.9%",
+                        "gemini31": "9.6%"
+                    }
+                },
+                {
+                    "id": "legal_agent_benchmark",
+                    "name": "Legal Agent Benchmark",
+                    "tooltip": "Hukuki araştırma, analiz ve belge işleme görevlerinde eylemci performans.",
+                    "values": {
+                        "fable5": "13.3%",
+                        "opus48": "10.4%",
+                        "gpt55": "2.1%",
+                        "gemini31": "0.0%"
                     }
                 },
                 {
@@ -795,6 +885,17 @@ const LLM_DATA = {
                         "opus46": "73.8%",
                         "gpt55": "81.8%",
                         "gpt54": "66.3%"
+                    }
+                },
+                {
+                    "id": "exploitbench",
+                    "name": "ExploitBench (Cap%)",
+                    "tooltip": "Gerçek dünya güvenlik açığı analiz ve istismar yetenek ölçümü (yetenek yüzdesi).",
+                    "values": {
+                        "fable5": "78.0%",
+                        "mythos": "69.0%",
+                        "opus48": "40.0%",
+                        "gpt55": "34.0%"
                     }
                 }
             ]
