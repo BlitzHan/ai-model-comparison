@@ -1,18 +1,18 @@
 const LLM_DATA = {
     "models": [
         {
-            "id": "fable5",
-            "name": "Fable 5",
-            "company": "Anthropic",
-            "date": "9 Haz 26",
-            "color": "#7c3aed"
-        },
-        {
             "id": "mythos",
             "name": "Mythos Preview",
             "company": "Anthropic",
             "date": "Nis 26",
             "color": "#a855f7"
+        },
+        {
+            "id": "fable5",
+            "name": "Fable 5",
+            "company": "Anthropic",
+            "date": "9 Haz 26",
+            "color": "#7c3aed"
         },
         {
             "id": "opus48",
@@ -131,8 +131,8 @@ const LLM_DATA = {
         {
             "name": "Anthropic",
             "ids": [
-                "fable5",
                 "mythos",
+                "fable5",
                 "opus48",
                 "opus47",
                 "opus46",

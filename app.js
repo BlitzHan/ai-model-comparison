@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const langToggleBtn = document.getElementById('lang-toggle');
 
     let selectedModelIds = LLM_DATA.models.map(m => m.id);
+
+    // Mythos ve Fable 5, diğer modellerden ayrı değerlendirilir:
+    // en iyi değer işaretlemesine ve birincilik sayısına dahil edilmezler.
+    const apexModelIds = ['mythos', 'fable5'];
     
     // Tema ve Dil Ayarları
     let currentLang = localStorage.getItem('lang') || 'tr';
@@ -90,7 +94,11 @@ document.addEventListener('DOMContentLoaded', () => {
         emptyState.classList.add('hidden');
 
         const activeModels = LLM_DATA.models.filter(m => selectedModelIds.includes(m.id));
-        
+
+        // Sabit sütun genişliği: table-layout fixed modunda min-width hücrelerde
+        // dikkate alınmadığı için tablonun toplam genişliği üzerinden zorlanır.
+        comparisonTable.style.minWidth = (180 + activeModels.length * 110) + 'px';
+
         let companyHTML = `<tr><th rowspan="2" style="width: 180px;">${t('benchmark')}</th>`;
         LLM_DATA.companies.forEach(company => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
@@ -105,7 +113,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
             companyActiveModels.forEach(model => {
                 const displayDate = t(model.date);
-                modelHTML += `<th style="width: calc((100% - 180px) / ${activeModels.length}); min-width: 100px;"><div class="model-header"><span class="name" style="color: ${model.color}">${model.name}</span><span class="date">${displayDate}</span></div></th>`;
+                modelHTML += `<th style="width: calc((100% - 180px) / ${activeModels.length});"><div class="model-header"><span class="name" style="color: ${model.color}">${model.name}</span><span class="date">${displayDate}</span></div></th>`;
             });
         });
         modelHTML += `</tr>`;
@@ -115,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let bodyHTML = '';
         let winCounts = {};
         
-        activeModels.filter(m => m.id !== 'mythos').forEach(m => winCounts[m.id] = 0);
+        activeModels.filter(m => !apexModelIds.includes(m.id)).forEach(m => winCounts[m.id] = 0);
 
         LLM_DATA.categories.forEach(category => {
             const visibleBenchmarks = category.benchmarks.filter(bench => activeModels.some(model => bench.values[model.id] !== undefined && bench.values[model.id] !== null));
@@ -127,7 +135,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     bodyHTML += `<tr><td data-tooltip="${tooltipText}">${bench.name}</td>`;
                     
                     const maxVal = findMaxValue(bench, activeModels);
-                    const maxExcludingMythos = findMaxValue(bench, activeModels.filter(m => m.id !== 'mythos'));
+                    const maxExcludingApex = findMaxValue(bench, activeModels.filter(m => !apexModelIds.includes(m.id)));
 
                     LLM_DATA.companies.forEach(company => {
                         const companyActiveModels = activeModels.filter(m => company.ids.includes(m.id));
@@ -139,9 +147,9 @@ document.addEventListener('DOMContentLoaded', () => {
                             const numVal = parseValue(val);
                             
                             if (val && numVal !== -1) {
-                                if (model.id === 'mythos' && numVal === maxVal && maxVal > -1) {
-                                    content = `<span class="best-mythos-pill">${displayVal}</span>`;
-                                } else if (model.id !== 'mythos' && numVal === maxExcludingMythos && maxExcludingMythos > -1) {
+                                if (apexModelIds.includes(model.id) && numVal === maxVal && maxVal > -1) {
+                                    content = `<span class="best-mythos-pill" style="border-color: ${model.color}; color: ${model.color}">${displayVal}</span>`;
+                                } else if (!apexModelIds.includes(model.id) && numVal === maxExcludingApex && maxExcludingApex > -1) {
                                     content = `<span class="best-value-pill">${displayVal}</span>`;
                                     winCounts[model.id]++;
                                 }
@@ -156,7 +164,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         tableBody.innerHTML = bodyHTML;
         
-        renderChart(winCounts, activeModels.filter(m => m.id !== 'mythos'));
+        renderChart(winCounts, activeModels.filter(m => !apexModelIds.includes(m.id)));
     }
 
     function renderChart(winCounts, models) {

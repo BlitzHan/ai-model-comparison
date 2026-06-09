@@ -140,6 +140,7 @@ thead th:first-child {
 /* AKILLI ÇERÇEVE: Sadece metnin etrafına, hücrenin tamamına değil */
 .value-cell {
     font-family: var(--font-mono);
+    white-space: nowrap;
 }
 
 .best-value-pill {
