@@ -91,7 +91,9 @@ h1 { font-size: 40px; font-weight: 800; letter-spacing: -0.04em; }
 }
 
 /* Tablo Yapısı */
-#table-container { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 16px; width: 100%; overflow-x: auto; }
+/* overflow-y: hidden şart — overflow-x tek başına dikeyi de "auto" yapar ve
+   gizli tooltip taşması yüzünden sayfa kaydırması tabloya kilitlenip takılır */
+#table-container { background: var(--bg-card); border: 1px solid var(--border-dim); border-radius: 16px; width: 100%; overflow-x: auto; overflow-y: hidden; overscroll-behavior-x: contain; }
 table { width: 100%; table-layout: fixed; border-collapse: collapse; }
 th, td { padding: 8px 6px; border-bottom: 1px solid var(--border-dim); font-size: 14px; text-align: center; }
 
