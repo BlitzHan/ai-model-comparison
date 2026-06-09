@@ -855,6 +855,7 @@ const LLM_DATA = {
                     "name": "Vending-Bench 2 ($)",
                     "tooltip": "Gerçek iş senaryolarında eylemci model performansını para kazanımıyla ölçer.",
                     "values": {
+                        "fable5": "$5.680",
                         "opus48": "$5.787",
                         "opus47": "$10.937",
                         "opus46": "$8.018",
