@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>F/P Model Bulucu - Zeka başına maliyet</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #09090b; --card: #121214; --border: #27272a; --muted: #a1a1aa; --text: #fafafa;
+    --soft: #18181b; --grid: #1f1f23;
+    --A: #d95926; --G: #3987e5; --O: #199e70;
+}
+[data-theme="light"] {
+    --bg: #f8fafc; --card: #ffffff; --border: #e2e8f0; --muted: #64748b; --text: #0f172a;
+    --soft: #f1f5f9; --grid: #eef2f6;
+    --A: #eb6834; --G: #2a78d6; --O: #1baf7a;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); overflow-x: hidden; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 16px 16px 60px; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 36px; }
+.top a { color: var(--muted); font-size: 13px; text-decoration: none; }
+.top a:hover { color: var(--text); }
+.btn { background: transparent; color: var(--text); border: 1px solid var(--border); padding: 6px 12px; border-radius: 6px; font: 500 12px Inter, sans-serif; cursor: pointer; }
+.btn:hover { background: var(--border); }
+header { margin-bottom: 28px; }
+.badge { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--muted); margin-bottom: 10px; }
+h1 { font-size: clamp(28px, 5vw, 40px); font-weight: 800; letter-spacing: -0.04em; text-wrap: balance; }
+.sub { color: var(--muted); margin-top: 10px; max-width: 68ch; line-height: 1.55; font-size: 15px; }
+.sub b { color: var(--text); font-weight: 600; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; margin-bottom: 16px; }
+h2 { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+.hint { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+/* Kontroller */
+.controls { display: flex; flex-wrap: wrap; gap: 20px 32px; align-items: flex-end; }
+.ctl { flex: 1 1 320px; }
+.ctl label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+.ctl output { font-size: 22px; font-weight: 800; color: var(--text); font-variant-numeric: tabular-nums; }
+input[type=range] { width: 100%; accent-color: var(--text); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+.chip { background: var(--soft); color: var(--muted); border: 1px solid var(--border); padding: 5px 10px; border-radius: 999px; font: 600 12px Inter, sans-serif; cursor: pointer; }
+.chip[aria-pressed=true] { color: var(--text); border-color: var(--muted); }
+.firm { display: inline-flex; align-items: center; gap: 7px; }
+.dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.chip[aria-pressed=false] .dot { opacity: .25; }
+
+/* Kazananlar */
+.picks { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+@media (max-width: 760px) { .picks { grid-template-columns: 1fr; } }
+.pick { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 18px 20px; }
+.pick.win { border-color: var(--text); }
+.pick .rank { font-size: 11px; font-weight: 700; letter-spacing: .08em; color: var(--muted); }
+.pick .name { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; margin: 8px 0 2px; display: flex; align-items: center; gap: 8px; }
+.pick.win .name { font-size: 26px; }
+.pick .eff { color: var(--muted); font-size: 13px; }
+.pick .ratio { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; margin-top: 14px; font-variant-numeric: tabular-nums; }
+.pick.win .ratio { font-size: 44px; }
+.pick .ratio small { font-size: 13px; font-weight: 500; color: var(--muted); letter-spacing: 0; }
+.stats { display: flex; gap: 18px; margin-top: 12px; font-size: 13px; color: var(--muted); flex-wrap: wrap; }
+.stats b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+.pick .vs { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 13px; color: var(--muted); line-height: 1.5; }
+.empty { color: var(--muted); padding: 24px; text-align: center; grid-column: 1 / -1; }
+
+/* Grafik */
+.chartbox { position: relative; margin-top: 12px; overflow-x: auto; }
+svg { display: block; width: 100%; min-width: 640px; height: auto; }
+svg text { font-family: Inter, sans-serif; fill: var(--muted); font-size: 11px; }
+svg .lbl { fill: var(--text); font-weight: 600; paint-order: stroke; stroke: var(--card); stroke-width: 4px; stroke-linejoin: round; }
+svg .axis-title { font-size: 12px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font-size: 12px; color: var(--muted); margin-top: 10px; }
+.legend i { display: inline-block; width: 18px; border-top: 2px solid var(--muted); vertical-align: middle; margin-right: 7px; }
+#tip { position: absolute; pointer-events: none; background: var(--soft); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; font-size: 12px; line-height: 1.6; min-width: 190px; box-shadow: 0 8px 24px rgba(0,0,0,.25); display: none; z-index: 5; }
+#tip .t { font-weight: 700; font-size: 13px; display: flex; align-items: center; gap: 7px; }
+#tip .r { display: flex; justify-content: space-between; gap: 16px; color: var(--muted); }
+#tip .r b { color: var(--text); font-variant-numeric: tabular-nums; }
+
+/* Tablo */
+.tablewrap { overflow-x: auto; margin-top: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 620px; }
+th, td { padding: 9px 10px; border-bottom: 1px solid var(--border); text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; }
+th:nth-child(2), td:nth-child(2) { text-align: left; }
+th { color: var(--muted); font-weight: 600; font-size: 12px; cursor: pointer; user-select: none; }
+th:hover { color: var(--text); }
+th[aria-sort] { color: var(--text); }
+td.n { color: var(--muted); }
+td .eff { color: var(--muted); }
+td.fp { font-weight: 700; }
+.tag { font-size: 10px; font-weight: 700; letter-spacing: .05em; border: 1px solid var(--border); color: var(--muted); border-radius: 4px; padding: 1px 5px; margin-left: 8px; }
+footer { color: var(--muted); font-size: 12px; line-height: 1.6; margin-top: 24px; }
+footer a { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <a href="index.html">← Benchmark karşılaştırması</a>
+        <button id="theme" class="btn">Açık Tema</button>
+    </div>
+
+    <header>
+        <div class="badge">F/P MODEL BULUCU</div>
+        <h1>1 dolara kaç zeka puanı?</h1>
+        <p class="sub">Her modelin <b>Intelligence Index</b> puanı, bir test görevini çözmenin ortalama maliyetine bölündü. Tek başına bu oran hep en ucuz modeli öne çıkarır; o yüzden önce <b>ihtiyacın olan en düşük zekayı</b> seç, oran o eşiğin üstündekiler arasında kazananı bulsun.</p>
+    </header>
+
+    <div class="card">
+        <div class="controls">
+            <div class="ctl">
+                <label for="min"><span>En az zeka puanı</span><output id="minOut">45</output></label>
+                <input type="range" id="min" min="0" max="62" step="1" value="45">
+                <div class="chips" id="presets"></div>
+            </div>
+            <div class="ctl">
+                <label><span>Firma</span></label>
+                <div class="chips" id="firms"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="picks" id="picks"></div>
+
+    <div class="card">
+        <h2>Zeka ve maliyet haritası</h2>
+        <p class="hint">Yukarı çıktıkça daha zeki, sola gittikçe daha ucuz. Çizginin üstündeki modeller "verimli sınır": aynı paraya daha zekisi yok. Çizginin sağında ve altında kalanlar için daha iyi bir seçenek var.</p>
+        <div class="chartbox">
+            <svg id="chart" viewBox="0 0 960 500" role="img" aria-label="Zeka puanı ve görev başı maliyet dağılım grafiği"></svg>
+            <div id="tip"></div>
+        </div>
+        <div class="legend">
+            <span class="firm"><span class="dot" style="background:var(--A)"></span>Anthropic</span>
+            <span class="firm"><span class="dot" style="background:var(--G)"></span>Google</span>
+            <span class="firm"><span class="dot" style="background:var(--O)"></span>OpenAI</span>
+            <span><i></i>Verimli sınır</span>
+            <span>Soluk noktalar: eşiğin altında</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Tüm sıralama</h2>
+        <p class="hint">Eşiği geçen modeller. Sütun başlığına tıklayarak sırala.</p>
+        <div class="tablewrap">
+            <table>
+                <thead><tr>
+                    <th data-k="rank">#</th>
+                    <th data-k="name">Model</th>
+                    <th data-k="iq">Zeka</th>
+                    <th data-k="cost">Görev maliyeti</th>
+                    <th data-k="fp">Puan / $</th>
+                    <th data-k="time">Süre (dk)</th>
+                </tr></thead>
+                <tbody id="rows"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <footer>
+        Veri: <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a>, Intelligence Index v5.0.1, 10 Kasım 2026 tarihinde alındı. Maliyet, bir Intelligence Index görevinin ağırlıklı ortalama dolar maliyetidir; süre aynı görevin dakika cinsinden çıkarım süresidir. Maliyeti yayınlanmamış modeller (Gemini 3.8 Flash low, Gemma ailesi, eski GPT sürümleri) listede yok. Parantez içindeki kademe modelin düşünme eforudur.
+    </footer>
+</div>
+
+<script>
+// [model, efor, firma, zeka, görev başı $, görev başı dk]
+const RAW = [
+["Claude Fable 5.2","max","A",65,26.54,46.4],["Claude Fable 5.2","xhigh","A",62,14.83,26.4],["Claude Fable 5.2","high","A",62,9.08,17.6],
+["Gemini 4 Carbon","high","G",60,7.76,26.5],["Claude Opus 5.5","max","A",59,10.04,25.1],["Gemini 4 Carbon","medium","G",58,6.59,23.5],
+["Claude Opus 5.5","xhigh","A",57,6.05,16.2],["GPT-6 Astra","max","O",57,6.24,23.0],["Claude Fable 5.2","medium","A",56,3.80,8.3],
+["GPT-6 Astra","xhigh","O",55,3.66,11.4],["GPT-6 Astra","high","O",55,3.24,9.9],["GPT-6.1 Sol","max","O",55,1.27,19.7],
+["Claude Sonnet 5.5","max","A",55,10.02,31.4],["Gemini 4 Carbon","low","G",54,7.19,21.3],["Claude Fable 5.2","low","A",54,3.10,6.5],
+["GPT-6.1 Sol","xhigh","O",52,0.76,9.2],["Claude Opus 5.5","high","A",52,3.46,9.5],["GPT-6 Astra","medium","O",52,2.73,7.0],
+["GPT-6.1 Terra","max","O",51,0.96,13.6],["Gemini 4 Argon","high","G",50,9.95,29.2],["GPT-6.1 Sol","high","O",50,0.59,6.4],
+["Claude Sonnet 5.5","xhigh","A",50,4.09,15.1],["Claude Opus 5.5","medium","A",48,2.45,7.1],["GPT-6.1 Sol","medium","O",46,0.36,3.8],
+["GPT-6.1 Terra","xhigh","O",45,0.40,6.0],["GPT-6 Astra","low","O",43,1.42,3.8],["GPT-6.1 Terra","high","O",42,0.26,4.0],
+["Claude Sonnet 5.5","high","A",42,1.64,7.0],["GPT-6.1 Terra","medium","O",38,0.17,2.6],["Claude Haiku 5.5","max","A",36,0.41,14.8],
+["GPT-6.1 Sol","low","O",35,0.16,1.7],["Claude Opus 5.5","low","A",35,0.98,3.0],["Claude Haiku 5.5","xhigh","A",35,0.25,9.6],
+["Gemini 3.8 Flash","high","G",31,7.77,14.6],["Claude Sonnet 5.5","medium","A",31,0.78,3.6],["GPT-6.1 Terra","düşünmesiz","O",31,0.23,2.3],
+["Gemini 3.8 Flash","medium","G",30,6.26,12.1],["Claude Haiku 5.5","high","A",30,0.16,6.5],["GPT-6.1 Terra","low","O",29,0.07,1.1],
+["GPT-6 Luna","max","O",28,0.15,12.0],["Claude Sonnet 5.5","low","A",26,0.51,2.6],["Claude Haiku 5.5","medium","A",25,0.09,4.0],
+["GPT-6 Luna","xhigh","O",23,0.10,7.1],["GPT-6 Luna","high","O",21,0.07,5.7],["Claude Haiku 5.5","low","A",19,0.04,2.2],
+["GPT-6 Luna","medium","O",18,0.04,3.3],["Gemini 3.5 Flash-Lite","","G",12,0.69,1.6],["GPT-6 Luna","low","O",10,0.01,0.6],
+["GPT-6 Luna","düşünmesiz","O",9,0.07,2.2],["gpt-oss-120b","high","O",4,0.35,7.8]
+];
+const FIRM = { A: "Anthropic", G: "Google", O: "OpenAI" };
+const M = RAW.map(([name, eff, firm, iq, cost, time], i) => ({ i, name, eff, firm, iq, cost, time, fp: iq / cost }));
+const TOP = M.reduce((a, b) => (b.iq > a.iq ? b : a));
+
+const state = { min: 45, firms: { A: true, G: true, O: true }, sort: "fp", dir: -1 };
+const $ = (id) => document.getElementById(id);
+const nf = (v, d = 0) => v.toLocaleString("tr-TR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const fpFmt = (v) => (v >= 100 ? nf(v) : nf(v, 1));
+const usd = (v) => "$" + nf(v, 2);
+const full = (m) => m.name + (m.eff ? ` <span class="eff">(${m.eff})</span>` : "");
+const dot = (f) => `<span class="dot" style="background:var(--${f})"></span>`;
+
+// Verimli sınır: daha ucuza daha zekisi olmayan modeller
+function frontier(list) {
+    const s = [...list].sort((a, b) => a.cost - b.cost || b.iq - a.iq);
+    const out = []; let best = -1;
+    for (const m of s) if (m.iq > best) { out.push(m); best = m.iq; }
+    return out;
+}
+
+// Grafik ölçekleri
+const W = 960, H = 500, L = 48, R = 24, T = 20, B = 46;
+const X0 = Math.log10(0.007), X1 = Math.log10(40);
+const x = (c) => L + ((Math.log10(c) - X0) / (X1 - X0)) * (W - L - R);
+const y = (v) => H - B - (v / 70) * (H - T - B);
+
+function render() {
+    const inFirm = M.filter((m) => state.firms[m.firm]);
+    const ok = inFirm.filter((m) => m.iq >= state.min);
+    const ranked = [...ok].sort((a, b) => b.fp - a.fp);
+    const fr = frontier(inFirm);
+    const frSet = new Set(fr.map((m) => m.i));
+    const win = ranked[0];
+
+    // Kazanan kartları
+    const titles = ["EN İYİ F/P", "2. SIRA", "3. SIRA"];
+    $("picks").innerHTML = ranked.length ? ranked.slice(0, 3).map((m, k) => `
+        <div class="pick ${k === 0 ? "win" : ""}">
+            <div class="rank">${titles[k]}</div>
+            <div class="name">${dot(m.firm)}${m.name}</div>
+            <div class="eff">${FIRM[m.firm]}${m.eff ? " · " + m.eff : ""}</div>
+            <div class="ratio">${fpFmt(m.fp)} <small>puan / $</small></div>
+            <div class="stats"><span>Zeka <b>${m.iq}</b></span><span>Görev <b>${usd(m.cost)}</b></span><span>Süre <b>${nf(m.time, 1)} dk</b></span></div>
+            ${k === 0 && m !== TOP ? `<div class="vs">En zeki model ${TOP.name} (${TOP.eff}) ile kıyas: zekasının <b style="color:var(--text)">%${nf((m.iq / TOP.iq) * 100)}</b> kadarı, maliyetinin <b style="color:var(--text)">%${nf((m.cost / TOP.cost) * 100, 1)}</b> kadarı.</div>` : ""}
+        </div>`).join("") : `<div class="pick empty">Bu eşiği geçen model yok. Eşiği düşür ya da bir firma daha seç.</div>`;
+
+    // Grafik
+    let s = "";
+    for (let v = 0; v <= 70; v += 10) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
+    for (const c of [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]) s += `<line x1="${x(c)}" x2="${x(c)}" y1="${T}" y2="${H - B}" stroke="var(--grid)"/><text x="${x(c)}" y="${H - B + 16}" text-anchor="middle">$${String(c).replace(".", ",")}</text>`;
+    s += `<text class="axis-title" x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle">Görev başı maliyet (logaritmik)</text>`;
+    s += `<text class="axis-title" x="${L - 34}" y="${T - 6}">Zeka puanı</text>`;
+    if (state.min > 0) s += `<line x1="${L}" x2="${W - R}" y1="${y(state.min)}" y2="${y(state.min)}" stroke="var(--muted)" stroke-dasharray="3 4"/><text x="${W - R}" y="${y(state.min) - 6}" text-anchor="end">eşik ${state.min}</text>`;
+    if (fr.length > 1) s += `<polyline fill="none" stroke="var(--muted)" stroke-width="2" stroke-linejoin="round" points="${fr.map((m) => x(m.cost) + "," + y(m.iq)).join(" ")}"/>`;
+    const draw = [...inFirm].sort((a, b) => (a.iq >= state.min) - (b.iq >= state.min));
+    for (const m of draw) {
+        const on = m.iq >= state.min;
+        s += `<circle cx="${x(m.cost)}" cy="${y(m.iq)}" r="${m === win ? 7 : 5}" fill="var(--${m.firm})" stroke="var(--card)" stroke-width="2" opacity="${on ? 1 : 0.28}"/>`;
+    }
+    if (win) s += `<circle cx="${x(win.cost)}" cy="${y(win.iq)}" r="12" fill="none" stroke="var(--text)" stroke-width="2"/>`;
+    // Sınırdaki modellerin etiketleri: sol üst boş bölgeye, üst üste binmeyecek şekilde
+    let prev = -99;
+    for (const m of [...fr].sort((a, b) => b.iq - a.iq)) {
+        if (m.iq < state.min && m !== win) continue;
+        const ly = Math.max(y(m.iq) - 6, prev + 14); prev = ly;
+        s += `<text class="lbl" x="${x(m.cost) - 10}" y="${ly}" text-anchor="end">${m.name.replace("Claude ", "").replace("Gemini 4 ", "")}${m.eff ? " " + m.eff : ""}</text>`;
+    }
+    $("chart").innerHTML = s;
+    $("chart")._pts = inFirm;
+
+    // Tablo
+    const rankOf = new Map(ranked.map((m, k) => [m.i, k + 1]));
+    const key = state.sort;
+    const val = (m) => (key === "rank" ? rankOf.get(m.i) : key === "name" ? m.name + m.eff : m[key]);
+    const rows = [...ok].sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : 0) * state.dir);
+    $("rows").innerHTML = rows.map((m) => `<tr>
+        <td class="n">${rankOf.get(m.i)}</td>
+        <td><span class="firm">${dot(m.firm)}<span>${full(m)}${frSet.has(m.i) ? '<span class="tag" title="Verimli sınırda: daha ucuza daha zekisi yok">SINIRDA</span>' : ""}</span></span></td>
+        <td>${m.iq}</td><td>${usd(m.cost)}</td><td class="fp">${fpFmt(m.fp)}</td><td>${nf(m.time, 1)}</td></tr>`).join("");
+    document.querySelectorAll("th").forEach((th) => {
+        if (th.dataset.k === key) th.setAttribute("aria-sort", state.dir > 0 ? "ascending" : "descending"); else th.removeAttribute("aria-sort");
+        th.textContent = th.textContent.replace(/ [↑↓]$/, "") + (th.dataset.k === key ? (state.dir > 0 ? " ↑" : " ↓") : "");
+    });
+
+    $("minOut").textContent = state.min === 0 ? "Hepsi" : state.min + "+";
+    document.querySelectorAll("#presets .chip").forEach((c) => c.setAttribute("aria-pressed", +c.dataset.v === state.min));
+    document.querySelectorAll("#firms .chip").forEach((c) => c.setAttribute("aria-pressed", state.firms[c.dataset.f]));
+}
+
+// Kontroller
+$("presets").innerHTML = [[0, "Hepsi"], [30, "Basit işler 30+"], [45, "Dengeli 45+"], [55, "Güçlü 55+"], [60, "Zirve 60+"]]
+    .map(([v, t]) => `<button class="chip" data-v="${v}">${t}</button>`).join("");
+$("firms").innerHTML = Object.entries(FIRM).map(([f, n]) => `<button class="chip firm" data-f="${f}">${dot(f)}${n}</button>`).join("");
+$("min").addEventListener("input", (e) => { state.min = +e.target.value; render(); });
+$("presets").addEventListener("click", (e) => { const c = e.target.closest(".chip"); if (!c) return; state.min = +c.dataset.v; $("min").value = state.min; render(); });
+$("firms").addEventListener("click", (e) => { const c = e.target.closest(".chip"); if (!c) return; state.firms[c.dataset.f] = !state.firms[c.dataset.f]; render(); });
+document.querySelector("thead").addEventListener("click", (e) => {
+    const k = e.target.dataset.k; if (!k) return;
+    if (state.sort === k) state.dir *= -1; else { state.sort = k; state.dir = k === "fp" || k === "iq" ? -1 : 1; }
+    render();
+});
+
+// İpucu kutusu: en yakın noktayı bul
+const svg = $("chart"), tip = $("tip");
+svg.addEventListener("pointermove", (e) => {
+    const r = svg.getBoundingClientRect(), k = W / r.width;
+    const px = (e.clientX - r.left) * k, py = (e.clientY - r.top) * k;
+    let best = null, bd = 24 * 24;
+    for (const m of svg._pts || []) { const d = (x(m.cost) - px) ** 2 + (y(m.iq) - py) ** 2; if (d < bd) { bd = d; best = m; } }
+    if (!best) { tip.style.display = "none"; return; }
+    tip.innerHTML = `<div class="t">${dot(best.firm)}${best.name}${best.eff ? " (" + best.eff + ")" : ""}</div>
+        <div class="r"><span>Zeka</span><b>${best.iq}</b></div><div class="r"><span>Görev maliyeti</span><b>${usd(best.cost)}</b></div>
+        <div class="r"><span>Puan / $</span><b>${fpFmt(best.fp)}</b></div><div class="r"><span>Süre</span><b>${nf(best.time, 1)} dk</b></div>`;
+    tip.style.display = "block";
+    const cx = x(best.cost) / k, cy = y(best.iq) / k, tw = tip.offsetWidth;
+    tip.style.left = Math.min(Math.max(cx + 14, 0), r.width - tw) - (cx + 14 + tw > r.width ? 28 + tw - (r.width - cx) + (r.width - cx - 14) : 0) + "px";
+    if (cx + 14 + tw > r.width) tip.style.left = Math.max(cx - tw - 14, 0) + "px";
+    tip.style.top = Math.max(cy - tip.offsetHeight - 10, 0) + "px";
+});
+svg.addEventListener("pointerleave", () => (tip.style.display = "none"));
+
+// Tema: ana sayfayla aynı anahtar
+let theme = "dark";
+try { theme = localStorage.getItem("theme") || "dark"; } catch (e) {}
+const applyTheme = () => { document.documentElement.setAttribute("data-theme", theme); $("theme").textContent = theme === "dark" ? "Açık Tema" : "Koyu Tema"; };
+$("theme").addEventListener("click", () => { theme = theme === "dark" ? "light" : "dark"; try { localStorage.setItem("theme", theme); } catch (e) {} applyTheme(); });
+applyTheme();
+render();
+</script>
+</body>
+</html>
