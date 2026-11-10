@@ -122,7 +122,7 @@ svg .lbl { font-family: var(--sans); fill: var(--ink); font-size: 12px; paint-or
 .keys { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; color: var(--muted); margin-top: 12px; align-items: center; }
 .keys span { display: inline-flex; align-items: center; gap: 8px; }
 .keys i { width: 16px; border-top: 1.5px solid var(--ink2); }
-#tip { position: absolute; pointer-events: none; background: var(--raise); border: 1px solid var(--hair2); border-radius: 8px; padding: 12px; font-size: 12px; line-height: 20px; min-width: 216px; display: none; z-index: 5; }
+#tip { position: fixed; left: 0; top: 0; max-width: calc(100vw - 16px); pointer-events: none; background: var(--raise); border: 1px solid var(--hair2); border-radius: 8px; padding: 12px; font-size: 12px; line-height: 20px; min-width: 216px; display: none; z-index: 5; }
 [data-theme="light"] #tip { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
 #tip .tt { font-weight: 500; font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 
@@ -423,13 +423,16 @@ function probe(e) {
     if (!best) { tip.style.display = "none"; return; }
     tip.innerHTML = `<div class="tt">${sw(best.firm)}${full(best)}</div>${line("Firma", FIRMS[best.firm])}${line("Puan / $", fpFmt(best.fp))}${line("Zeka", best.iq)}${line("Görev maliyeti", usd(best.cost))}${line("Süre", nf(best.time, 1) + " dk")}`;
     tip.style.display = "block";
-    const cx = sx(best.cost) / k + svg.offsetLeft, cy = sy(best.iq) / k + svg.offsetTop, tw = tip.offsetWidth, th = tip.offsetHeight;
-    tip.style.left = (cx + 16 + tw > svg.offsetLeft + r.width ? Math.max(cx - tw - 16, 0) : cx + 16) + "px";
-    tip.style.top = Math.max(cy - th - 12, 4) + "px";
+    // Kutu ekrana göre konumlanır ve her zaman görünür alanda kalır
+    const cx = r.left + sx(best.cost) / k, cy = r.top + sy(best.iq) / k, tw = tip.offsetWidth, th = tip.offsetHeight, vw = document.documentElement.clientWidth, vh = window.innerHeight;
+    const left = cx + 16 + tw <= vw - 8 ? cx + 16 : cx - 16 - tw, top = cy - th - 12 >= 8 ? cy - th - 12 : cy + 16;
+    tip.style.left = Math.min(Math.max(left, 8), vw - tw - 8) + "px";
+    tip.style.top = Math.min(Math.max(top, 8), vh - th - 8) + "px";
 }
 svg.addEventListener("pointermove", probe);
 svg.addEventListener("pointerdown", probe);
 svg.addEventListener("pointerleave", () => { tip.style.display = "none"; mark(null); });
+window.addEventListener("scroll", () => { tip.style.display = "none"; }, { passive: true });
 for (const id of ["rows", "bars"]) {
     $(id).addEventListener("pointerover", (e) => { const el = e.target.closest("[data-i]"); mark(el ? M[+el.dataset.i] : null); });
     $(id).addEventListener("pointerleave", () => mark(null));
