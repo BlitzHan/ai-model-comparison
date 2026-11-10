@@ -201,6 +201,75 @@ const LLM_DATA = {
             "hidden": true
         },
         {
+            "id": "kimik31pro",
+            "name": "Kimi K3.1 Pro",
+            "company": "Moonshot",
+            "date": "Eki 26",
+            "color": "#eab308"
+        },
+        {
+            "id": "kimik3",
+            "name": "Kimi K3",
+            "company": "Moonshot",
+            "date": "Tem 26",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
+            "id": "kimik26",
+            "name": "Kimi K2.6",
+            "company": "Moonshot",
+            "date": "Nis 26",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
+            "id": "glm53",
+            "name": "GLM 5.3",
+            "company": "Z.AI",
+            "date": "Ağu 26",
+            "color": "#a1a1aa"
+        },
+        {
+            "id": "glm52",
+            "name": "GLM 5.2",
+            "company": "Z.AI",
+            "date": "Haz 26",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
+            "id": "glm51",
+            "name": "GLM 5.1",
+            "company": "Z.AI",
+            "date": "Mar 26",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
+            "id": "qwen38max",
+            "name": "Qwen 3.8 Max",
+            "company": "Alibaba",
+            "date": "Ağu 26",
+            "color": "#f43f5e"
+        },
+        {
+            "id": "qwen37max",
+            "name": "Qwen 3.7 Max",
+            "company": "Alibaba",
+            "date": "May 26",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
+            "id": "qwen36plus",
+            "name": "Qwen 3.6 Plus",
+            "company": "Alibaba",
+            "date": "Nis 26",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
             "id": "deepseekv41flash",
             "name": "DeepSeek V4.1 Flash",
             "company": "DeepSeek",
@@ -237,6 +306,13 @@ const LLM_DATA = {
             "date": "Ara 24",
             "color": "#71717a",
             "hidden": true
+        },
+        {
+            "id": "minimaxm3",
+            "name": "MiniMax M3",
+            "company": "MiniMax",
+            "date": "Haz 26",
+            "color": "#14b8a6"
         },
         {
             "id": "grok47",
@@ -282,6 +358,43 @@ const LLM_DATA = {
             "name": "Grok 4",
             "company": "xAI",
             "date": "Tem 25",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
+            "id": "musewonderfull",
+            "name": "Muse Wonder Full",
+            "company": "Meta",
+            "date": "Eki 26",
+            "color": "#8b5cf6"
+        },
+        {
+            "id": "musewonder",
+            "name": "Muse Wonder",
+            "company": "Meta",
+            "date": "Eki 26",
+            "color": "#a78bfa"
+        },
+        {
+            "id": "musespark13",
+            "name": "Muse Spark 1.3",
+            "company": "Meta",
+            "date": "Eyl 26",
+            "color": "#c4b5fd"
+        },
+        {
+            "id": "musespark12",
+            "name": "Muse Spark 1.2",
+            "company": "Meta",
+            "date": "Ağu 26",
+            "color": "#71717a",
+            "hidden": true
+        },
+        {
+            "id": "musespark11",
+            "name": "Muse Spark 1.1",
+            "company": "Meta",
+            "date": "Tem 26",
             "color": "#71717a",
             "hidden": true
         }
@@ -332,15 +445,15 @@ const LLM_DATA = {
             "color": "#3b82f6"
         },
         {
-            "name": "DeepSeek",
+            "name": "Meta",
             "ids": [
-                "deepseekv41flash",
-                "deepseekv4pro0813",
-                "deepseekv4pro",
-                "deepseekv32",
-                "deepseekv3"
+                "musewonderfull",
+                "musewonder",
+                "musespark13",
+                "musespark12",
+                "musespark11"
             ],
-            "color": "#ef4444"
+            "color": "#8b5cf6"
         },
         {
             "name": "xAI",
@@ -353,6 +466,51 @@ const LLM_DATA = {
                 "grok4"
             ],
             "color": "#06b6d4"
+        },
+        {
+            "name": "Moonshot",
+            "ids": [
+                "kimik31pro",
+                "kimik3",
+                "kimik26"
+            ],
+            "color": "#eab308"
+        },
+        {
+            "name": "Alibaba",
+            "ids": [
+                "qwen38max",
+                "qwen37max",
+                "qwen36plus"
+            ],
+            "color": "#f43f5e"
+        },
+        {
+            "name": "DeepSeek",
+            "ids": [
+                "deepseekv41flash",
+                "deepseekv4pro0813",
+                "deepseekv4pro",
+                "deepseekv32",
+                "deepseekv3"
+            ],
+            "color": "#ef4444"
+        },
+        {
+            "name": "Z.AI",
+            "ids": [
+                "glm53",
+                "glm52",
+                "glm51"
+            ],
+            "color": "#a1a1aa"
+        },
+        {
+            "name": "MiniMax",
+            "ids": [
+                "minimaxm3"
+            ],
+            "color": "#14b8a6"
         }
     ],
     "categories": [
@@ -377,8 +535,10 @@ const LLM_DATA = {
                         "gpt54": "77.2%",
                         "gemini31pro": "80.6%",
                         "gemini3pro": "76.2%",
+                        "qwen36plus": "78.8%",
                         "deepseekv4pro": "80.6%",
                         "deepseekv3": "42.0%",
+                        "minimaxm3": "80.5%",
                         "grok4": "72.0%"
                     }
                 },
@@ -403,8 +563,12 @@ const LLM_DATA = {
                         "gemini35flash": "55.1%",
                         "gemini31pro": "54.2%",
                         "gemini3pro": "43.3%",
+                        "glm52": "62.1%",
+                        "qwen36plus": "56.6%",
                         "deepseekv4pro": "55.4%",
-                        "grok45": "64.7%"
+                        "minimaxm3": "59.0%",
+                        "grok45": "64.7%",
+                        "musespark11": "61.5%"
                     }
                 },
                 {
@@ -423,6 +587,7 @@ const LLM_DATA = {
                         "sonnet55": "90.3%",
                         "sonnet5": "78.3%",
                         "haiku55": "83.7%",
+                        "qwen36plus": "73.8%",
                         "deepseekv4pro": "76.2%",
                         "grok45": "78.0%"
                     }
@@ -464,8 +629,17 @@ const LLM_DATA = {
                         "gemini36flash": "49.0%",
                         "gemini35flash": "37.0%",
                         "gemini31pro": "12.0%",
+                        "kimik3": "69.0%",
+                        "glm53": "66.9%",
+                        "glm52": "44.0%",
+                        "qwen38max": "56.6%",
                         "grok46": "65.9%",
-                        "grok45": "54.0%"
+                        "grok45": "54.0%",
+                        "musewonderfull": "79.0%",
+                        "musewonder": "78.8%",
+                        "musespark13": "75.4%",
+                        "musespark12": "59.3%",
+                        "musespark11": "53.0%"
                     }
                 },
                 {
@@ -482,6 +656,7 @@ const LLM_DATA = {
                         "gpt54": "75.1%",
                         "gemini31pro": "68.5%",
                         "gemini3pro": "56.9%",
+                        "qwen36plus": "61.6%",
                         "deepseekv4pro": "67.9%",
                         "deepseekv32": "46.4%"
                     }
@@ -502,8 +677,12 @@ const LLM_DATA = {
                         "gemini37flash": "85.8%",
                         "gemini35flash": "76.2%",
                         "gemini31pro": "70.7%",
+                        "kimik3": "88.3%",
+                        "glm53": "88.2%",
                         "deepseekv41flash": "90.6%",
-                        "deepseekv4pro0813": "87.9%"
+                        "deepseekv4pro0813": "87.9%",
+                        "minimaxm3": "66.0%",
+                        "musespark11": "80.0%"
                     }
                 },
                 {
@@ -520,6 +699,7 @@ const LLM_DATA = {
                         "gpt56sol": "37.3%",
                         "gemini38flash": "19.1%",
                         "gemini37flash": "11.2%",
+                        "glm53": "41.8%",
                         "grok46": "20.3%",
                         "grok45": "12.4%"
                     }
@@ -541,9 +721,15 @@ const LLM_DATA = {
                         "gemini35flash": "39.4%",
                         "gemini31pro": "53.8%",
                         "gemini3pro": "41.7%",
+                        "kimik26": "43.9%",
+                        "glm52": "50.8%",
+                        "glm51": "43.2%",
+                        "qwen37max": "50.8%",
+                        "qwen36plus": "43.9%",
                         "deepseekv4pro": "46.2%",
                         "deepseekv32": "35.6%",
                         "deepseekv3": "6.8%",
+                        "minimaxm3": "42.4%",
                         "grok43": "37.9%",
                         "grok420": "37.9%",
                         "grok4": "37.9%"
@@ -558,6 +744,8 @@ const LLM_DATA = {
                         "opus5": "30.0%",
                         "opus48": "10.5%",
                         "gpt56sol": "22.4%",
+                        "kimik3": "7.1%",
+                        "glm53": "8.1%",
                         "grok46": "7.1%"
                     }
                 },
@@ -585,6 +773,8 @@ const LLM_DATA = {
                         "gpt55": "58.4%",
                         "gemini38flash": "69.2%",
                         "gemini37flash": "61.6%",
+                        "kimik3": "60.8%",
+                        "glm52": "55.0%",
                         "grok46": "70.8%"
                     }
                 },
@@ -595,6 +785,7 @@ const LLM_DATA = {
                     "values": {
                         "opus46": "88.8%",
                         "gemini31pro": "91.7%",
+                        "qwen36plus": "87.1%",
                         "deepseekv4pro": "93.5%",
                         "deepseekv32": "49.2%",
                         "deepseekv3": "40.5%",
@@ -641,15 +832,27 @@ const LLM_DATA = {
                         "gemini35flash": "92.1%",
                         "gemini31pro": "94.1%",
                         "gemini3pro": "90.8%",
+                        "kimik3": "93.5%",
+                        "kimik26": "91.1%",
+                        "glm53": "91.7%",
+                        "glm52": "89.5%",
+                        "glm51": "86.8%",
+                        "qwen38max": "92.7%",
+                        "qwen37max": "92.3%",
+                        "qwen36plus": "88.2%",
                         "deepseekv4pro0813": "92.8%",
                         "deepseekv4pro": "92.8%",
                         "deepseekv32": "84.0%",
                         "deepseekv3": "55.7%",
+                        "minimaxm3": "92.9%",
                         "grok46": "94.9%",
                         "grok45": "93.1%",
                         "grok43": "90.1%",
                         "grok420": "91.1%",
-                        "grok4": "87.7%"
+                        "grok4": "87.7%",
+                        "musespark13": "93.5%",
+                        "musespark12": "90.4%",
+                        "musespark11": "89.8%"
                     }
                 },
                 {
@@ -682,17 +885,32 @@ const LLM_DATA = {
                         "gemini35flash": "10.9%",
                         "gemini31pro": "17.7%",
                         "gemini3pro": "9.1%",
+                        "kimik31pro": "24.6%",
+                        "kimik3": "23.4%",
+                        "kimik26": "8.0%",
+                        "glm53": "19.1%",
+                        "glm52": "20.9%",
+                        "glm51": "4.6%",
+                        "qwen38max": "20.0%",
+                        "qwen37max": "13.4%",
+                        "qwen36plus": "2.9%",
                         "deepseekv41flash": "14.3%",
                         "deepseekv4pro0813": "18.0%",
                         "deepseekv4pro": "18.0%",
                         "deepseekv32": "2.9%",
                         "deepseekv3": "0.0%",
+                        "minimaxm3": "3.7%",
                         "grok47": "17.7%",
                         "grok46": "17.1%",
                         "grok45": "15.4%",
                         "grok43": "8.0%",
                         "grok420": "6.6%",
-                        "grok4": "2.0%"
+                        "grok4": "2.0%",
+                        "musewonderfull": "32.9%",
+                        "musewonder": "28.3%",
+                        "musespark13": "24.9%",
+                        "musespark12": "17.7%",
+                        "musespark11": "15.1%"
                     }
                 },
                 {
@@ -725,17 +943,32 @@ const LLM_DATA = {
                         "gemini35flash": "53.1%",
                         "gemini31pro": "58.7%",
                         "gemini3pro": "56.1%",
+                        "kimik31pro": "60.8%",
+                        "kimik3": "59.5%",
+                        "kimik26": "51.5%",
+                        "glm53": "59.0%",
+                        "glm52": "51.2%",
+                        "glm51": "44.8%",
+                        "qwen38max": "53.2%",
+                        "qwen37max": "49.5%",
+                        "qwen36plus": "40.7%",
                         "deepseekv41flash": "51.9%",
                         "deepseekv4pro0813": "51.0%",
                         "deepseekv4pro": "51.0%",
                         "deepseekv32": "38.9%",
                         "deepseekv3": "35.4%",
+                        "minimaxm3": "47.1%",
                         "grok47": "57.4%",
                         "grok46": "56.5%",
                         "grok45": "55.0%",
                         "grok43": "48.3%",
                         "grok420": "45.6%",
-                        "grok4": "45.7%"
+                        "grok4": "45.7%",
+                        "musewonderfull": "62.6%",
+                        "musewonder": "60.3%",
+                        "musespark13": "58.8%",
+                        "musespark12": "57.4%",
+                        "musespark11": "58.8%"
                     }
                 },
                 {
@@ -767,17 +1000,32 @@ const LLM_DATA = {
                         "gemini35flash": "41.3%",
                         "gemini31pro": "47.0%",
                         "gemini3pro": "37.2%",
+                        "kimik31pro": "52.5%",
+                        "kimik3": "46.9%",
+                        "kimik26": "37.5%",
+                        "glm53": "42.3%",
+                        "glm52": "41.1%",
+                        "glm51": "30.1%",
+                        "qwen38max": "43.1%",
+                        "qwen37max": "40.5%",
+                        "qwen36plus": "27.8%",
                         "deepseekv41flash": "39.2%",
                         "deepseekv4pro0813": "41.0%",
                         "deepseekv4pro": "41.0%",
                         "deepseekv32": "22.2%",
                         "deepseekv3": "3.6%",
+                        "minimaxm3": "39.0%",
                         "grok47": "43.1%",
                         "grok46": "42.9%",
                         "grok45": "42.7%",
                         "grok43": "37.2%",
                         "grok420": "32.2%",
-                        "grok4": "23.9%"
+                        "grok4": "23.9%",
+                        "musewonderfull": "53.6%",
+                        "musewonder": "50.1%",
+                        "musespark13": "48.7%",
+                        "musespark12": "45.5%",
+                        "musespark11": "46.2%"
                     }
                 },
                 {
@@ -867,6 +1115,7 @@ const LLM_DATA = {
                         "opus46": "89.1%",
                         "gpt54": "87.5%",
                         "gemini31pro": "91.0%",
+                        "qwen36plus": "88.5%",
                         "deepseekv4pro": "87.5%",
                         "deepseekv32": "81.2%",
                         "deepseekv3": "75.9%"
@@ -883,7 +1132,8 @@ const LLM_DATA = {
                         "opus45": "90.8%",
                         "sonnet46": "89.3%",
                         "gemini31pro": "92.6%",
-                        "gemini3pro": "91.8%"
+                        "gemini3pro": "91.8%",
+                        "qwen36plus": "89.5%"
                     }
                 },
                 {
@@ -927,9 +1177,15 @@ const LLM_DATA = {
                         "gemini35flash": "74.6%",
                         "gemini31pro": "77.1%",
                         "gemini3pro": "70.4%",
+                        "kimik26": "76.0%",
+                        "glm52": "73.3%",
+                        "glm51": "76.3%",
+                        "qwen37max": "80.5%",
+                        "qwen36plus": "75.2%",
                         "deepseekv4pro": "76.5%",
                         "deepseekv32": "60.7%",
                         "deepseekv3": "34.8%",
+                        "minimaxm3": "82.9%",
                         "grok43": "81.3%",
                         "grok420": "81.2%",
                         "grok4": "53.7%"
@@ -963,6 +1219,8 @@ const LLM_DATA = {
                         "gemini35flash": "92.5%",
                         "gemini31pro": "98.0%",
                         "gemini3pro": "75.0%",
+                        "kimik3": "94.5%",
+                        "glm52": "77.0%",
                         "deepseekv32": "57.0%",
                         "grok420": "89.5%",
                         "grok4": "66.6%"
@@ -990,6 +1248,8 @@ const LLM_DATA = {
                         "gemini35flash": "72.1%",
                         "gemini31pro": "77.1%",
                         "gemini3pro": "31.1%",
+                        "kimik3": "60.4%",
+                        "glm52": "22.8%",
                         "deepseekv32": "4.0%",
                         "grok420": "65.1%",
                         "grok4": "15.9%"
@@ -1030,7 +1290,8 @@ const LLM_DATA = {
                         "gpt54": "81.2%",
                         "gemini35flash": "83.6%",
                         "gemini31pro": "80.5%",
-                        "gemini3pro": "81.0%"
+                        "gemini3pro": "81.0%",
+                        "minimaxm3": "78.1%"
                     }
                 },
                 {
@@ -1104,6 +1365,10 @@ const LLM_DATA = {
                         "gpt54": "99.2%",
                         "gemini31pro": "98.3%",
                         "gemini3pro": "91.7%",
+                        "kimik26": "95.8%",
+                        "glm52": "99.2%",
+                        "glm51": "95.8%",
+                        "qwen36plus": "95.3%",
                         "deepseekv4pro": "95.8%",
                         "deepseekv32": "94.2%"
                     }
@@ -1127,6 +1392,8 @@ const LLM_DATA = {
                         "opus46": "96.2%",
                         "gpt54": "97.7%",
                         "gemini31pro": "94.7%",
+                        "glm52": "92.5%",
+                        "qwen36plus": "87.8%",
                         "deepseekv4pro": "95.2%"
                     }
                 },
@@ -1138,6 +1405,8 @@ const LLM_DATA = {
                         "opus46": "75.3%",
                         "gpt54": "91.4%",
                         "gemini31pro": "81.0%",
+                        "glm52": "91.0%",
+                        "qwen36plus": "83.8%",
                         "deepseekv4pro": "89.8%"
                     }
                 },
@@ -1262,7 +1531,8 @@ const LLM_DATA = {
                         "gpt54": "82.7%",
                         "gemini31pro": "85.9%",
                         "gemini3pro": "59.2%",
-                        "deepseekv4pro": "83.4%"
+                        "deepseekv4pro": "83.4%",
+                        "minimaxm3": "83.5%"
                     }
                 },
                 {
@@ -1281,7 +1551,9 @@ const LLM_DATA = {
                         "gpt55": "78.7%",
                         "gpt54": "75.0%",
                         "gemini35flash": "78.4%",
-                        "gemini31pro": "76.2%"
+                        "gemini31pro": "76.2%",
+                        "minimaxm3": "70.1%",
+                        "musespark11": "80.8%"
                     }
                 },
                 {
@@ -1339,7 +1611,11 @@ const LLM_DATA = {
                         "gemini35flash": "83.6%",
                         "gemini31pro": "78.2%",
                         "gemini3pro": "54.1%",
-                        "deepseekv4pro": "73.6%"
+                        "glm52": "76.8%",
+                        "qwen36plus": "74.1%",
+                        "deepseekv4pro": "73.6%",
+                        "minimaxm3": "74.2%",
+                        "musespark11": "88.1%"
                     }
                 },
                 {
@@ -1408,7 +1684,8 @@ const LLM_DATA = {
                         "opus47": "51.5%",
                         "gpt55": "51.8%",
                         "gemini35flash": "57.9%",
-                        "gemini31pro": "43.0%"
+                        "gemini31pro": "43.0%",
+                        "musespark11": "57.2%"
                     }
                 },
                 {
@@ -1465,8 +1742,14 @@ const LLM_DATA = {
                         "gemini35flash": "$5.396",
                         "gemini31pro": "$911",
                         "gemini3pro": "$5.478",
+                        "kimik3": "$5.165",
+                        "kimik26": "$6.205",
+                        "glm52": "$8.314",
+                        "glm51": "$5.634",
+                        "qwen36plus": "$5.115",
                         "deepseekv4pro": "$3.285",
                         "deepseekv32": "$1.034",
+                        "minimaxm3": "$2.158",
                         "grok45": "$3.887",
                         "grok420": "$4.663"
                     }
@@ -1493,6 +1776,7 @@ const LLM_DATA = {
                         "gpt55": "52.2%",
                         "gpt54": "58.7%",
                         "gemini31pro": "51.4%",
+                        "qwen36plus": "50.6%",
                         "deepseekv4pro": "48.2%",
                         "grok4": "44.4%"
                     }
@@ -1513,9 +1797,15 @@ const LLM_DATA = {
                         "gemini35flash": "1656",
                         "gemini31pro": "1314",
                         "gemini3pro": "1184",
+                        "kimik26": "1481",
+                        "glm52": "1524",
+                        "glm51": "1535",
+                        "qwen37max": "1300",
+                        "qwen36plus": "1352",
                         "deepseekv4pro": "1554",
                         "deepseekv32": "1197",
                         "deepseekv3": "409",
+                        "minimaxm3": "1670",
                         "grok43": "1098",
                         "grok420": "1168",
                         "grok4": "990"
@@ -1541,11 +1831,22 @@ const LLM_DATA = {
                         "gemini36flash": "959",
                         "gemini35flash": "873",
                         "gemini31pro": "466",
+                        "kimik3": "1504",
+                        "kimik26": "820",
+                        "glm53": "1524",
+                        "glm52": "1243",
+                        "glm51": "969",
+                        "qwen38max": "1398",
+                        "qwen37max": "918",
                         "deepseekv4pro0813": "1273",
                         "deepseekv4pro": "930",
+                        "minimaxm3": "1103",
                         "grok46": "1554",
                         "grok45": "1293",
-                        "grok43": "764"
+                        "grok43": "764",
+                        "musespark13": "1562",
+                        "musespark12": "1354",
+                        "musespark11": "868"
                     }
                 },
                 {
