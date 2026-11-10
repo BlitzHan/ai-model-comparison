@@ -98,7 +98,7 @@ h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
 
 svg { display: block; width: 100%; min-width: 680px; height: auto; touch-action: pan-y; }
 svg text { font-family: Inter, sans-serif; fill: var(--muted); font-size: 11px; }
-svg .lbl { fill: var(--ink2); font-size: 10.5px; paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; }
+svg .lbl { fill: var(--ink); font-size: 11px; font-weight: 500; paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; }
 svg .lbl.w { fill: var(--ink); font-weight: 600; }
 .keys { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); margin-top: 10px; align-items: center; }
 .keys span { display: inline-flex; align-items: center; gap: 6px; }
@@ -183,7 +183,7 @@ footer a { color: var(--ink2); }
 
     <section>
         <h2>Zeka ve maliyet haritası</h2>
-        <p class="note">Yalnızca eşiği geçen modeller; eksenler onlara göre yakınlaşır. Yukarısı daha zeki, solu daha ucuz. Çizgi verimli sınırdır: üstündekilerden daha ucuza daha zekisi yok.</p>
+        <p class="note">Yalnızca eşiği geçen modeller; eksenler onlara göre yakınlaşır. Yukarısı daha zeki, solu daha ucuz. Çizgi verimli sınırdır: üstündekilerden daha ucuza daha zekisi yok; adı yazanlar onlar. Soluk noktalar sınırın gerisinde kalanlar, üzerine gelince adı çıkar.</p>
         <div class="card box">
             <svg id="chart" viewBox="0 0 980 580" role="img" aria-label="Zeka puanı ve görev başı maliyet dağılım grafiği"></svg>
             <div id="tip"></div>
@@ -290,18 +290,20 @@ function drawScatter(ok, win) {
     s += `<text x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle">Görev başı maliyet (logaritmik)</text><text x="${L - 30}" y="${T - 10}">Zeka puanı</text>`;
     const fr = frontier(ok);
     if (fr.length > 1) s += `<polyline fill="none" stroke="var(--ink2)" stroke-width="1.5" stroke-linejoin="round" points="${fr.map((m) => sx(m.cost) + "," + sy(m.iq)).join(" ")}"/>`;
+    const frS0 = new Set(fr);
     for (const m of ok) {
         const hollow = m.firm === "I";
-        s += `<circle cx="${sx(m.cost)}" cy="${sy(m.iq)}" r="${m === win ? 7 : hollow ? 4.5 : 5}" fill="${hollow ? "var(--panel)" : `var(--c${m.firm})`}" stroke="${hollow ? "var(--cI)" : "var(--panel)"}" stroke-width="2"/>`;
+        s += `<circle cx="${sx(m.cost)}" cy="${sy(m.iq)}" r="${m === win ? 7 : hollow ? 4.5 : 5}" fill="${hollow ? "var(--panel)" : `var(--c${m.firm})`}" stroke="${hollow ? "var(--cI)" : "var(--panel)"}" stroke-width="2" opacity="${frS0.has(m) || m === win ? 1 : 0.45}"/>`;
     }
     if (win) s += `<circle cx="${sx(win.cost)}" cy="${sy(win.iq)}" r="12" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
     s += `<circle id="hl" r="10" fill="none" stroke="var(--ink)" stroke-width="1.5" visibility="hidden"/>`;
-    // Her noktaya model adı: dört yönden boş olanı seç, sığmayan atlanır (üzerine gelince görünür)
+    // Yalnız verimli sınırdaki modeller ve kazanan adlandırılır; diğerleri üzerine gelince görünür
     const boxes = ok.map((m) => [sx(m.cost) - 7, sy(m.iq) - 7, sx(m.cost) + 7, sy(m.iq) + 7]);
     const hit = (b) => boxes.some((o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
-    for (const m of [...ok].sort((a, b) => (b === win) - (a === win) || b.fp - a.fp)) {
-        const t = short(m), w = t.length * 5.9 + 4, px = sx(m.cost), py = sy(m.iq), g = m === win ? 15 : 9;
-        const opts = [["start", px + g, py + 4, px + g, px + g + w], ["end", px - g, py + 4, px - g - w, px - g], ["middle", px, py - g - 2, px - w / 2, px + w / 2], ["middle", px, py + g + 10, px - w / 2, px + w / 2]];
+    const frS = new Set(fr);
+    for (const m of ok.filter((m) => m === win || frS.has(m)).sort((a, b) => (b === win) - (a === win) || b.iq - a.iq)) {
+        const t = short(m), w = t.length * 6.3 + 4, px = sx(m.cost), py = sy(m.iq), g = m === win ? 15 : 9;
+        const opts = [["end", px - g, py - 3, px - g - w, px - g], ["middle", px, py - g - 3, px - w / 2, px + w / 2], ["end", px - g, py + 4, px - g - w, px - g], ["start", px + g, py + 12, px + g, px + g + w]];
         for (const [anchor, tx, ty, bx0, bx1] of opts) {
             const b = [bx0, ty - 10, bx1, ty + 3];
             if (b[0] < L || b[2] > W - 4 || b[1] < 4 || b[3] > H - B || hit(b)) continue;
@@ -340,9 +342,9 @@ function render() {
     // Çubuk grafik: en iyi F/P solda
     const top = ranked.slice(0, 40), mx = win ? win.fp : 1;
     $("bars").innerHTML = top.map((m) => `<div class="col" data-i="${m.i}" style="--c:var(--c${m.firm})" title="${full(m)} · ${FIRMS[m.firm]} · zeka ${m.iq} · görev ${usd(m.cost)}">
-        <span class="v num">${fpFmt(m.fp)}</span><div class="b${m.firm === "I" ? " hollow" : ""}" style="height:${Math.max((m.fp / mx) * 88, 0.5)}%"></div><span class="l">${short(m)}</span></div>`).join("");
+        <span class="v num">${fpFmt(m.fp)}</span><div class="b${m.firm === "I" ? " hollow" : ""}" style="height:${Math.max(Math.sqrt(m.fp / mx) * 88, 1)}%"></div><span class="l">${short(m)}</span></div>`).join("");
     $("bars").style.minWidth = top.length * 36 + 104 + "px";
-    $("barNote").textContent = ranked.length ? `Soldan sağa en yüksek orandan en düşüğe. ${ranked.length > 40 ? "İlk 40 model ayarı gösteriliyor; tamamı tabloda." : ranked.length + " model ayarı."}` : "";
+    $("barNote").textContent = ranked.length ? `Soldan sağa en yüksek orandan en düşüğe. Çubuk boyları karekök ölçeklidir, küçük oranlar da seçilsin diye; gerçek değer çubuğun üstünde. ${ranked.length > 40 ? "İlk 40 model ayarı gösteriliyor; tamamı tabloda." : ranked.length + " model ayarı."}` : "";
 
     const frSet = drawScatter(ok, win);
     const firmsOn = Object.keys(FIRMS).filter((f) => ok.some((m) => m.firm === f));
