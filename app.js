@@ -10,11 +10,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const themeToggleBtn = document.getElementById('theme-toggle');
     const langToggleBtn = document.getElementById('lang-toggle');
 
+    // Eski modeller (hidden: true) veride durur ama sayfada gösterilmez.
+    LLM_DATA.models = LLM_DATA.models.filter(m => !m.hidden);
+
     let selectedModelIds = LLM_DATA.models.map(m => m.id);
 
-    // Mythos ve Fable 5, diğer modellerden ayrı değerlendirilir:
+    // Fable 5.1, diğer modellerden ayrı değerlendirilir:
     // en iyi değer işaretlemesine ve birincilik sayısına dahil edilmezler.
-    const apexModelIds = ['mythos', 'fable5'];
+    const apexModelIds = ['fable51'];
     
     // Tema ve Dil Ayarları
     let currentLang = localStorage.getItem('lang') || 'tr';
