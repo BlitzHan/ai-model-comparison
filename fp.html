@@ -3,33 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>F/P Model Bulucu - 1 dolara kaç zeka puanı?</title>
+<title>Fiyat / Performans Sıralaması - AI Model Karşılaştırma</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-    --bg: #0c0d0f; --panel: #131417; --raise: #1a1c20; --line: #24262b; --line2: #32353c;
-    --ink: #eeeeeb; --ink2: #b4b6bc; --muted: #84878f; --grid: #1c1e22;
+    --bg: #0b0c0e; --panel: #121316; --raise: #1a1c20; --line: #23252a; --line2: #33363d;
+    --ink: #eeeeeb; --ink2: #b6b8be; --muted: #868991; --grid: #1b1d21;
     --cA: #d95926; --cG: #3987e5; --cO: #199e70; --cM: #9085e9; --cX: #d55181;
     --cK: #c98500; --cQ: #e66767; --cD: #5a9e2f; --cZ: #8b8d94; --cI: #8b8d94;
-    --serif: 'Newsreader', Georgia, serif; --sans: 'Inter', -apple-system, sans-serif;
 }
 [data-theme="light"] {
-    --bg: #f5f4f0; --panel: #ffffff; --raise: #f3f2ee; --line: #e3e1da; --line2: #cfccc3;
-    --ink: #15161a; --ink2: #41434a; --muted: #6d6f77; --grid: #efeee9;
+    --bg: #f6f6f4; --panel: #ffffff; --raise: #f2f2ef; --line: #e4e3de; --line2: #cfcec8;
+    --ink: #15161a; --ink2: #41434a; --muted: #6d6f77; --grid: #efefec;
     --cA: #eb6834; --cG: #2a78d6; --cO: #1baf7a; --cM: #6250d6; --cX: #e87ba4;
     --cK: #eda100; --cQ: #e34948; --cD: #3d8a12; --cZ: #7b7d84; --cI: #7b7d84;
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { font-family: var(--sans); background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.5; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.5; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 button { font: inherit; color: inherit; cursor: pointer; background: none; border: 0; }
 .num { font-variant-numeric: tabular-nums; }
 
-/* Üst bar */
 .bar { border-bottom: 1px solid var(--line); }
-.bar-in { max-width: 1360px; margin: 0 auto; padding: 0 24px; height: 52px; display: flex; align-items: center; gap: 24px; }
-.brand { font-weight: 700; letter-spacing: -0.01em; font-size: 14px; margin-right: auto; white-space: nowrap; }
+.bar-in, .page { max-width: 1160px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+.bar-in { height: 52px; display: flex; align-items: center; gap: 20px; }
+.brand { font-weight: 600; font-size: 14px; margin-right: auto; white-space: nowrap; }
 .nav { display: flex; gap: 4px; }
 .nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 500; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
 .nav a:hover { color: var(--ink); }
@@ -37,182 +36,176 @@ button { font: inherit; color: inherit; cursor: pointer; background: none; borde
 .ghost { border: 1px solid var(--line); border-radius: 6px; padding: 5px 10px; font-size: 12px; font-weight: 500; color: var(--ink2); white-space: nowrap; }
 .ghost:hover { border-color: var(--line2); color: var(--ink); }
 
-/* Yerleşim */
-.shell { max-width: 1360px; margin: 0 auto; padding: 0 24px 72px; display: grid; grid-template-columns: 272px minmax(0, 1fr); gap: 40px; }
-main { min-width: 0; }
-.hero { padding: 44px 0 30px; }
-.eyebrow { font-size: 11px; font-weight: 600; letter-spacing: .1em; color: var(--muted); }
-h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(34px, 4.6vw, 54px); line-height: 1.05; letter-spacing: -0.02em; margin: 12px 0 14px; text-wrap: balance; }
-.lede { color: var(--ink2); font-size: 15px; line-height: 1.6; max-width: 62ch; }
-.meta { margin-top: 16px; font-size: 12px; color: var(--muted); }
+.page { padding-bottom: 72px; }
+.hero { padding: 36px 0 24px; }
+h1 { font-size: 26px; font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; }
+.lede { color: var(--ink2); margin-top: 8px; max-width: 76ch; }
+.meta { margin-top: 8px; font-size: 12px; color: var(--muted); }
 
-/* Kenar çubuğu */
-aside { padding-top: 44px; }
-.side { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow-y: auto; scrollbar-width: thin; padding-right: 4px; }
-.side-h { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 4px; }
-.side-h h2 { font-size: 13px; font-weight: 600; }
-.side-h span { font-size: 12px; color: var(--muted); }
-.side-act { display: flex; gap: 6px; margin: 10px 0 14px; }
-.side-act .ghost { flex: 1; }
-.firm { border-top: 1px solid var(--line); padding: 10px 0 12px; }
-.firm-h { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; padding: 3px 0; font-weight: 600; font-size: 13px; }
-.firm-h .cnt { margin-left: auto; font-weight: 400; font-size: 12px; color: var(--muted); }
-.firm-h:hover .cnt { color: var(--ink); }
-.firm.off .firm-h { color: var(--muted); }
+.card { border: 1px solid var(--line); background: var(--panel); border-radius: 12px; }
+.ctl { padding: 4px 20px; }
+.row { display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 8px 20px; padding: 16px 0; align-items: start; }
+.row + .row { border-top: 1px solid var(--line); }
+.row > .lab { font-size: 13px; font-weight: 600; padding-top: 2px; }
+.row > .lab small { display: block; font-weight: 400; color: var(--muted); font-size: 12px; margin-top: 2px; }
+.slide { display: flex; align-items: center; gap: 14px; }
+.slide output { font-size: 20px; font-weight: 700; min-width: 3.4ch; }
+input[type=range] { flex: 1; min-width: 0; accent-color: var(--ink); height: 24px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.presets { margin-top: 8px; }
+.chip { font-size: 12px; font-weight: 500; padding: 5px 10px; border-radius: 999px; border: 1px solid var(--line2); background: var(--raise); display: inline-flex; align-items: center; gap: 7px; line-height: 1.4; }
+.chip:hover { border-color: var(--muted); }
+.chip[aria-pressed=false] { background: transparent; border-color: var(--line); color: var(--muted); }
+.chip[aria-pressed=false] .sw { opacity: .3; }
+.chip .c { color: var(--muted); font-weight: 400; }
+.chip.plain { border-radius: 6px; }
 .sw { width: 10px; height: 10px; border-radius: 50%; flex: none; background: var(--c); border: 2px solid var(--c); }
 .sw.hollow { background: transparent; }
-.off > .firm-h .sw, .fam[aria-pressed=false] .sw { opacity: .3; }
-.fams { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 7px; }
-.fam { font-size: 12px; padding: 3px 9px; border-radius: 999px; border: 1px solid var(--line2); color: var(--ink); background: var(--raise); line-height: 1.5; }
-.fam[aria-pressed=false] { background: transparent; border-color: var(--line); color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line2); }
-.fam:hover { border-color: var(--muted); }
-details.mob { display: none; }
-#sideMob .side-h { display: none; }
-#sideMob .side-act { margin-top: 0; }
+.acts { display: flex; gap: 14px; margin-top: 10px; font-size: 12px; align-items: center; flex-wrap: wrap; }
+.link { color: var(--ink2); text-decoration: underline; text-decoration-color: var(--line2); text-underline-offset: 3px; font-size: 12px; }
+.link:hover { color: var(--ink); }
+details summary { list-style: none; cursor: pointer; display: inline; }
+details summary::-webkit-details-marker { display: none; }
+.famgrid { margin-top: 12px; display: grid; gap: 10px; }
+.famrow { display: grid; grid-template-columns: 84px minmax(0, 1fr); gap: 8px; align-items: start; }
+.famrow > span { font-size: 12px; color: var(--muted); padding-top: 5px; }
 
-/* Eşik */
-.thresh { border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 18px 20px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 8px 28px; align-items: center; }
-.thresh .lab { font-size: 12px; color: var(--muted); }
-.thresh output { display: block; font-family: var(--serif); font-size: 34px; line-height: 1; margin-top: 4px; min-width: 2.6ch; }
-input[type=range] { width: 100%; accent-color: var(--ink); height: 24px; }
-.presets { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
-.preset { font-size: 12px; padding: 4px 10px; border-radius: 6px; color: var(--muted); border: 1px solid transparent; }
-.preset:hover { color: var(--ink); }
-.preset[aria-pressed=true] { color: var(--ink); border-color: var(--line2); background: var(--raise); }
+.picks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 12px; }
+.pick { padding: 16px 18px; min-width: 0; }
+.pick .rk { font-size: 11px; font-weight: 600; letter-spacing: .08em; color: var(--muted); }
+.pick .nm { display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; margin-top: 8px; }
+.pick .nm span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pick .big { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin-top: 6px; line-height: 1.1; }
+.pick .big small { font-size: 12px; font-weight: 400; color: var(--muted); letter-spacing: 0; margin-left: 5px; }
+.pick .d { color: var(--muted); font-size: 12px; margin-top: 6px; }
+.pick.first { border-color: var(--line2); }
+.none { grid-column: 1 / -1; padding: 28px; text-align: center; color: var(--muted); }
 
-/* Öneri */
-.picks { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 16px; margin-top: 16px; }
-.win { border: 1px solid var(--line2); background: var(--panel); border-radius: 12px; padding: 22px 24px; }
-.win .tagline { font-size: 11px; font-weight: 600; letter-spacing: .1em; color: var(--muted); }
-.win .nm { display: flex; align-items: center; gap: 10px; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-top: 10px; }
-.win .by { color: var(--muted); font-size: 13px; margin-top: 2px; }
-.win .big { font-family: var(--serif); font-size: 72px; line-height: 1; letter-spacing: -0.03em; margin-top: 18px; }
-.win .big small { font-family: var(--sans); font-size: 13px; color: var(--muted); letter-spacing: 0; margin-left: 4px; }
-.kv { display: grid; grid-template-columns: repeat(3, auto); justify-content: start; gap: 4px 28px; margin-top: 18px; }
-.kv dt { font-size: 11px; color: var(--muted); }
-.kv dd { font-size: 16px; font-weight: 600; grid-row: 2; }
-.win .vs { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--ink2); font-size: 13px; }
-.win .vs b { color: var(--ink); font-weight: 600; }
-.runners { border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 8px 20px; display: flex; flex-direction: column; }
-.runners h3 { font-size: 11px; font-weight: 600; letter-spacing: .1em; color: var(--muted); padding: 14px 0 6px; }
-.run { display: grid; grid-template-columns: 18px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 11px 0; border-top: 1px solid var(--line); flex: 1; }
-.run .k { color: var(--muted); font-size: 12px; }
-.run .n { font-weight: 600; font-size: 14px; display: flex; align-items: center; gap: 8px; min-width: 0; }
-.run .n span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.run .d { font-size: 12px; color: var(--muted); margin-top: 1px; }
-.run .v { font-family: var(--serif); font-size: 24px; text-align: right; }
-.none { grid-column: 1 / -1; border: 1px dashed var(--line2); border-radius: 12px; padding: 36px; text-align: center; color: var(--muted); }
+section { margin-top: 36px; }
+h2 { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; }
+.note { color: var(--muted); font-size: 13px; margin-top: 2px; max-width: 80ch; }
+.box { margin-top: 12px; position: relative; overflow-x: auto; padding: 14px 12px 10px; }
 
-/* Bölümler */
-section { margin-top: 44px; }
-.sec-h { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; margin-bottom: 4px; }
-h2.t { font-family: var(--serif); font-weight: 400; font-size: 26px; letter-spacing: -0.01em; }
-.note { color: var(--muted); font-size: 13px; max-width: 70ch; }
-.chartbox { position: relative; margin-top: 14px; border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 14px 10px 8px; overflow-x: auto; }
-svg { display: block; width: 100%; min-width: 620px; height: auto; touch-action: pan-y; }
-svg text { font-family: var(--sans); fill: var(--muted); font-size: 11px; }
-svg .lbl { fill: var(--ink); font-weight: 600; paint-order: stroke; stroke: var(--panel); stroke-width: 4px; stroke-linejoin: round; }
+/* Çubuk grafik */
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 300px; padding: 0 8px 0 96px; margin-bottom: 128px; border-bottom: 1px solid var(--line2); }
+.col { flex: 1 0 34px; max-width: 56px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative; }
+.col .v { font-size: 11px; font-weight: 600; margin-bottom: 4px; white-space: nowrap; }
+.col .b { width: 100%; border-radius: 4px 4px 0 0; background: var(--c); min-height: 2px; }
+.col .b.hollow { background: transparent; border: 2px solid var(--c); border-bottom: 0; }
+.col .l { position: absolute; top: calc(100% + 8px); right: 50%; transform: rotate(-48deg); transform-origin: top right; white-space: nowrap; font-size: 11px; color: var(--ink2); }
+.col:hover .l { color: var(--ink); }
+.col:hover .b { filter: brightness(1.15); }
+
+svg { display: block; width: 100%; min-width: 680px; height: auto; touch-action: pan-y; }
+svg text { font-family: Inter, sans-serif; fill: var(--muted); font-size: 11px; }
+svg .lbl { fill: var(--ink2); font-size: 10.5px; paint-order: stroke; stroke: var(--panel); stroke-width: 3px; stroke-linejoin: round; }
+svg .lbl.w { fill: var(--ink); font-weight: 600; }
 .keys { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; color: var(--muted); margin-top: 10px; align-items: center; }
 .keys span { display: inline-flex; align-items: center; gap: 6px; }
 .keys i { width: 18px; border-top: 2px solid var(--ink2); }
-.keys i.dash { border-top: 1px dashed var(--muted); }
 #tip { position: absolute; pointer-events: none; background: var(--raise); border: 1px solid var(--line2); border-radius: 8px; padding: 10px 12px; font-size: 12px; min-width: 200px; box-shadow: 0 10px 30px rgba(0,0,0,.28); display: none; z-index: 5; }
 #tip .tt { font-weight: 600; font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 #tip .r { display: flex; justify-content: space-between; gap: 18px; color: var(--muted); line-height: 1.7; }
 #tip .r b { color: var(--ink); font-weight: 600; }
 
-/* Tablo */
-.tw { margin-top: 14px; border: 1px solid var(--line); background: var(--panel); border-radius: 12px; overflow-x: auto; }
-table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 640px; }
+.tw { margin-top: 12px; overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; min-width: 720px; }
 th, td { padding: 10px 14px; text-align: right; white-space: nowrap; }
 td { border-top: 1px solid var(--line); }
 th:nth-child(2), td:nth-child(2), th:nth-child(3), td:nth-child(3) { text-align: left; }
-th { font-size: 11px; font-weight: 600; letter-spacing: .06em; color: var(--muted); user-select: none; cursor: pointer; background: var(--raise); }
+th { font-size: 11px; font-weight: 600; letter-spacing: .05em; color: var(--muted); user-select: none; cursor: pointer; background: var(--raise); }
 th:hover, th[aria-sort] { color: var(--ink); }
 tbody tr:hover { background: var(--raise); }
 td.k, td.fi { color: var(--muted); }
 td .ef { color: var(--muted); }
 td.m { display: flex; align-items: center; gap: 9px; font-weight: 500; }
 td.fp { font-weight: 700; }
-.iq { display: inline-flex; align-items: center; gap: 10px; justify-content: flex-end; }
-.iq i { display: block; width: 64px; height: 4px; border-radius: 2px; background: var(--line); overflow: hidden; }
-.iq i b { display: block; height: 100%; background: var(--ink2); border-radius: 2px; }
 .pf { font-size: 10px; font-weight: 600; letter-spacing: .05em; color: var(--muted); border: 1px solid var(--line2); border-radius: 4px; padding: 0 5px; }
-footer { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; max-width: 86ch; }
+footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--line); color: var(--muted); font-size: 12px; line-height: 1.7; max-width: 90ch; }
 footer a { color: var(--ink2); }
 
-@media (max-width: 980px) {
-    .shell { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 0 16px 56px; }
-    .bar-in { padding: 0 16px; gap: 10px; }
+@media (max-width: 720px) {
+    .bar-in, .page { padding-left: 16px; padding-right: 16px; }
     .brand { display: none; }
     .nav { margin-right: auto; }
-    aside { display: none; }
-    details.mob { display: block; border: 1px solid var(--line); background: var(--panel); border-radius: 12px; padding: 0 16px; margin-bottom: 16px; }
-    details.mob summary { padding: 14px 0; font-weight: 600; font-size: 13px; cursor: pointer; display: flex; justify-content: space-between; list-style: none; }
-    details.mob summary::-webkit-details-marker { display: none; }
-    details.mob summary span { color: var(--muted); font-weight: 400; }
-    .hero { padding: 30px 0 24px; }
+    .hero { padding: 26px 0 20px; }
+    h1 { font-size: 22px; }
+    .ctl { padding: 2px 16px; }
+    .row { grid-template-columns: minmax(0, 1fr); }
     .picks { grid-template-columns: minmax(0, 1fr); }
-    .thresh { grid-template-columns: minmax(0, 1fr); }
-    .win .big { font-size: 56px; }
+    .famrow { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+    .famrow > span { padding-top: 0; }
 }
 </style>
 </head>
 <body>
 <div class="bar"><div class="bar-in">
     <div class="brand">AI Model Karşılaştırma</div>
-    <nav class="nav"><a href="index.html">Benchmarklar</a><a href="fp.html" class="on">F/P Bulucu</a></nav>
+    <nav class="nav"><a href="index.html">Benchmarklar</a><a href="fp.html" class="on">Fiyat / Performans</a></nav>
     <button id="theme" class="ghost">Açık tema</button>
 </div></div>
 
-<div class="shell">
-    <aside><div class="side" id="side"></div></aside>
+<div class="page">
+    <div class="hero">
+        <h1>Fiyat / Performans Sıralaması</h1>
+        <p class="lede">Modeller zekaya göre değil, 1 dolara verdikleri zeka puanına göre sıralanır: Intelligence Index puanı, bir görevin ortalama maliyetine bölünür.</p>
+        <p class="meta" id="meta"></p>
+    </div>
 
-    <main>
-        <div class="hero">
-            <div class="eyebrow">F/P MODEL BULUCU</div>
-            <h1>1 dolara kaç zeka puanı?</h1>
-            <p class="lede">Her modelin Intelligence Index puanı, bir test görevini çözmenin ortalama maliyetine bölündü. Tek başına bu oran hep en ucuz modeli öne çıkarır; önce ihtiyacın olan en düşük zekayı seç, kazanan o eşiğin üstündekiler arasından çıksın.</p>
-            <p class="meta" id="meta"></p>
-        </div>
-
-        <details class="mob" id="mob"><summary>Modeller <span id="mobCnt"></span></summary><div id="sideMob"></div></details>
-
-        <div class="thresh">
-            <div><div class="lab">En az zeka puanı</div><output id="minOut">45</output></div>
+    <div class="card ctl">
+        <div class="row">
+            <div class="lab">En az zeka puanı<small>Altındakiler sıralamaya girmez</small></div>
             <div>
-                <input type="range" id="min" min="0" max="62" step="1" value="45" aria-label="En az zeka puanı">
-                <div class="presets" id="presets"></div>
+                <div class="slide"><output id="minOut">45+</output><input type="range" id="min" min="0" max="62" step="1" value="45" aria-label="En az zeka puanı"></div>
+                <div class="chips presets" id="presets"></div>
             </div>
         </div>
-
-        <div class="picks" id="picks"></div>
-
-        <section>
-            <div class="sec-h"><h2 class="t">Zeka ve maliyet haritası</h2></div>
-            <p class="note">Yukarı çıktıkça daha zeki, sola gittikçe daha ucuz. Çizgi verimli sınırdır: üstündeki modellerden daha ucuza daha zekisi yok.</p>
-            <div class="chartbox">
-                <svg id="chart" viewBox="0 0 980 520" role="img" aria-label="Zeka puanı ve görev başı maliyet dağılım grafiği"></svg>
-                <div id="tip"></div>
+        <div class="row">
+            <div class="lab">Modeller<small id="cnt"></small></div>
+            <div>
+                <div class="chips" id="firms"></div>
+                <details id="det">
+                    <summary class="acts"><span class="link">Modelleri tek tek seç</span></summary>
+                    <div class="famgrid" id="fams"></div>
+                </details>
+                <div class="acts"><button class="link" data-all="1">Hepsini aç</button><button class="link" data-all="0">Hepsini kapat</button></div>
             </div>
-            <div class="keys" id="keys"></div>
-        </section>
+        </div>
+    </div>
 
-        <section>
-            <div class="sec-h"><h2 class="t">Sıralama</h2><span class="note" id="tcount"></span></div>
-            <div class="tw"><table>
-                <thead><tr>
-                    <th data-k="rank">#</th><th data-k="name">MODEL</th><th data-k="firm">FİRMA</th>
-                    <th data-k="iq">ZEKA</th><th data-k="cost">GÖREV MALİYETİ</th><th data-k="fp">PUAN / $</th><th data-k="time">SÜRE (DK)</th>
-                </tr></thead>
-                <tbody id="rows"></tbody>
-            </table></div>
-        </section>
+    <div class="picks" id="picks"></div>
 
-        <footer>
-            Veri: <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a>, Intelligence Index v5.0.1, 10 Kasım 2026. Maliyet, bir Intelligence Index görevinin ağırlıklı ortalama dolar maliyetidir; süre aynı görevin dakika cinsinden çıkarım süresidir. Maliyeti yayınlanmamış modeller listede yok. Parantez içindeki kademe modelin düşünme eforudur.
-        </footer>
-    </main>
+    <section>
+        <h2>1 dolara zeka puanı</h2>
+        <p class="note" id="barNote"></p>
+        <div class="card box"><div class="bars" id="bars"></div></div>
+    </section>
+
+    <section>
+        <h2>Zeka ve maliyet haritası</h2>
+        <p class="note">Yalnızca eşiği geçen modeller; eksenler onlara göre yakınlaşır. Yukarısı daha zeki, solu daha ucuz. Çizgi verimli sınırdır: üstündekilerden daha ucuza daha zekisi yok.</p>
+        <div class="card box">
+            <svg id="chart" viewBox="0 0 980 580" role="img" aria-label="Zeka puanı ve görev başı maliyet dağılım grafiği"></svg>
+            <div id="tip"></div>
+        </div>
+        <div class="keys" id="keys"></div>
+    </section>
+
+    <section>
+        <h2>Tablo</h2>
+        <p class="note" id="tcount"></p>
+        <div class="card tw"><table>
+            <thead><tr>
+                <th data-k="rank">#</th><th data-k="name">MODEL</th><th data-k="firm">FİRMA</th>
+                <th data-k="fp">PUAN / $</th><th data-k="iq">ZEKA</th><th data-k="cost">GÖREV MALİYETİ</th><th data-k="per20">20 $ İLE GÖREV</th><th data-k="time">SÜRE (DK)</th>
+            </tr></thead>
+            <tbody id="rows"></tbody>
+        </table></div>
+    </section>
+
+    <footer>
+        Veri: <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a>, Intelligence Index v5.0.1, 10 Kasım 2026. Maliyet, bir Intelligence Index görevinin API fiyatıyla ağırlıklı ortalama dolar maliyetidir; süre aynı görevin dakika cinsinden çıkarım süresidir. "20 $ ile görev" 20 doları bu maliyete böler; üyelik paketlerinin kotasını göstermez. Maliyeti yayınlanmamış modeller listede yok. Model adının yanındaki kademe düşünme eforudur.
+    </footer>
 </div>
 
 <script>
@@ -255,8 +248,8 @@ const FAMS = {}; // firma -> model aileleri
 for (const m of M) { (FAMS[m.firm] ||= []); if (!FAMS[m.firm].includes(m.name)) FAMS[m.firm].push(m.name); }
 const ALL_FAMS = Object.values(FAMS).flat();
 
-const state = { min: 45, off: new Set(), sort: "fp", dir: -1, hover: null };
-try { const s = JSON.parse(localStorage.getItem("fp-off") || "[]"); s.forEach((n) => ALL_FAMS.includes(n) && state.off.add(n)); } catch (e) {}
+const state = { min: 45, off: new Set(), sort: "fp", dir: -1 };
+try { JSON.parse(localStorage.getItem("fp-off") || "[]").forEach((n) => ALL_FAMS.includes(n) && state.off.add(n)); } catch (e) {}
 const save = () => { try { localStorage.setItem("fp-off", JSON.stringify([...state.off])); } catch (e) {} };
 
 const $ = (id) => document.getElementById(id);
@@ -264,7 +257,9 @@ const nf = (v, d = 0) => v.toLocaleString("tr-TR", { minimumFractionDigits: d, m
 const fpFmt = (v) => (v >= 100 ? nf(v) : nf(v, 1));
 const usd = (v) => "$" + nf(v, 2);
 const sw = (f) => `<span class="sw${f === "I" ? " hollow" : ""}" style="--c:var(--c${f})"></span>`;
-const short = (m) => m.name.replace("Claude ", "").replace("Gemini 4 ", "").replace("DeepSeek ", "DS ") + (m.eff ? " " + m.eff : "");
+const fam = (n) => n.replace("Claude ", "").replace("DeepSeek ", "DS ");
+const short = (m) => fam(m.name) + (m.eff ? " " + m.eff : "");
+const full = (m) => m.name + (m.eff ? " (" + m.eff + ")" : "");
 
 function frontier(list) {
     const s = [...list].sort((a, b) => a.cost - b.cost || b.iq - a.iq), out = []; let best = -1;
@@ -272,88 +267,98 @@ function frontier(list) {
     return out;
 }
 
-// Grafik ölçekleri
-const W = 980, H = 520, L = 44, R = 20, T = 22, B = 44;
-const X0 = Math.log10(0.007), X1 = Math.log10(40);
-const x = (c) => L + ((Math.log10(c) - X0) / (X1 - X0)) * (W - L - R);
-const y = (v) => H - B - (v / 70) * (H - T - B);
+const W = 980, H = 580, L = 44, R = 24, T = 24, B = 44;
+let sx = () => 0, sy = () => 0;
 
-function sideHTML() {
-    const on = ALL_FAMS.length - state.off.size;
-    return `<div class="side-h"><h2>Modeller</h2><span>${on} / ${ALL_FAMS.length} açık</span></div>
-    <div class="side-act"><button class="ghost" data-all="1">Hepsini aç</button><button class="ghost" data-all="0">Hepsini kapat</button></div>` +
-    Object.entries(FIRMS).map(([f, n]) => {
-        const fams = FAMS[f], act = fams.filter((a) => !state.off.has(a)).length;
-        return `<div class="firm${act ? "" : " off"}"><button class="firm-h" data-firm="${f}" title="Firmanın tüm modellerini aç/kapat">${sw(f)}${n}<span class="cnt">${act}/${fams.length}</span></button>
-        <div class="fams">${fams.map((a) => `<button class="fam" data-fam="${a}" aria-pressed="${!state.off.has(a)}">${a.replace("Claude ", "").replace("DeepSeek ", "")}</button>`).join("")}</div></div>`;
-    }).join("");
+function drawScatter(ok, win) {
+    const svg = $("chart");
+    svg._pts = ok;
+    if (!ok.length) { svg.innerHTML = `<text x="${W / 2}" y="${H / 2}" text-anchor="middle">Gösterilecek model yok.</text>`; return new Set(); }
+    // Eksenler görünen modellere göre yakınlaşır
+    const iqs = ok.map((m) => m.iq), cs = ok.map((m) => m.cost);
+    const span = Math.max(...iqs) - Math.min(...iqs), step = span <= 12 ? 2 : span <= 30 ? 5 : 10;
+    const y0 = Math.max(0, Math.floor((Math.min(...iqs) - step * 0.6) / step) * step), y1 = Math.ceil((Math.max(...iqs) + step * 0.6) / step) * step;
+    const lx0 = Math.log10(Math.min(...cs)) - 0.22, lx1 = Math.log10(Math.max(...cs)) + 0.14;
+    sx = (c) => L + ((Math.log10(c) - lx0) / (lx1 - lx0)) * (W - L - R);
+    sy = (v) => H - B - ((v - y0) / (y1 - y0)) * (H - T - B);
+    let s = "";
+    for (let v = y0; v <= y1; v += step) s += `<line x1="${L}" x2="${W - R}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--grid)"/><text x="${L - 8}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`;
+    for (const c of [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50]) {
+        if (Math.log10(c) < lx0 || Math.log10(c) > lx1) continue;
+        s += `<line x1="${sx(c)}" x2="${sx(c)}" y1="${T}" y2="${H - B}" stroke="var(--grid)"/><text x="${sx(c)}" y="${H - B + 16}" text-anchor="middle">$${String(c).replace(".", ",")}</text>`;
+    }
+    s += `<text x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle">Görev başı maliyet (logaritmik)</text><text x="${L - 30}" y="${T - 10}">Zeka puanı</text>`;
+    const fr = frontier(ok);
+    if (fr.length > 1) s += `<polyline fill="none" stroke="var(--ink2)" stroke-width="1.5" stroke-linejoin="round" points="${fr.map((m) => sx(m.cost) + "," + sy(m.iq)).join(" ")}"/>`;
+    for (const m of ok) {
+        const hollow = m.firm === "I";
+        s += `<circle cx="${sx(m.cost)}" cy="${sy(m.iq)}" r="${m === win ? 7 : hollow ? 4.5 : 5}" fill="${hollow ? "var(--panel)" : `var(--c${m.firm})`}" stroke="${hollow ? "var(--cI)" : "var(--panel)"}" stroke-width="2"/>`;
+    }
+    if (win) s += `<circle cx="${sx(win.cost)}" cy="${sy(win.iq)}" r="12" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
+    s += `<circle id="hl" r="10" fill="none" stroke="var(--ink)" stroke-width="1.5" visibility="hidden"/>`;
+    // Her noktaya model adı: dört yönden boş olanı seç, sığmayan atlanır (üzerine gelince görünür)
+    const boxes = ok.map((m) => [sx(m.cost) - 7, sy(m.iq) - 7, sx(m.cost) + 7, sy(m.iq) + 7]);
+    const hit = (b) => boxes.some((o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
+    for (const m of [...ok].sort((a, b) => (b === win) - (a === win) || b.fp - a.fp)) {
+        const t = short(m), w = t.length * 5.9 + 4, px = sx(m.cost), py = sy(m.iq), g = m === win ? 15 : 9;
+        const opts = [["start", px + g, py + 4, px + g, px + g + w], ["end", px - g, py + 4, px - g - w, px - g], ["middle", px, py - g - 2, px - w / 2, px + w / 2], ["middle", px, py + g + 10, px - w / 2, px + w / 2]];
+        for (const [anchor, tx, ty, bx0, bx1] of opts) {
+            const b = [bx0, ty - 10, bx1, ty + 3];
+            if (b[0] < L || b[2] > W - 4 || b[1] < 4 || b[3] > H - B || hit(b)) continue;
+            boxes.push(b);
+            s += `<text class="lbl${m === win ? " w" : ""}" x="${tx}" y="${ty}" text-anchor="${anchor}">${t}</text>`;
+            break;
+        }
+    }
+    svg.innerHTML = s;
+    return new Set(fr.map((m) => m.i));
 }
 
 function render() {
     const act = M.filter((m) => !state.off.has(m.name));
     const ok = act.filter((m) => m.iq >= state.min);
     const ranked = [...ok].sort((a, b) => b.fp - a.fp);
-    const fr = frontier(act), frSet = new Set(fr.map((m) => m.i));
-    const win = ranked[0], top = act.reduce((a, b) => (!a || b.iq > a.iq ? b : a), null);
+    const win = ranked[0];
 
-    $("side").innerHTML = $("sideMob").innerHTML = sideHTML();
-    $("mobCnt").textContent = `${ALL_FAMS.length - state.off.size} / ${ALL_FAMS.length} açık`;
-    $("meta").textContent = `${M.length} model ayarı · ${Object.keys(FIRMS).length} firma · veri 10 Kasım 2026`;
+    // Model seçimi
+    $("firms").innerHTML = Object.entries(FIRMS).map(([f, n]) => {
+        const on = FAMS[f].filter((a) => !state.off.has(a)).length;
+        return `<button class="chip" data-firm="${f}" aria-pressed="${on > 0}">${sw(f)}${n}<span class="c">${on}/${FAMS[f].length}</span></button>`;
+    }).join("");
+    $("fams").innerHTML = Object.entries(FIRMS).map(([f, n]) => `<div class="famrow"><span>${n}</span><div class="chips">${FAMS[f].map((a) => `<button class="chip" data-fam="${a}" aria-pressed="${!state.off.has(a)}">${sw(f)}${fam(a)}</button>`).join("")}</div></div>`).join("");
+    $("cnt").textContent = `${ALL_FAMS.length - state.off.size} / ${ALL_FAMS.length} açık`;
+    $("meta").textContent = `${ALL_FAMS.length} model, ${M.length} efor ayarı, ${Object.keys(FIRMS).length} firma · veri 10 Kasım 2026`;
 
-    // Öneri
-    if (!win) $("picks").innerHTML = `<div class="none">${act.length ? "Bu eşiği geçen model yok. Eşiği düşür ya da daha fazla model aç." : "Hiç model açık değil. Soldan model seç."}</div>`;
-    else $("picks").innerHTML = `<div class="win">
-            <div class="tagline">EN İYİ FİYAT / PERFORMANS</div>
-            <div class="nm">${sw(win.firm)}${win.name}</div>
-            <div class="by">${FIRMS[win.firm]}${win.eff ? " · " + win.eff : ""}</div>
-            <div class="big num">${fpFmt(win.fp)}<small>puan / $</small></div>
-            <dl class="kv"><dt>Zeka</dt><dd class="num">${win.iq}</dd><dt>Görev maliyeti</dt><dd class="num">${usd(win.cost)}</dd><dt>Süre</dt><dd class="num">${nf(win.time, 1)} dk</dd></dl>
-            ${win !== top ? `<div class="vs">Açık modellerin en zekisi ${top.name}${top.eff ? " (" + top.eff + ")" : ""} ile kıyas: zekasının <b>%${nf((win.iq / top.iq) * 100)}</b> kadarı, maliyetinin <b>%${nf((win.cost / top.cost) * 100, 1)}</b> kadarı.</div>` : `<div class="vs">Açık modellerin en zekisi de bu.</div>`}
-        </div>
-        <div class="runners"><h3>SIRADAKİLER</h3>${ranked.slice(1, 5).map((m, k) => `<div class="run">
-            <span class="k num">${k + 2}</span>
-            <div><div class="n">${sw(m.firm)}<span>${m.name}${m.eff ? " (" + m.eff + ")" : ""}</span></div><div class="d num">Zeka ${m.iq} · ${usd(m.cost)} · ${nf(m.time, 1)} dk</div></div>
-            <span class="v num">${fpFmt(m.fp)}</span></div>`).join("") || `<div class="run"><span></span><div class="d">Eşiği geçen başka model yok.</div><span></span></div>`}</div>`;
+    // İlk üç
+    $("picks").innerHTML = ranked.length ? ranked.slice(0, 3).map((m, k) => `<div class="card pick${k ? "" : " first"}">
+        <div class="rk">${k + 1}. SIRA</div>
+        <div class="nm" title="${full(m)}">${sw(m.firm)}<span>${full(m)}</span></div>
+        <div class="big num">${fpFmt(m.fp)}<small>puan / $</small></div>
+        <div class="d num">Zeka ${m.iq} · görev ${usd(m.cost)} · ${nf(m.time, 1)} dk</div></div>`).join("")
+        : `<div class="card none">${act.length ? "Bu eşiği geçen model yok. Eşiği düşür ya da daha fazla model aç." : "Hiç model açık değil."}</div>`;
 
-    // Grafik
-    let s = "";
-    for (let v = 0; v <= 70; v += 10) s += `<line x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}" stroke="var(--grid)"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v}</text>`;
-    for (const c of [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30]) s += `<line x1="${x(c)}" x2="${x(c)}" y1="${T}" y2="${H - B}" stroke="var(--grid)"/><text x="${x(c)}" y="${H - B + 16}" text-anchor="middle">$${String(c).replace(".", ",")}</text>`;
-    s += `<text x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle">Görev başı maliyet (logaritmik)</text><text x="${L - 30}" y="${T - 8}">Zeka puanı</text>`;
-    if (state.min > 0) s += `<rect x="${L}" y="${y(state.min)}" width="${W - L - R}" height="${y(0) - y(state.min)}" fill="var(--bg)" opacity=".45"/><line x1="${L}" x2="${W - R}" y1="${y(state.min)}" y2="${y(state.min)}" stroke="var(--muted)" stroke-dasharray="3 4"/><text x="${W - R - 4}" y="${y(state.min) - 6}" text-anchor="end">eşik ${state.min}</text>`;
-    if (fr.length > 1) s += `<polyline fill="none" stroke="var(--ink2)" stroke-width="2" stroke-linejoin="round" points="${fr.map((m) => x(m.cost) + "," + y(m.iq)).join(" ")}"/>`;
-    for (const m of [...act].sort((a, b) => (a.iq >= state.min) - (b.iq >= state.min))) {
-        const hollow = m.firm === "I";
-        s += `<circle cx="${x(m.cost)}" cy="${y(m.iq)}" r="${m === win ? 7 : hollow ? 4.5 : 5}" fill="${hollow ? "var(--panel)" : `var(--c${m.firm})`}" stroke="${hollow ? "var(--cI)" : "var(--panel)"}" stroke-width="2" opacity="${m.iq >= state.min ? 1 : 0.3}"/>`;
-    }
-    if (win) s += `<circle cx="${x(win.cost)}" cy="${y(win.iq)}" r="12" fill="none" stroke="var(--ink)" stroke-width="2"/>`;
-    s += `<circle id="hl" r="10" fill="none" stroke="var(--ink)" stroke-width="1.5" visibility="hidden"/>`;
-    // Etiketler: kazanan ve sınırdaki modeller; üst üste binen atlanır
-    const placed = [];
-    const cand = [...(win ? [win] : []), ...fr.filter((m) => m !== win && m.iq >= state.min).sort((a, b) => b.iq - a.iq)];
-    for (const m of cand) {
-        const lx = x(m.cost) - (m === win ? 16 : 10), ly = y(m.iq) - 7, t = short(m), w = t.length * 6.4;
-        if (lx - w < L || placed.some((p) => Math.abs(p.y - ly) < 13 && lx > p.x0 - 6 && lx - w < p.x1 + 6)) continue;
-        placed.push({ y: ly, x0: lx - w, x1: lx });
-        s += `<text class="lbl" x="${lx}" y="${ly}" text-anchor="end">${t}</text>`;
-    }
-    $("chart").innerHTML = s;
-    $("chart")._pts = act;
-    const firmsOn = Object.keys(FIRMS).filter((f) => act.some((m) => m.firm === f));
-    $("keys").innerHTML = firmsOn.map((f) => `<span>${sw(f)}${FIRMS[f]}</span>`).join("") + `<span><i></i>Verimli sınır</span><span><i class="dash"></i>Eşik</span>`;
+    // Çubuk grafik: en iyi F/P solda
+    const top = ranked.slice(0, 40), mx = win ? win.fp : 1;
+    $("bars").innerHTML = top.map((m) => `<div class="col" data-i="${m.i}" style="--c:var(--c${m.firm})" title="${full(m)} · ${FIRMS[m.firm]} · zeka ${m.iq} · görev ${usd(m.cost)}">
+        <span class="v num">${fpFmt(m.fp)}</span><div class="b${m.firm === "I" ? " hollow" : ""}" style="height:${Math.max((m.fp / mx) * 88, 0.5)}%"></div><span class="l">${short(m)}</span></div>`).join("");
+    $("bars").style.minWidth = top.length * 36 + 104 + "px";
+    $("barNote").textContent = ranked.length ? `Soldan sağa en yüksek orandan en düşüğe. ${ranked.length > 40 ? "İlk 40 model ayarı gösteriliyor; tamamı tabloda." : ranked.length + " model ayarı."}` : "";
+
+    const frSet = drawScatter(ok, win);
+    const firmsOn = Object.keys(FIRMS).filter((f) => ok.some((m) => m.firm === f));
+    $("keys").innerHTML = firmsOn.map((f) => `<span>${sw(f)}${FIRMS[f]}</span>`).join("") + (ok.length > 1 ? `<span><i></i>Verimli sınır</span>` : "");
 
     // Tablo
     const rankOf = new Map(ranked.map((m, k) => [m.i, k + 1])), key = state.sort;
-    const val = (m) => (key === "rank" ? rankOf.get(m.i) : key === "name" ? m.name + m.eff : key === "firm" ? FIRMS[m.firm] : m[key]);
+    const val = (m) => (key === "rank" ? rankOf.get(m.i) : key === "name" ? m.name + m.eff : key === "firm" ? FIRMS[m.firm] : key === "per20" ? 20 / m.cost : m[key]);
     const rows = [...ok].sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : b.fp - a.fp) * state.dir);
     $("rows").innerHTML = rows.map((m) => `<tr data-i="${m.i}">
         <td class="k num">${rankOf.get(m.i)}</td>
         <td class="m">${sw(m.firm)}<span>${m.name}${m.eff ? ` <span class="ef">${m.eff}</span>` : ""}</span>${frSet.has(m.i) ? '<span class="pf" title="Verimli sınırda: daha ucuza daha zekisi yok">SINIRDA</span>' : ""}</td>
-        <td class="fi">${FIRMS[m.firm]}</td>
-        <td class="num"><span class="iq">${m.iq}<i><b style="width:${(m.iq / 65) * 100}%"></b></i></span></td>
-        <td class="num">${usd(m.cost)}</td><td class="fp num">${fpFmt(m.fp)}</td><td class="num">${nf(m.time, 1)}</td></tr>`).join("")
-        || `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:28px">Gösterilecek model yok.</td></tr>`;
-    $("tcount").textContent = `${ok.length} model ayarı eşiği geçiyor · başlığa tıklayarak sırala`;
+        <td class="fi">${FIRMS[m.firm]}</td><td class="fp num">${fpFmt(m.fp)}</td><td class="num">${m.iq}</td>
+        <td class="num">${usd(m.cost)}</td><td class="num">${20 / m.cost >= 10 ? nf(20 / m.cost) : nf(20 / m.cost, 1)}</td><td class="num">${nf(m.time, 1)}</td></tr>`).join("")
+        || `<tr><td colspan="8" style="text-align:center;color:var(--muted);padding:28px">Gösterilecek model yok.</td></tr>`;
+    $("tcount").textContent = `${ok.length} model ayarı eşiği geçiyor. Sıralamak için sütun başlığına tıkla.`;
     document.querySelectorAll("th").forEach((th) => {
         const on = th.dataset.k === key;
         on ? th.setAttribute("aria-sort", state.dir > 0 ? "ascending" : "descending") : th.removeAttribute("aria-sort");
@@ -361,53 +366,53 @@ function render() {
     });
 
     $("minOut").textContent = state.min === 0 ? "Hepsi" : state.min + "+";
-    document.querySelectorAll(".preset").forEach((c) => c.setAttribute("aria-pressed", +c.dataset.v === state.min));
+    document.querySelectorAll("#presets .chip").forEach((c) => c.setAttribute("aria-pressed", +c.dataset.v === state.min));
 }
 
-// Model aç/kapat (kenar çubuğu ve mobil panel aynı işleyici)
-function onSide(e) {
+// Model aç/kapat
+document.querySelector(".ctl").addEventListener("click", (e) => {
     const b = e.target.closest("button"); if (!b) return;
-    if (b.dataset.all) { state.off = new Set(b.dataset.all === "1" ? [] : ALL_FAMS); }
-    else if (b.dataset.fam) { state.off.has(b.dataset.fam) ? state.off.delete(b.dataset.fam) : state.off.add(b.dataset.fam); }
-    else if (b.dataset.firm) { const fams = FAMS[b.dataset.firm], anyOn = fams.some((a) => !state.off.has(a)); fams.forEach((a) => (anyOn ? state.off.add(a) : state.off.delete(a))); }
+    if (b.dataset.all) state.off = new Set(b.dataset.all === "1" ? [] : ALL_FAMS);
+    else if (b.dataset.fam) state.off.has(b.dataset.fam) ? state.off.delete(b.dataset.fam) : state.off.add(b.dataset.fam);
+    else if (b.dataset.firm) { const fs = FAMS[b.dataset.firm], anyOn = fs.some((a) => !state.off.has(a)); fs.forEach((a) => (anyOn ? state.off.add(a) : state.off.delete(a))); }
+    else if (b.dataset.v !== undefined) { state.min = +b.dataset.v; $("min").value = state.min; }
     else return;
-    const sc = $("side").scrollTop; save(); render(); $("side").scrollTop = sc;
-}
-$("side").addEventListener("click", onSide);
-$("sideMob").addEventListener("click", onSide);
-
-$("presets").innerHTML = [[0, "Hepsi"], [30, "Basit işler 30+"], [45, "Dengeli 45+"], [55, "Güçlü 55+"], [60, "Zirve 60+"]].map(([v, t]) => `<button class="preset" data-v="${v}">${t}</button>`).join("");
+    save(); render();
+});
+$("presets").innerHTML = [[0, "Hepsi"], [30, "Basit işler 30+"], [45, "Dengeli 45+"], [55, "Güçlü 55+"], [60, "Zirve 60+"]].map(([v, t]) => `<button class="chip plain" data-v="${v}">${t}</button>`).join("");
 $("min").addEventListener("input", (e) => { state.min = +e.target.value; render(); });
-$("presets").addEventListener("click", (e) => { const c = e.target.closest(".preset"); if (!c) return; state.min = +c.dataset.v; $("min").value = state.min; render(); });
 document.querySelector("thead").addEventListener("click", (e) => {
     const k = e.target.dataset.k; if (!k) return;
-    if (state.sort === k) state.dir *= -1; else { state.sort = k; state.dir = k === "fp" || k === "iq" ? -1 : 1; }
+    if (state.sort === k) state.dir *= -1; else { state.sort = k; state.dir = ["fp", "iq", "per20"].includes(k) ? -1 : 1; }
     render();
 });
 
 // İpucu ve vurgulama
 const svg = $("chart"), tip = $("tip");
-function mark(m) { const h = $("hl"); if (!h) return; if (!m) { h.setAttribute("visibility", "hidden"); return; } h.setAttribute("cx", x(m.cost)); h.setAttribute("cy", y(m.iq)); h.setAttribute("visibility", "visible"); }
-svg.addEventListener("pointermove", (e) => {
+function mark(m) { const h = $("hl"); if (!h) return; if (!m || !svg._pts.includes(m)) { h.setAttribute("visibility", "hidden"); return; } h.setAttribute("cx", sx(m.cost)); h.setAttribute("cy", sy(m.iq)); h.setAttribute("visibility", "visible"); }
+function probe(e) {
     const r = svg.getBoundingClientRect(), k = W / r.width, px = (e.clientX - r.left) * k, py = (e.clientY - r.top) * k;
-    let best = null, bd = 26 * 26;
-    for (const m of svg._pts || []) { const d = (x(m.cost) - px) ** 2 + (y(m.iq) - py) ** 2; if (d < bd) { bd = d; best = m; } }
+    let best = null, bd = 28 * 28;
+    for (const m of svg._pts || []) { const d = (sx(m.cost) - px) ** 2 + (sy(m.iq) - py) ** 2; if (d < bd) { bd = d; best = m; } }
     mark(best);
     if (!best) { tip.style.display = "none"; return; }
-    tip.innerHTML = `<div class="tt">${sw(best.firm)}${best.name}${best.eff ? " (" + best.eff + ")" : ""}</div>
-        <div class="r"><span>Firma</span><b>${FIRMS[best.firm]}</b></div><div class="r"><span>Zeka</span><b class="num">${best.iq}</b></div>
-        <div class="r"><span>Görev maliyeti</span><b class="num">${usd(best.cost)}</b></div><div class="r"><span>Puan / $</span><b class="num">${fpFmt(best.fp)}</b></div>
+    tip.innerHTML = `<div class="tt">${sw(best.firm)}${full(best)}</div>
+        <div class="r"><span>Firma</span><b>${FIRMS[best.firm]}</b></div><div class="r"><span>Puan / $</span><b class="num">${fpFmt(best.fp)}</b></div>
+        <div class="r"><span>Zeka</span><b class="num">${best.iq}</b></div><div class="r"><span>Görev maliyeti</span><b class="num">${usd(best.cost)}</b></div>
         <div class="r"><span>Süre</span><b class="num">${nf(best.time, 1)} dk</b></div>`;
     tip.style.display = "block";
-    const ox = svg.offsetLeft, oy = svg.offsetTop, cx = x(best.cost) / k + ox, cy = y(best.iq) / k + oy, tw = tip.offsetWidth, th = tip.offsetHeight;
-    tip.style.left = (cx + 16 + tw > r.width + ox ? Math.max(cx - tw - 16, 0) : cx + 16) + "px";
+    const cx = sx(best.cost) / k + svg.offsetLeft, cy = sy(best.iq) / k + svg.offsetTop, tw = tip.offsetWidth, th = tip.offsetHeight;
+    tip.style.left = (cx + 16 + tw > svg.offsetLeft + r.width ? Math.max(cx - tw - 16, 0) : cx + 16) + "px";
     tip.style.top = Math.max(cy - th - 12, 4) + "px";
-});
+}
+svg.addEventListener("pointermove", probe);
+svg.addEventListener("pointerdown", probe);
 svg.addEventListener("pointerleave", () => { tip.style.display = "none"; mark(null); });
-$("rows").addEventListener("pointerover", (e) => { const tr = e.target.closest("tr[data-i]"); mark(tr ? M[+tr.dataset.i] : null); });
-$("rows").addEventListener("pointerleave", () => mark(null));
+for (const id of ["rows", "bars"]) {
+    $(id).addEventListener("pointerover", (e) => { const el = e.target.closest("[data-i]"); mark(el ? M[+el.dataset.i] : null); });
+    $(id).addEventListener("pointerleave", () => mark(null));
+}
 
-// Tema: ana sayfayla aynı anahtar
 let theme = "dark";
 try { theme = localStorage.getItem("theme") || "dark"; } catch (e) {}
 const applyTheme = () => { document.documentElement.setAttribute("data-theme", theme); $("theme").textContent = theme === "dark" ? "Açık tema" : "Koyu tema"; };
