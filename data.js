@@ -109,6 +109,13 @@ const LLM_DATA = {
             "color": "#059669"
         },
         {
+            "id": "gpt62sol",
+            "name": "GPT 6.2 Sol",
+            "company": "OpenAI",
+            "date": "Kas 26",
+            "color": "#047857"
+        },
+        {
             "id": "gpt61sol",
             "name": "GPT 6.1 Sol",
             "company": "OpenAI",
@@ -430,6 +437,7 @@ const LLM_DATA = {
             "name": "OpenAI",
             "ids": [
                 "gpt62astra",
+                "gpt62sol",
                 "gpt61sol",
                 "gpt6astra",
                 "gpt56sol",
@@ -704,6 +712,7 @@ const LLM_DATA = {
                         "opus48": "23.6%",
                         "sonnet5": "12.4%",
                         "gpt62astra": "64.1%",
+                        "gpt62sol": "60.1%",
                         "gpt6astra": "58.2%",
                         "gpt56sol": "37.3%",
                         "gemini38flash": "19.1%",
@@ -1833,6 +1842,7 @@ const LLM_DATA = {
                         "sonnet5": "1362",
                         "sonnet46": "1071",
                         "gpt62astra": "1643",
+                        "gpt62sol": "1612",
                         "gpt6astra": "1568",
                         "gpt56sol": "1483",
                         "gpt55": "1143",
