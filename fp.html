@@ -104,17 +104,14 @@ h2 { font-size: 18px; line-height: 24px; font-weight: 500; }
 .note { color: var(--muted); font-size: 13px; margin-top: 4px; max-width: 76ch; }
 .box { margin-top: 16px; position: relative; overflow-x: auto; padding: 24px 16px 12px; }
 
-/* Çubuk grafik */
-.bars { display: flex; align-items: flex-end; gap: 4px; height: 340px; padding: 0 8px 0 96px; margin-bottom: 132px; border-bottom: 1px solid var(--hair2); }
-.col { flex: 1 0 32px; max-width: 56px; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; position: relative; }
-.col .v { font-family: var(--mono); font-size: 11px; line-height: 16px; color: var(--ink2); margin-bottom: 4px; white-space: nowrap; }
-.col .b { width: 100%; border-radius: 4px 4px 0 0; background: var(--bar); min-height: 2px; transition: background-color .12s var(--ease); }
-.col:hover .b { background: var(--bar-h); }
-.col.w .b, .col.w:hover .b { background: var(--acc); }
-.col.w .v { color: var(--acc-ink); font-weight: 500; }
-.col .l { position: absolute; top: calc(100% + 8px); right: 50%; transform: rotate(-48deg); transform-origin: top right; white-space: nowrap; font-size: 12px; line-height: 16px; color: var(--ink2); display: inline-flex; align-items: center; gap: 6px; }
-.col:hover .l, .col.w .l { color: var(--ink); }
-
+/* Efor yolları */
+.pchips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 16px; }
+.pchips .opt { font-size: 12px; padding: 2px 10px; }
+.pinfo { margin: 16px 16px 0; padding: 12px 16px; border-radius: 8px; background: var(--raise); font-size: 13px; line-height: 20px; color: var(--ink2); min-height: 64px; }
+.pinfo b { color: var(--ink); font-weight: 500; }
+.pinfo .mono { font-size: 12px; }
+.pinfo .alt { margin-top: 4px; }
+.pinfo .best { color: var(--cO); }
 svg { display: block; width: 100%; min-width: 640px; height: auto; touch-action: pan-y; }
 svg text { font-family: var(--mono); fill: var(--muted); font-size: 11px; }
 svg .ax { font-family: var(--sans); }
@@ -122,7 +119,7 @@ svg .lbl { font-family: var(--sans); fill: var(--ink); font-size: 12px; paint-or
 .keys { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 12px; color: var(--muted); margin-top: 12px; align-items: center; }
 .keys span { display: inline-flex; align-items: center; gap: 8px; }
 .keys i { width: 16px; border-top: 1.5px solid var(--ink2); }
-#tip { position: fixed; left: 0; top: 0; max-width: calc(100vw - 16px); pointer-events: none; background: var(--raise); border: 1px solid var(--hair2); border-radius: 8px; padding: 12px; font-size: 12px; line-height: 20px; min-width: 216px; display: none; z-index: 5; }
+#tip { display: none !important; position: fixed; left: 0; top: 0; max-width: calc(100vw - 16px); pointer-events: none; background: var(--raise); border: 1px solid var(--hair2); border-radius: 8px; padding: 12px; font-size: 12px; line-height: 20px; min-width: 216px; display: none; z-index: 5; }
 [data-theme="light"] #tip { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
 #tip .tt { font-weight: 500; font-size: 13px; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
 
@@ -156,7 +153,6 @@ footer a { color: var(--ink2); }
     .prov { padding: 20px 16px; }
     .prov + .prov { border-left: 0; border-top: 1px solid var(--hair); }
     section { margin-top: 40px; }
-    .bars { height: 280px; }
 }
 </style>
 </head>
@@ -170,7 +166,7 @@ footer a { color: var(--ink2); }
 <div class="page">
     <div class="hero">
         <h1>1 dolara en çok zeka veren modeller</h1>
-        <p class="lede">Sıralama zekaya göre değil, paranın karşılığına göre: her modelin Intelligence Index puanı, bir görevi çözmenin ortalama dolar maliyetine bölünür.</p>
+        <p class="lede">Her model bir çizgi, çizgideki her nokta bir düşünme kademesi. Yukarısı daha zeki, sağı daha pahalı: puanı alırken kaç dolar yaktığı tek bakışta görünür. Aşağıdaki tablo puan / $ oranına göre sıralar.</p>
         <p class="meta" id="meta"></p>
     </div>
 
@@ -195,16 +191,20 @@ footer a { color: var(--ink2); }
         </div>
     </div>
 
+    <section style="margin-top:32px">
+        <h2>Efor yolları</h2>
+        <p class="note">İçi boş nokta low, sağa doğru medium, high, xhigh, max. Bir noktaya gel ya da dokun: o fiyattan dikey çizgi iner, aynı paraya daha zeki bir ayar varsa altta yazar. Model eklemek için aşağıdaki adlara bas.</p>
+        <div class="card" style="margin-top:16px">
+            <div class="pinfo" id="pinfo"></div>
+            <div class="box" style="margin-top:0;padding-top:12px"><svg id="paths" viewBox="0 0 980 460" role="img" aria-label="Modellerin düşünme kademelerine göre zeka ve görev başı maliyet yolları"></svg></div>
+        </div>
+        <div class="pchips" id="pchips"></div>
+    </section>
+
     <div class="card slip" id="slip" aria-label="OpenAI, Anthropic ve Google için en iyi oranlı modeller"></div>
 
     <section>
-        <h2>Sıralama</h2>
-        <p class="note" id="barNote"></p>
-        <div class="card box"><div class="bars" id="bars"></div></div>
-    </section>
-
-    <section>
-        <h2>Tablo</h2>
+        <h2>Puan / $ sıralaması</h2>
         <p class="note" id="tcount"></p>
         <div class="card tw"><table>
             <thead><tr>
@@ -213,16 +213,6 @@ footer a { color: var(--ink2); }
             </tr></thead>
             <tbody id="rows"></tbody>
         </table></div>
-    </section>
-
-    <section>
-        <h2>Zeka ve maliyet</h2>
-        <p class="note">Yukarısı daha zeki, solu daha ucuz. Çizgideki modellerden daha ucuza daha zekisi yok, adı yazanlar onlar. Soluk noktaların adı üzerine gelince çıkar.</p>
-        <div class="card box">
-            <svg id="chart" viewBox="0 0 980 440" role="img" aria-label="Zeka puanı ve görev başı maliyet dağılım grafiği"></svg>
-            <div id="tip"></div>
-        </div>
-        <div class="keys" id="keys"></div>
     </section>
 
     <footer>
@@ -294,52 +284,6 @@ function frontier(list) {
     return out;
 }
 
-const W = 980, H = 440, L = 44, R = 24, T = 28, B = 44;
-let sx = () => 0, sy = () => 0;
-
-function drawScatter(ok, win) {
-    const svg = $("chart");
-    svg._pts = ok;
-    if (!ok.length) { svg.innerHTML = `<text class="ax" x="${W / 2}" y="${H / 2}" text-anchor="middle">Gösterilecek model yok</text>`; return new Set(); }
-    const iqs = ok.map((m) => m.iq), cs = ok.map((m) => m.cost);
-    const span = Math.max(...iqs) - Math.min(...iqs), step = span <= 12 ? 2 : span <= 30 ? 5 : 10;
-    const y0 = Math.max(0, Math.floor((Math.min(...iqs) - step * 0.6) / step) * step), y1 = Math.ceil((Math.max(...iqs) + step * 0.6) / step) * step;
-    const lx0 = Math.log10(Math.min(...cs)) - 0.24, lx1 = Math.log10(Math.max(...cs)) + 0.14;
-    sx = (c) => L + ((Math.log10(c) - lx0) / (lx1 - lx0)) * (W - L - R);
-    sy = (v) => H - B - ((v - y0) / (y1 - y0)) * (H - T - B);
-    let s = "";
-    for (let v = y0; v <= y1; v += step) s += `<line x1="${L}" x2="${W - R}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--hair)"/><text x="${L - 8}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`;
-    for (const c of [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50]) {
-        if (Math.log10(c) < lx0 || Math.log10(c) > lx1) continue;
-        s += `<line x1="${sx(c)}" x2="${sx(c)}" y1="${T}" y2="${H - B}" stroke="var(--hair)"/><text x="${sx(c)}" y="${H - B + 16}" text-anchor="middle">$${String(c).replace(".", ",")}</text>`;
-    }
-    s += `<text class="ax" x="${(L + W - R) / 2}" y="${H - 6}" text-anchor="middle">Görev başı maliyet, logaritmik</text><text class="ax" x="${L - 32}" y="${T - 12}">Zeka puanı</text>`;
-    const fr = frontier(ok), frS = new Set(fr);
-    if (fr.length > 1) s += `<polyline fill="none" stroke="var(--ink2)" stroke-width="1.5" stroke-linejoin="round" points="${fr.map((m) => sx(m.cost) + "," + sy(m.iq)).join(" ")}"/>`;
-    for (const m of ok) {
-        const hollow = m.firm === "I";
-        s += `<circle cx="${sx(m.cost)}" cy="${sy(m.iq)}" r="${hollow ? 4.5 : 5}" fill="${hollow ? "var(--card)" : `var(--c${m.firm})`}" stroke="${hollow ? "var(--cI)" : "var(--card)"}" stroke-width="2" opacity="${frS.has(m) || m === win ? 1 : 0.4}"/>`;
-    }
-    if (win) s += `<circle cx="${sx(win.cost)}" cy="${sy(win.iq)}" r="10" fill="none" stroke="var(--acc)" stroke-width="2"/>`;
-    s += `<circle id="hl" r="9" fill="none" stroke="var(--ink)" stroke-width="1.5" visibility="hidden"/>`;
-    // Yalnız çizgideki modeller ve kazanan adlandırılır
-    const boxes = ok.map((m) => [sx(m.cost) - 7, sy(m.iq) - 7, sx(m.cost) + 7, sy(m.iq) + 7]);
-    const hit = (b) => boxes.some((o) => b[0] < o[2] && b[2] > o[0] && b[1] < o[3] && b[3] > o[1]);
-    for (const m of ok.filter((m) => m === win || frS.has(m)).sort((a, b) => (b === win) - (a === win) || b.iq - a.iq)) {
-        const t = short(m), w = t.length * 6.6 + 4, px = sx(m.cost), py = sy(m.iq), g = m === win ? 14 : 9;
-        const opts = [["end", px - g, py - 3, px - g - w, px - g], ["middle", px, py - g - 3, px - w / 2, px + w / 2], ["end", px - g, py + 4, px - g - w, px - g], ["start", px + g, py + 12, px + g, px + g + w]];
-        for (const [anchor, tx, ty, bx0, bx1] of opts) {
-            const b = [bx0, ty - 11, bx1, ty + 3];
-            if (b[0] < L || b[2] > W - 4 || b[1] < 4 || b[3] > H - B || hit(b)) continue;
-            boxes.push(b);
-            s += `<text class="lbl" x="${tx}" y="${ty}" text-anchor="${anchor}">${t}</text>`;
-            break;
-        }
-    }
-    svg.innerHTML = s;
-    return new Set(fr.map((m) => m.i));
-}
-
 function render() {
     const act = M.filter((m) => !state.off.has(m.name));
     const ok = act.filter((m) => m.iq >= state.min);
@@ -368,17 +312,7 @@ function render() {
         </div>`;
     }).join("");
 
-    // Çubuk grafik: en iyi oran solda, tek vurgu kazananda
-    const top = ranked.slice(0, 40), mx = win ? win.fp : 1;
-    $("bars").innerHTML = top.map((m, k) => `<div class="col${k ? "" : " w"}" data-i="${m.i}" title="${full(m)} · ${FIRMS[m.firm]} · zeka ${m.iq} · görev ${usd(m.cost)}">
-        <span class="v">${fpFmt(m.fp)}</span><div class="b" style="height:${Math.max(Math.sqrt(m.fp / mx) * 90, 1)}%"></div><span class="l">${short(m)}${sw(m.firm)}</span></div>`).join("");
-    $("bars").style.minWidth = top.length * 36 + 104 + "px";
-    $("barNote").textContent = ranked.length ? `Puan / $ oranına göre, en yüksek solda. Çubuk boyları karekök ölçekli, gerçek değer üstünde yazıyor${ranked.length > 40 ? ". İlk 40 ayar gösteriliyor, tamamı tabloda" : ""}` : "";
-
-    const frSet = drawScatter(ok, win);
-    const firmsOn = Object.keys(FIRMS).filter((f) => ok.some((m) => m.firm === f));
-    $("keys").innerHTML = firmsOn.map((f) => `<span>${sw(f)}${FIRMS[f]}</span>`).join("") + (ok.length > 1 ? `<span><i></i>Verimli sınır</span>` : "");
-
+    const frSet = new Set(frontier(ok).map((m) => m.i));
     const rankOf = new Map(ranked.map((m, k) => [m.i, k + 1])), key = state.sort;
     const val = (m) => (key === "rank" ? rankOf.get(m.i) : key === "name" ? m.name + m.eff : key === "firm" ? FIRMS[m.firm] : key === "per20" ? 20 / m.cost : m[key]);
     const rows = [...ok].sort((a, b) => (val(a) > val(b) ? 1 : val(a) < val(b) ? -1 : b.fp - a.fp) * state.dir);
@@ -416,30 +350,97 @@ document.querySelector("thead").addEventListener("click", (e) => {
     render();
 });
 
-const svg = $("chart"), tip = $("tip");
-function mark(m) { const h = $("hl"); if (!h) return; if (!m || !svg._pts.includes(m)) { h.setAttribute("visibility", "hidden"); return; } h.setAttribute("cx", sx(m.cost)); h.setAttribute("cy", sy(m.iq)); h.setAttribute("visibility", "visible"); }
-function probe(e) {
-    const r = svg.getBoundingClientRect(), k = W / r.width, px = (e.clientX - r.left) * k, py = (e.clientY - r.top) * k;
-    let best = null, bd = 28 * 28;
-    for (const m of svg._pts || []) { const d = (sx(m.cost) - px) ** 2 + (sy(m.iq) - py) ** 2; if (d < bd) { bd = d; best = m; } }
-    mark(best);
-    if (!best) { tip.style.display = "none"; return; }
-    tip.innerHTML = `<div class="tt">${sw(best.firm)}${full(best)}</div>${line("Firma", FIRMS[best.firm])}${line("Puan / $", fpFmt(best.fp))}${line("Zeka", best.iq)}${line("Görev maliyeti", usd(best.cost))}${line("Süre", nf(best.time, 1) + " dk")}`;
-    tip.style.display = "block";
-    // Kutu ekrana göre konumlanır ve her zaman görünür alanda kalır
-    const cx = r.left + sx(best.cost) / k, cy = r.top + sy(best.iq) / k, tw = tip.offsetWidth, th = tip.offsetHeight, vw = document.documentElement.clientWidth, vh = window.innerHeight;
-    const left = cx + 16 + tw <= vw - 8 ? cx + 16 : cx - 16 - tw, top = cy - th - 12 >= 8 ? cy - th - 12 : cy + 16;
-    tip.style.left = Math.min(Math.max(left, 8), vw - tw - 8) + "px";
-    tip.style.top = Math.min(Math.max(top, 8), vh - th - 8) + "px";
+
+// ---- Efor yolları ----
+const EORD = { "düşünmesiz": -1, low: 0, medium: 1, "": 2, high: 2, xhigh: 3, max: 4 };
+const LINES = {}; // model -> kademeleri
+for (const m of M) (LINES[m.name] ||= []).push(m);
+for (const a of Object.values(LINES)) a.sort((x, y) => EORD[x.eff] - EORD[y.eff] || x.cost - y.cost);
+const DEF_PATHS = ["GPT-6.2 Sol", "GPT-6.2 Astra", "Claude Fable 5.2", "Claude Opus 5.5", "Claude Sonnet 5.5", "Gemini 4 Carbon", "Kimi K3.1 Pro", "DeepSeek V4.1 Flash"];
+const pOn = new Set(DEF_PATHS);
+try { const s = JSON.parse(localStorage.getItem("fp-paths") || "null"); if (Array.isArray(s)) { pOn.clear(); s.forEach((n) => LINES[n] && pOn.add(n)); } } catch (e) {}
+const pSave = () => { try { localStorage.setItem("fp-paths", JSON.stringify([...pOn])); } catch (e) {} };
+const PW = 980, PH = 460, PL = 44, PR = 132, PT = 16, PB = 40;
+const pv = { sx: () => 0, sy: () => 0, pts: [], sel: null };
+const effTxt = (m) => (m.eff ? m.eff : "tek ayar");
+
+// Aynı paraya (en fazla %5 pahalı) daha zeki ayar, grafikteki çizgiler içinde
+function altFor(p) {
+    return pv.pts.filter((o) => o !== p && o.cost <= p.cost * 1.05 && o.iq > p.iq).sort((a, b) => b.iq - a.iq || a.cost - b.cost)[0] || null;
 }
-svg.addEventListener("pointermove", probe);
-svg.addEventListener("pointerdown", probe);
-svg.addEventListener("pointerleave", () => { tip.style.display = "none"; mark(null); });
-window.addEventListener("scroll", () => { tip.style.display = "none"; }, { passive: true });
-for (const id of ["rows", "bars"]) {
-    $(id).addEventListener("pointerover", (e) => { const el = e.target.closest("[data-i]"); mark(el ? M[+el.dataset.i] : null); });
-    $(id).addEventListener("pointerleave", () => mark(null));
+
+function drawPaths() {
+    const svg = $("paths"), pts = [...pOn].flatMap((n) => LINES[n]);
+    pv.pts = pts;
+    if (pv.sel && !pts.includes(pv.sel)) pv.sel = null;
+    $("pchips").innerHTML = Object.keys(FIRMS).flatMap((f) => FAMS[f].map((n) => `<button class="opt" data-p="${n}" aria-pressed="${pOn.has(n)}">${sw(f)}${fam(n)}</button>`)).join("")
+        + `<button class="link" data-p="*" style="margin-left:8px">Varsayılana dön</button>`;
+    if (!pts.length) { svg.innerHTML = `<text class="ax" x="${PW / 2}" y="${PH / 2}" text-anchor="middle">Aşağıdan model seç</text>`; info(null); return; }
+    const iqs = pts.map((m) => m.iq), cs = pts.map((m) => m.cost);
+    const y0 = Math.max(0, Math.floor((Math.min(...iqs) - 3) / 10) * 10), y1 = Math.ceil((Math.max(...iqs) + 3) / 10) * 10;
+    const lx0 = Math.log10(Math.min(...cs)) - 0.15, lx1 = Math.log10(Math.max(...cs)) + 0.1;
+    const sx = (pv.sx = (c) => PL + ((Math.log10(c) - lx0) / (lx1 - lx0)) * (PW - PL - PR));
+    const sy = (pv.sy = (v) => PH - PB - ((v - y0) / (y1 - y0)) * (PH - PT - PB));
+    const sel = pv.sel, alt = sel ? altFor(sel) : null;
+    let s = "";
+    for (let v = y0; v <= y1; v += 10) s += `<line x1="${PL}" x2="${PW - PR}" y1="${sy(v)}" y2="${sy(v)}" stroke="var(--hair)"/><text x="${PL - 8}" y="${sy(v) + 4}" text-anchor="end">${v}</text>`;
+    for (const c of [0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50]) {
+        if (Math.log10(c) < lx0 || Math.log10(c) > lx1) continue;
+        s += `<line x1="${sx(c)}" x2="${sx(c)}" y1="${PT}" y2="${PH - PB}" stroke="var(--hair)"/><text x="${sx(c)}" y="${PH - PB + 16}" text-anchor="middle">$${String(c).replace(".", ",")}</text>`;
+    }
+    s += `<text class="ax" x="${(PL + PW - PR) / 2}" y="${PH - 4}" text-anchor="middle">Görev başı maliyet, logaritmik</text><text class="ax" x="${PL + 6}" y="${PT + 12}">Zeka</text>`;
+    if (sel) s += `<line x1="${sx(sel.cost)}" x2="${sx(sel.cost)}" y1="${PT}" y2="${PH - PB}" stroke="var(--ink2)" stroke-dasharray="4 4"/>`;
+    const labels = [];
+    for (const n of pOn) {
+        const a = LINES[n], f = a[0].firm, dim = sel && sel.name !== n && !(alt && alt.name === n);
+        const op = dim ? 0.18 : 1;
+        if (a.length > 1) s += `<polyline fill="none" stroke="var(--c${f})" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" opacity="${op}" points="${a.map((p) => sx(p.cost) + "," + sy(p.iq)).join(" ")}"/>`;
+        for (const p of a) {
+            const hollow = p.eff === "low", big = p === sel || p === alt;
+            s += `<circle cx="${sx(p.cost)}" cy="${sy(p.iq)}" r="${big ? 7 : hollow ? 5 : 4}" fill="${hollow ? "var(--card)" : `var(--c${f})`}" stroke="var(--c${f})" stroke-width="2" opacity="${op}"/>`;
+        }
+        const last = a.reduce((x, y) => (y.cost > x.cost ? y : x));
+        labels.push({ x: sx(last.cost) + 10, y: sy(last.iq) + 4, t: fam(n), op });
+    }
+    // Ad etiketleri üst üste binmesin
+    labels.sort((a, b) => a.y - b.y);
+    for (let i = 1; i < labels.length; i++) for (let j = 0; j < i; j++) {
+        const a = labels[j], b = labels[i];
+        if (Math.abs(a.y - b.y) < 14 && Math.abs(a.x - b.x) < 120) b.y = a.y + 14;
+    }
+    for (const l of labels) s += `<text class="lbl" x="${Math.min(l.x, PW - 4)}" y="${l.y}" text-anchor="${l.x > PW - 120 ? "end" : "start"}" opacity="${l.op}">${l.t}</text>`;
+    if (sel) s += `<circle cx="${sx(sel.cost)}" cy="${sy(sel.iq)}" r="11" fill="none" stroke="var(--ink)" stroke-width="1.5"/>`;
+    svg.innerHTML = s;
+    info(sel, alt);
 }
+
+function info(p, alt) {
+    const el = $("pinfo");
+    if (!p) { el.innerHTML = `Bir noktanın üzerine gel: o ayarın zekası, görev başı maliyeti ve aynı paraya daha zekisi var mı.`; return; }
+    el.innerHTML = `<div>${sw(p.firm)} <b>${p.name}</b> · ${effTxt(p)} <span class="mono">· zeka ${p.iq} · görev ${usd(p.cost)} · ${fpFmt(p.fp)} puan/$ · ${nf(p.time, 1)} dk</span></div>`
+        + (alt ? `<div class="alt">Aynı paraya daha zekisi: <b>${alt.name}</b> · ${effTxt(alt)} <span class="mono">· zeka ${alt.iq} (+${alt.iq - p.iq}) · görev ${usd(alt.cost)}</span></div>`
+               : `<div class="alt best">Grafikteki modeller içinde bu fiyata bundan zekisi yok.</div>`);
+}
+
+function probePaths(e) {
+    const svg = $("paths"), r = svg.getBoundingClientRect(), k = PW / r.width, px = (e.clientX - r.left) * k, py = (e.clientY - r.top) * k;
+    let best = null, bd = 26 * 26;
+    for (const m of pv.pts) { const d = (pv.sx(m.cost) - px) ** 2 + (pv.sy(m.iq) - py) ** 2; if (d < bd) { bd = d; best = m; } }
+    if (best && best !== pv.sel) { pv.sel = best; drawPaths(); }
+}
+$("paths").addEventListener("pointermove", probePaths);
+$("paths").addEventListener("pointerdown", probePaths);
+$("pchips").addEventListener("click", (e) => {
+    const b = e.target.closest("[data-p]"); if (!b) return;
+    const n = b.dataset.p;
+    if (n === "*") { pOn.clear(); DEF_PATHS.forEach((x) => pOn.add(x)); }
+    else pOn.has(n) ? pOn.delete(n) : pOn.add(n);
+    pSave(); drawPaths();
+});
+$("rows").addEventListener("pointerover", (e) => {
+    const el = e.target.closest("[data-i]"); if (!el) return;
+    const m = M[+el.dataset.i]; if (pOn.has(m.name) && m !== pv.sel) { pv.sel = m; drawPaths(); }
+});
 
 let theme = "dark";
 try { theme = localStorage.getItem("theme") || "dark"; } catch (e) {}
@@ -447,6 +448,7 @@ const applyTheme = () => { document.documentElement.setAttribute("data-theme", t
 $("theme").addEventListener("click", () => { theme = theme === "dark" ? "light" : "dark"; try { localStorage.setItem("theme", theme); } catch (e) {} applyTheme(); });
 applyTheme();
 render();
+drawPaths();
 </script>
 </body>
 </html>
