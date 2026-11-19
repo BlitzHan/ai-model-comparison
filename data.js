@@ -154,11 +154,25 @@ const LLM_DATA = {
             "hidden": true
         },
         {
+            "id": "gemini4neon",
+            "name": "Gemini 4 Neon",
+            "company": "Google",
+            "date": "Kas 26",
+            "color": "#1d4ed8"
+        },
+        {
             "id": "gemini4carbon",
             "name": "Gemini 4 Carbon",
             "company": "Google",
             "date": "Eki 26",
             "color": "#3b82f6"
+        },
+        {
+            "id": "gemini4hydrogen",
+            "name": "Gemini 4 Hydrogen",
+            "company": "Google",
+            "date": "Kas 26",
+            "color": "#93c5fd"
         },
         {
             "id": "gemini4argon",
@@ -449,7 +463,9 @@ const LLM_DATA = {
         {
             "name": "Google",
             "ids": [
+                "gemini4neon",
                 "gemini4carbon",
+                "gemini4hydrogen",
                 "gemini4argon",
                 "gemini38flash",
                 "gemini37flash",
@@ -713,6 +729,10 @@ const LLM_DATA = {
                         "sonnet5": "12.4%",
                         "gpt62astra": "64.1%",
                         "gpt62sol": "60.1%",
+                        "gemini4neon": "63.6%",
+                        "gemini4carbon": "65.2%",
+                        "gemini4hydrogen": "53.5%",
+                        "gemini4argon": "57.1%",
                         "gpt6astra": "58.2%",
                         "gpt56sol": "37.3%",
                         "gemini38flash": "19.1%",
@@ -1843,6 +1863,10 @@ const LLM_DATA = {
                         "sonnet46": "1071",
                         "gpt62astra": "1643",
                         "gpt62sol": "1612",
+                        "gemini4neon": "1700",
+                        "gemini4carbon": "1611",
+                        "gemini4hydrogen": "1568",
+                        "gemini4argon": "1485",
                         "gpt6astra": "1568",
                         "gpt56sol": "1483",
                         "gpt55": "1143",

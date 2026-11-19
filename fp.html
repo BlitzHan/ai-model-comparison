@@ -216,7 +216,7 @@ footer a { color: var(--ink2); }
     </section>
 
     <footer>
-        Veri: <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a>, Intelligence Index v5.0.1, 10 Kasım 2026 (GPT-6.2 Astra ve Sol 18 Kasım 2026). Maliyet, bir Intelligence Index görevinin API fiyatıyla ağırlıklı ortalama dolar maliyetidir; süre aynı görevin dakika cinsinden çıkarım süresidir. "20 $ ile görev" 20 doları bu maliyete böler; üyelik paketlerinin kotasını göstermez. Maliyeti yayınlanmamış modeller listede yok. Model adının yanındaki kademe düşünme eforudur.
+        Veri: <a href="https://artificialanalysis.ai/leaderboards/models" target="_blank" rel="noopener">Artificial Analysis</a>, Intelligence Index v5.0.1, 10 Kasım 2026 (GPT-6.2 Astra, GPT-6.2 Sol ve Gemini 4 ailesi 18-19 Kasım 2026). Maliyet, bir Intelligence Index görevinin API fiyatıyla ağırlıklı ortalama dolar maliyetidir; süre aynı görevin dakika cinsinden çıkarım süresidir. "20 $ ile görev" 20 doları bu maliyete böler; üyelik paketlerinin kotasını göstermez. Maliyeti yayınlanmamış modeller listede yok. Model adının yanındaki kademe düşünme eforudur.
     </footer>
 </div>
 
@@ -232,8 +232,10 @@ const RAW = [
 ["Claude Sonnet 5.5","medium","A",31,0.78,3.6],["Claude Sonnet 5.5","low","A",26,0.51,2.6],
 ["Claude Haiku 5.5","max","A",36,0.41,14.8],["Claude Haiku 5.5","xhigh","A",35,0.25,9.6],["Claude Haiku 5.5","high","A",30,0.16,6.5],
 ["Claude Haiku 5.5","medium","A",25,0.09,4.0],["Claude Haiku 5.5","low","A",19,0.04,2.2],
-["Gemini 4 Carbon","high","G",60,7.76,26.5],["Gemini 4 Carbon","medium","G",58,6.59,23.5],["Gemini 4 Carbon","low","G",54,7.19,21.3],
-["Gemini 4 Argon","high","G",50,9.95,29.2],["Gemini 3.8 Flash","high","G",31,7.77,14.6],["Gemini 3.8 Flash","medium","G",30,6.26,12.1],
+["Gemini 4 Neon","xhigh","G",61,6.44,21.5],["Gemini 4 Neon","high","G",60,3.74,14.8],["Gemini 4 Neon","medium","G",55,1.90,8.3],["Gemini 4 Neon","low","G",44,0.75,3.7],
+["Gemini 4 Carbon","high","G",60,7.76,37.1],["Gemini 4 Carbon","medium","G",58,6.59,29.6],["Gemini 4 Carbon","low","G",54,7.19,30.4],
+["Gemini 4 Hydrogen","xhigh","G",54,3.16,15.3],["Gemini 4 Hydrogen","high","G",51,1.87,8.6],["Gemini 4 Hydrogen","medium","G",41,0.80,4.2],["Gemini 4 Hydrogen","low","G",27,0.29,1.5],
+["Gemini 4 Argon","high","G",50,4.97,29.7],["Gemini 4 Argon","medium","G",48,4.31,29.1],["Gemini 3.8 Flash","high","G",31,7.77,14.6],["Gemini 3.8 Flash","medium","G",30,6.26,12.1],
 ["Gemini 3.5 Flash-Lite","","G",12,0.69,1.6],
 ["GPT-6.2 Astra","max","O",62,4.00,11.5],["GPT-6.2 Astra","xhigh","O",62,2.52,6.5],["GPT-6.2 Astra","high","O",60,2.07,5.1],
 ["GPT-6.2 Astra","medium","O",57,1.62,3.8],["GPT-6.2 Astra","low","O",46,0.66,1.5],
@@ -356,7 +358,7 @@ const EORD = { "düşünmesiz": -1, low: 0, medium: 1, "": 2, high: 2, xhigh: 3,
 const LINES = {}; // model -> kademeleri
 for (const m of M) (LINES[m.name] ||= []).push(m);
 for (const a of Object.values(LINES)) a.sort((x, y) => EORD[x.eff] - EORD[y.eff] || x.cost - y.cost);
-const DEF_PATHS = ["GPT-6.2 Sol", "GPT-6.2 Astra", "Claude Fable 5.2", "Claude Opus 5.5", "Claude Sonnet 5.5", "Gemini 4 Carbon", "Kimi K3.1 Pro", "DeepSeek V4.1 Flash"];
+const DEF_PATHS = ["GPT-6.2 Sol", "GPT-6.2 Astra", "Claude Fable 5.2", "Claude Opus 5.5", "Claude Sonnet 5.5", "Gemini 4 Neon", "Gemini 4 Carbon", "Kimi K3.1 Pro", "DeepSeek V4.1 Flash"];
 const pOn = new Set(DEF_PATHS);
 try { const s = JSON.parse(localStorage.getItem("fp-paths") || "null"); if (Array.isArray(s)) { pOn.clear(); s.forEach((n) => LINES[n] && pOn.add(n)); } } catch (e) {}
 const pSave = () => { try { localStorage.setItem("fp-paths", JSON.stringify([...pOn])); } catch (e) {} };
